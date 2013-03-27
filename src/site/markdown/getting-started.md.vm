@@ -57,17 +57,17 @@ Installation
 ------------------------------------------------------------------------------
 ${HHH} 1. Extract the distribution ZIP
 
-Download and extract the gateway-${gateway-version}.zip file into the
+Download and extract the knox-${gateway-version}.zip file into the
 installation directory that will contain your `{GATEWAY_HOME}`
 
-    jar xf gateway-${gateway-version}.zip
+    jar xf knox-${gateway-version}.zip
 
-This will create a directory `gateway-${gateway-version}` in your current
+This will create a directory `knox-${gateway-version}` in your current
 directory.
 
 ${HHH} 2. Enter the `{GATEWAY_HOME}` directory
 
-    cd gateway-${gateway-version}
+    cd knox-${gateway-version}
 
 The fully qualified name of this directory will be referenced as
 `{GATEWAY_HOME}` throughout the remainder of this document.
