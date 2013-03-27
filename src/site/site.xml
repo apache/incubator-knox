@@ -80,7 +80,7 @@
 
         <links>
             <item name="Git" href="https://git-wip-us.apache.org/repos/asf/incubator-knox.git" />
-            <item name="Svn" href="https://svn.apache.org/repos/asf/incubator/knox/site" />
+            <item name="Svn" href="https://svn.apache.org/repos/asf/incubator/knox" />
             <item name="Jira" href="https://issues.apache.org/jira/browse/KNOX" />
             <item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index" />
         </links>
@@ -112,7 +112,7 @@
             <item name="Build" href="build-process.html"/>
             <item name="Release" href="release-process.html"/>
             <item name="Contribute" href="contribute-process.html"/>
-            <item name="Site Publication" href="site-process.html"/>
+            <item name="Site Maintenance" href="https://cwiki.apache.org/KNOX/site-maintenance.html"/>
         </menu>
 
         <menu name="Resources">
