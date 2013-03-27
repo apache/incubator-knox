@@ -101,6 +101,7 @@
             <item name="Client (KnoxShell DSL)" href="client.html"/>
             <item name="Sandbox Configuration" href="https://cwiki.apache.org/KNOX/sandbox-configuration.html"/>
             <item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index"/>
+            <item name="Dependencies" href="https://cwiki.apache.org/KNOX/dependencies.html"/>
         </menu>
 
         <menu name="Releases">
