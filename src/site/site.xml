@@ -57,8 +57,6 @@
 
     <body>
         <head>
-            <!-- Start of Google analytics -->
-            <!--
             <script type="text/javascript">
                 var _gaq = _gaq || [];
                 _gaq.push(['_setAccount', 'UA-27188762-1']);
@@ -74,8 +72,6 @@
                 s.parentNode.insertBefore(ga, s);
                 })();
             </script>
-            -->
-            <!-- End of Google analytics -->
         </head>
 
         <links>
@@ -90,34 +86,35 @@
         </breadcrumbs>
 
         <menu name="Knox">
-            <item name="Welcome" href="index.html"/>
-            <item name="News" href="news.html"/>
+            <item name="Home" href="index.html"/>
+            <item name="News" href="https://cwiki.apache.org/KNOX/news.html"/>
             <item name="License" href="license.html"/>
         </menu>
 
         <menu name="Documentation">
-            <item name="Getting Started" href="getting-started.html"/>
-            <item name="Usage Examples" href="examples.html"/>
-            <item name="Client (KnoxShell DSL)" href="client.html"/>
+            <item name="Getting Started" href="https://cwiki.apache.org/KNOX/getting-started.html"/>
+            <item name="Usage Examples" href="https://cwiki.apache.org/KNOX/examples.html"/>
+            <item name="Client (KnoxShell DSL)" href="https://cwiki.apache.org/KNOX/client-usage.html"/>
             <item name="Sandbox Configuration" href="https://cwiki.apache.org/KNOX/sandbox-configuration.html"/>
-            <item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index"/>
             <item name="Dependencies" href="https://cwiki.apache.org/KNOX/dependencies.html"/>
+            <item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index"/>
         </menu>
 
         <menu name="Releases">
-            <item name="0.2.0 (coming soon)" href="release-0-2-0.html"/>
-            <item name="0.3.0 (planning)" href="roadmap-0-3-0.html"/>
+            <item name="0.2.0 (coming soon)" href="https://cwiki.apache.org/KNOX/release-020.html"/>
+            <item name="Roadmap" href="https://cwiki.apache.org/KNOX/roadmap.html"/>
         </menu>
 
         <menu name="Processes">
-            <item name="Build" href="build-process.html"/>
-            <item name="Release" href="release-process.html"/>
-            <item name="Contribute" href="contribute-process.html"/>
+            <item name="Build" href="https://cwiki.apache.org/KNOX/build-process.html"/>
+            <item name="Release" href="https://cwiki.apache.org/KNOX/release-process.html"/>
+            <item name="Contribute" href="https://cwiki.apache.org/KNOX/contribution-process.html"/>
             <item name="Site Maintenance" href="https://cwiki.apache.org/KNOX/site-maintenance.html"/>
         </menu>
 
         <menu name="Resources">
-            <item name="Source Code" href="https://git-wip-us.apache.org/repos/asf/incubator-knox.git"/>
+            <item name="Product Source" href="https://git-wip-us.apache.org/repos/asf/incubator-knox.git"/>
+            <item name="Site Source" href="https://svn.apache.org/repos/asf/incubator/knox"/>
             <item name="Project Team" href="team-list.html"/>
             <item name="Mailing Lists" href="mail-lists.html"/>
             <item name="Issue Tracking" href="issue-tracking.html"/>
@@ -137,7 +134,7 @@
                 All other marks mentioned may be trademarks or registered trademarks of their respective owners.
             </div>
             <div class="row span12">
-                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="https://cwiki.apache.org/KNOX/privacy-policy.html">Privacy Policy</a>
             </div>
         </footer>
 
