@@ -101,7 +101,7 @@
         </menu>
 
         <menu name="Releases">
-            <item name="0.2.0 (coming soon)" href="https://cwiki.apache.org/KNOX/release-020.html"/>
+            <item name="0.2.0" href="https://cwiki.apache.org/KNOX/release-020.html"/>
             <item name="Roadmap" href="https://cwiki.apache.org/KNOX/roadmap.html"/>
         </menu>
 
