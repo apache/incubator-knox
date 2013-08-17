@@ -87,29 +87,41 @@
 
         <menu name="Knox">
             <item name="Home" href="index.html"/>
-            <item name="News" href="https://cwiki.apache.org/KNOX/news.html"/>
+            <item name="News" href="https://cwiki.apache.org/confluence/display/KNOX/News"/>
             <item name="License" href="license.html"/>
         </menu>
 
         <menu name="Documentation">
-            <item name="Getting Started" href="https://cwiki.apache.org/KNOX/getting-started.html"/>
-            <item name="Usage Examples" href="https://cwiki.apache.org/KNOX/examples.html"/>
-            <item name="Client (KnoxShell DSL)" href="https://cwiki.apache.org/KNOX/client-usage.html"/>
-            <item name="Sandbox Configuration" href="https://cwiki.apache.org/KNOX/sandbox-configuration.html"/>
-            <item name="Dependencies" href="https://cwiki.apache.org/KNOX/dependencies.html"/>
+            <!-- item name="Getting Started" href="https://cwiki.apache.org/KNOX/getting-started.html"/ -->
+            <item name="Getting Started" href="https://cwiki.apache.org/confluence/display/KNOX/Getting+Started"/>
+            <!--item name="Usage Examples" href="https://cwiki.apache.org/KNOX/examples.html"/ -->
+            <item name="Usage Examples" href="https://cwiki.apache.org/confluence/display/KNOX/Examples"/>
+            <!-- item name="Client (KnoxShell DSL)" href="https://cwiki.apache.org/KNOX/client-usage.html"/ -->
+            <item name="Client (KnoxShell DSL)" href="https://cwiki.apache.org/confluence/display/KNOX/Client+Usage"/>
+            <!-- item name="Sandbox Configuration" href="https://cwiki.apache.org/KNOX/sandbox-configuration.html"/ -->
+            <item name="Sandbox Configuration" href="https://cwiki.apache.org/confluence/display/KNOX/Sandbox+Configuration"/>
+            <!-- item name="Dependencies" href="https://cwiki.apache.org/KNOX/dependencies.html"/ -->
+            <item name="Dependencies" href="https://cwiki.apache.org/confluence/display/KNOX/Dependencies"/>
+            <!-- item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index"/ -->
             <item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index"/>
         </menu>
 
         <menu name="Releases">
-            <item name="0.2.0" href="https://cwiki.apache.org/KNOX/release-020.html"/>
-            <item name="Roadmap" href="https://cwiki.apache.org/KNOX/roadmap.html"/>
+            <!-- item name="0.2.0" href="https://cwiki.apache.org/KNOX/release-020.html"/ -->
+            <item name="0.2.0" href="https://cwiki.apache.org/confluence/display/KNOX/Release+0.2.0"/>
+            <!-- item name="Roadmap" href="https://cwiki.apache.org/KNOX/roadmap.html"/ -->
+            <item name="Roadmap" href="https://cwiki.apache.org/confluence/display/KNOX/Roadmap"/>
         </menu>
 
         <menu name="Processes">
-            <item name="Build" href="https://cwiki.apache.org/KNOX/build-process.html"/>
-            <item name="Release" href="https://cwiki.apache.org/KNOX/release-process.html"/>
-            <item name="Contribute" href="https://cwiki.apache.org/KNOX/contribution-process.html"/>
-            <item name="Site Maintenance" href="https://cwiki.apache.org/KNOX/site-maintenance.html"/>
+            <!-- item name="Build" href="https://cwiki.apache.org/KNOX/build-process.html"/ -->
+            <item name="Build" href="https://cwiki.apache.org/confluence/display/KNOX/Build+Process"/>
+            <!-- item name="Release" href="https://cwiki.apache.org/KNOX/release-process.html"/ -->
+            <item name="Release" href="https://cwiki.apache.org/confluence/display/KNOX/Release+Process"/>
+            <!-- item name="Contribute" href="https://cwiki.apache.org/KNOX/contribution-process.html"/ -->
+            <item name="Contribute" href="https://cwiki.apache.org/confluence/display/KNOX/Contribution+Process"/>
+            <!-- item name="Site Maintenance" href="https://cwiki.apache.org/KNOX/site-maintenance.html"/ -->
+            <item name="Site Maintenance" href="https://cwiki.apache.org/confluence/display/KNOX/Site+Maintenance"/>
         </menu>
 
         <menu name="Resources">
@@ -134,7 +146,9 @@
                 All other marks mentioned may be trademarks or registered trademarks of their respective owners.
             </div>
             <div class="row span12">
-                <a href="https://cwiki.apache.org/KNOX/privacy-policy.html">Privacy Policy</a>
+                <!-- a href="https://cwiki.apache.org/KNOX/privacy-policy.html">Privacy Policy</a -->
+                <a href="https://cwiki.apache.org/confluence/display/KNOX/Privacy+Policy">Privacy Policy</a>
+
             </div>
         </footer>
 
