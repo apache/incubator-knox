@@ -29,6 +29,7 @@ Table Of Contents
 * [Installation](#Installation)
 * [Getting Started](#Getting+Started)
 * [Supported Services](#Supported+Services)
+* [Sandbox Configuration](#Sandbox+Configuration)
 * [Usage Examples](#Usage+Examples)
 * [Gateway Details](#Gateway+Details)
     * [Authentication](#Authentication)
@@ -61,9 +62,7 @@ TODO
 Java 1.6 or later is required for the Knox Gateway runtime.
 Use the command below to check the version of Java installed on the system where Knox will be running.
 
-{code}
-java -version
-{code}
+    java -version
 
 ### Hadoop ###
 
@@ -126,6 +125,9 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 | Hive/JDBC         | 0.11.0     | ![n]        | ![n]   |
 |                   | 0.12.0     | ![?]![y]    | ![?]   |
 | Hive/ODBC         | 0.12.0     | ![?]        | ![?]   |
+
+
+<<sandbox.md>>
 
 
 {{Usage Examples}}

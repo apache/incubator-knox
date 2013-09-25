@@ -95,7 +95,10 @@ h6 {
    color: #777777;
    font-size: 14px; }
 
-p, blockquote, ul, ol, dl, li, table, pre {
+ul {
+   margin: 0px 0; }
+
+p, blockquote, ol, dl, li, table, pre {
    margin: 15px 0; }
 
 hr {

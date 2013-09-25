@@ -21,10 +21,10 @@
 Hadoop requires a client that can be used to interact remotely with the services provided by Hadoop cluster.
 This will also be true when using the Apache Knox Gateway to provide perimeter security and centralized access for these services.
 The two primary existing clients for Hadoop are the CLI (i.e. Command Line Interface, hadoop) and HUE (i.e. Hadoop User Environment).
-for several reasons however, neither of these clients can _currently_ be used to access Hadoop services via the Apache Knox Gateway.
+For several reasons however, neither of these clients can _currently_ be used to access Hadoop services via the Apache Knox Gateway.
 
-This lead to thinking about a very simple client that could help people use and evaluate the gateway.
-The list below outline the general requirements for such a client.
+This led to thinking about a very simple client that could help people use and evaluate the gateway.
+The list below outlines the general requirements for such a client.
 
 * Promote the evaluation and adoption of the Apache Knox Gateway
 * Simple to deploy and use on data worker desktops to access to remote Hadoop clusters
@@ -37,6 +37,7 @@ The list below outline the general requirements for such a client.
 
 The result is a very simple DSL ([Domain Specific Language](http://en.wikipedia.org/wiki/Domain-specific_language)) of sorts that is used via [Groovy](http://groovy.codehaus.org) scripts.
 Here is an example of a command that copies a file from the local file system to HDFS.
+
 _Note: The variables session, localFile and remoteFile are assumed to be defined._
 
     Hdfs.put( session ).file( localFile ).to( remoteFile ).now()
