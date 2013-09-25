@@ -31,7 +31,7 @@
         <module>markbook</module>
     </modules>
 
-    <name>Apache Knox Gateway</name>
+    <name>Apache Knox Gateway Site</name>
     <description>Knox is a gateway for Hadoop clusters.</description>
     <url>http://incubator.apache.org/knox</url>
 
@@ -186,7 +186,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.0</version>
+                    <version>3.1</version>
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.doxia</groupId>
@@ -195,9 +195,12 @@
                         </dependency>
                     </dependencies>
                     <configuration>
+                        <modulesExcludes>
+                            <moduleExclude>markdown</moduleExclude>
+                        </modulesExcludes>
                         <inputEncoding>UTF-8</inputEncoding>
                         <outputEncoding>UTF-8</outputEncoding>
-                        <outputDirectory>../../site</outputDirectory>
+                        <outputDirectory>../site</outputDirectory>
                     </configuration>
                 </plugin>
             </plugins>

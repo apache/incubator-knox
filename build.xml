@@ -57,8 +57,9 @@
 
     <target name="site" depends="_site,books"/>
     <target name="_site" depends="init">
-        <delete dir="${book-target}/${gateway-artifact}-0-3-0" includes="**/*.html,**/*.css,**/*.png"/>
+        <delete dir="../site" includes="**/*.html,**/*.css,**/*.png"/>
         <exec executable="${mvn.cmd}">
+            <arg value="-N"/>
             <arg value="site"/>
         </exec>
     </target>
