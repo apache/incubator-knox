@@ -20,10 +20,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.hadoop</groupId>
+    <groupId>org.apache.hadoop.gateway</groupId>
     <artifactId>gateway-site</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <version>0.0.0-SNAPSHOT</version>
+
+    <modules>
+        <module>markbook</module>
+    </modules>
 
     <name>Apache Knox Gateway</name>
     <description>Knox is a gateway for Hadoop clusters.</description>
@@ -34,7 +40,6 @@
         <HHH>###</HHH>
         <HHHH>####</HHHH>
         <HHHHH>#####</HHHHH>
-        <gateway-version>0.2.0-SNAPSHOT</gateway-version>
     </properties>
 
     <licenses>
@@ -192,7 +197,7 @@
                     <configuration>
                         <inputEncoding>UTF-8</inputEncoding>
                         <outputEncoding>UTF-8</outputEncoding>
-                        <outputDirectory>../site</outputDirectory>
+                        <outputDirectory>../../site</outputDirectory>
                     </configuration>
                 </plugin>
             </plugins>

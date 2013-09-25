@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="Apache Knox Gateway Site" default="site" basedir=".">
+
+    <description>
+        Release build file for the Apache Knox Gateway
+    </description>
+
+    <property name="gateway-name" value="Apache Knox Gateway (Incubator)"/>
+    <property name="gateway-project" value="knox"/>
+    <property name="gateway-artifact" value="${gateway-project}-incubating"/>
+    <property name="release-manager" value="kminder"/>
+    <property name="book-target" value="../site/books"/>
+
+    <property name="svn.release.path" value="https://dist.apache.org/repos/dist/release/incubator/${gateway-project}" />
+    <property name="svn.staging.path" value="https://dist.apache.org/repos/dist/dev/incubator/${gateway-project}" />
+
+    <condition property="isUnix">
+        <os family="unix"/>
+    </condition>
+
+    <condition property="mvn.cmd" value="mvn">
+        <os family="unix" />
+    </condition>
+    <condition property="mvn.cmd" value="mvn.bat">
+        <os family="windows" />
+    </condition>
+
+    <condition property="svn.cmd" value="svn">
+        <os family="unix" />
+    </condition>
+    <condition property="svn.cmd" value="svn">
+        <os family="windows" />
+    </condition>
+
+    <target name="init" description="Initialize the build.">
+    </target>
+
+    <target name="clean" depends="init" description="Clean up any build artifacts.">
+        <delete file="target"/>
+    </target>
+
+    <target name="site" depends="_site,books"/>
+    <target name="_site" depends="init">
+        <delete dir="${book-target}/${gateway-artifact}-0-3-0" includes="**/*.html,**/*.css,**/*.png"/>
+        <exec executable="${mvn.cmd}">
+            <arg value="site"/>
+        </exec>
+    </target>
+
+    <target name="books" depends="markbook,_books"/>
+    <target name="_books" depends="_book-0-3-0"/>
+    <target name="_book-0-3-0" depends="init">
+        <delete dir="${book-target}/${gateway-artifact}-0-3-0" includes="**/*.html,**/*.css,**/*.png"/>
+        <java jar="markbook/target/markbook.jar" fork="true">
+            <arg value="-i"/><arg value="books/0.3.0/book.md"/>
+            <arg value="-o"/><arg value="${book-target}/${gateway-artifact}-0-3-0/${gateway-artifact}-0-3-0.html"/>
+        </java>
+        <copy todir="${book-target}/${gateway-artifact}-0-3-0">
+            <fileset dir="books/static"/>
+        </copy>
+    </target>
+
+    <target name="markbook" depends="init" description="Build and package markbook tool.">
+        <exec executable="${mvn.cmd}">
+            <arg value="clean"/>
+            <arg value="package"/>
+        </exec>
+    </target>
+
+</project>
