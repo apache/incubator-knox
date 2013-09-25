@@ -15,10 +15,26 @@
    limitations under the License.
 --->
 
-<link href="book.css" rel="stylesheet"/>
+{{Installation}}
+----------------
 
-[asl]: http://www.apache.org/licenses/LICENSE-2.0
-[y]: check.png "Yes"
-[n]: error.png "No"
-[?]: question.png "Unknown"
-[$]: bulb.png "Note"
+### ZIP ###
+
+Download and extract the `knox-{VERSION}.zip` file into the installation directory that will contain your `{GATEWAY_HOME}`.
+You can find the downloads for Knox releases on the [Apache mirrors](http://www.apache.org/dyn/closer.cgi/incubator/knox/).
+
+    jar xf knox-{VERSION}.zip
+
+This will create a directory `knox-{VERSION}` in your current directory.
+
+
+### RPM ###
+
+TODO
+
+
+### Layout ###
+
+TODO - Describe the purpose of all of the directories
+
+

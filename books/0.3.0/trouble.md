@@ -30,3 +30,13 @@ There are various useful loggers pre-populated in that file but they are comment
     log4j.logger.org.apache.http.headers=DEBUG   # Use this logger to increase the debugging of Apache HTTP header.
     log4j.logger.org.apache.http.wire=DEBUG      # Use this logger to increase the debugging of Apache HTTP wire traffic.
 
+### Filing Bugs ###
+
+h2. Filing bugs
+
+Bugs can be filed using [Jira](https://issues.apache.org/jira/browse/KNOX).
+Please include the results of this command below in the Environment section.
+Also include the version of Hadoop being used.
+
+    java -jar bin/server.jar -version
+

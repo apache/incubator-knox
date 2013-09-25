@@ -33,6 +33,8 @@ Table Of Contents
 * [Gateway Details](#Gateway+Details)
     * [Authentication](#Authentication)
     * [Authorization](#Authorization)
+    * [Configuration](#Configuration)
+* [Client Details](#Client+Details)
 * [Service Details](#Service+Details)
     * [WebHDFS](#WebHDFS)
     * [WebHCat/Templeton](#WebHCat)
@@ -51,14 +53,39 @@ Table Of Contents
 TODO
 
 
+{{Requirements}}
+----------------
+
+### Java ###
+
+Java 1.6 or later is required for the Knox Gateway runtime.
+Use the command below to check the version of Java installed on the system where Knox will be running.
+
+{code}
+java -version
+{code}
+
+### Hadoop ###
+
+An an existing Hadoop 1.x or 2.x cluster is required for Knox to protect.
+One of the easiest ways to ensure this it to utilize a HDP Sandbox VM.
+It is possible to use a Hadoop cluster deployed on EC2 but this will require additional configuration.
+Currently if this Hadoop cluster is secured with Kerberos only WebHDFS will work and additional configuration is required.
+
+The Hadoop cluster should be ensured to have at least WebHDFS, WebHCat (i.e. Templeton) and Oozie configured, deployed and running.
+HBase/Stargate and Hive can also be accessed via the Knox Gateway given the proper versions and configuration.
+
+The instructions that follow assume that the Gateway is *not* collocated with the Hadoop clusters themselves and (most importantly) that the hostnames and IP addresses of the cluster services are accessible by the gateway where ever it happens to be running.
+All of the instructions and samples are tailored to work "out of the box" against a Hortonworks Sandbox 2.x VM.
+
+This release of the Apache Knox Gateway has been tested against the [Hortonworks Sandbox 2.0](http://hortonworks.com/products/hortonworks-sandbox/).
+
+
 {{Download}}
 ------------
 
-TODO
-
-| ![$] Important |
-| -------------- |
-| Please ensure that you validate the integrity of any downloaded files as described [below](#Release+Verification). |
+Download and extract the knox-\{VERSION\}.zip}} file into the installation directory that will contain your {{\{GATEWAY_HOME\}}}.
+You can find the downloads for Knox releases on the [Apache mirrors|http://www.apache.org/dyn/closer.cgi/incubator/knox/].
 
 * Source archive: [knox-incubating-0.3.0-src.zip][src-zip] ([PGP signature][src-pgp], [SHA1 digest][src-sha], [MD5 digest][src-md5])
 * Binary archive: [knox-incubating-0.3.0.zip][bin-zip] ([PGP signature][bin-pgp], [SHA1 digest][bin-sha], [MD5 digest][bin-md5])
@@ -72,32 +99,16 @@ TODO
 [bin-sha]: http://www.apache.org/dist/incubator/knox/0.3.0/knox-incubating-0.3.0.zip.sha
 [bin-md5]: http://www.apache.org/dist/incubator/knox/0.3.0/knox-incubating-0.3.0.zip.md5
 
+| ![$] Important |
+| -------------- |
+| Please ensure that you validate the integrity of any downloaded files as described [below](#Release+Verification). |
+
 Apache Knox Gateway releases are available under the [Apache License, Version 2.0][asl].
 See the NOTICE file contained in each release artifact for applicable copyright attribution notices.
 
 
-{{Installation}}
-----------------
-
-### ZIP ###
-
-TODO
-
-
-### RPM ###
-
-TODO
-
-
-### Layout ###
-
-TODO - Describe the purpose of all of the directories
-
-
-{{Getting Started}}
--------------------
-
-TODO
+<<install.md>>
+<<using.md>>
 
 
 {{Supported Services}}
@@ -128,15 +139,17 @@ These examples provide more detail about how to access various Apache Hadoop ser
 * [HBase](#HBase+Examples)
 * [Hive](#Hive+Examples)
 
+<<config.md>>
 
 {{Gateway Details}}
 -------------------
 
 TODO
 
+<<config.md>>
 <<authn.md>>
 <<authz.md>>
-
+<<client.md>>
 
 {{Service Details}}
 -------------------
