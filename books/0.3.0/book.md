@@ -44,8 +44,8 @@ Table Of Contents
     * [Hive](#Hive)
 * [Secure Clusters](#Secure+Clusters)
 * [Trouble Shooting](#Trouble+Shooting)
-* [Export Controls](#Export+Controls)
 * [Release Verification](#Release+Verification)
+* [Export Controls](#Export+Controls)
 
 
 {{Introduction}}
@@ -118,13 +118,16 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 
 | Service           | Version    | Non-Secure  | Secure |
 | ----------------- | ---------- | ----------- | ------ |
-| WebHDFS           | 2.1.0      | ![y]        | ![y]   |
-| WebHCat/Templeton | 0.11.0     | ![y]        | ![n]   |
+| WebHDFS           | 2.1.0      | ![y]        | ![?]![y]   |
+| WebHCat/Templeton | 0.11.0     | ![y]        | ![?]![n]   |
 | Ozzie             | 4.0.0      | ![y]        | ![?]   |
 | HBase/Stargate    | 0.95.2     | ![y]        | ![?]   |
 | Hive/JDBC         | 0.11.0     | ![n]        | ![n]   |
 |                   | 0.12.0     | ![?]![y]    | ![?]   |
 | Hive/ODBC         | 0.12.0     | ![?]        | ![?]   |
+
+ProxyUser feature of WebHDFS, WebHCat and Oozie required for secure cluster support seem to work fine.
+Knox code seems to be broken for support of secure cluster at this time for WebHDFS, WebHCat and Oozie.
 
 
 <<sandbox.md>>
@@ -167,24 +170,6 @@ TODO
 <<trouble.md>>
 
 
-{{Export Controls}}
--------------------
-
-Apache Knox Gateway includes cryptographic software.
-The country in which you currently reside may have restrictions on the import, possession, use, and/or re-export to another country, of encryption software.
-BEFORE using any encryption software, please check your country's laws, regulations and policies concerning the import, possession, or use, and re-export of encryption software, to see if this is permitted.
-See http://www.wassenaar.org for more information.
-
-The U.S. Government Department of Commerce, Bureau of Industry and Security (BIS), has classified this software as Export Commodity Control Number (ECCN) 5D002.C.1, which includes information security software using or performing cryptographic functions with asymmetric algorithms.
-The form and manner of this Apache Software Foundation distribution makes it eligible for export under the License Exception ENC Technology Software Unrestricted (TSU) exception (see the BIS Export Administration Regulations, Section 740.13) for both object code and source code.
-
-The following provides more details on the included cryptographic software:
-
-* Apache Knox Gateway uses the ApacheDS which in turn uses Bouncy Castle generic encryption libraries.
-* See http://www.bouncycastle.org for more details on Bouncy Castle.
-* See http://directory.apache.org/apacheds for more details on ApacheDS.
-
-
 {{Release Verification}}
 ------------------------
 
@@ -208,6 +193,25 @@ or
 
     % gpg --import KEYS
     % gpg --verify knox-incubating-0.3.0.zip.asc
+
+
+{{Export Controls}}
+-------------------
+
+Apache Knox Gateway includes cryptographic software.
+The country in which you currently reside may have restrictions on the import, possession, use, and/or re-export to another country, of encryption software.
+BEFORE using any encryption software, please check your country's laws, regulations and policies concerning the import, possession, or use, and re-export of encryption software, to see if this is permitted.
+See http://www.wassenaar.org for more information.
+
+The U.S. Government Department of Commerce, Bureau of Industry and Security (BIS), has classified this software as Export Commodity Control Number (ECCN) 5D002.C.1, which includes information security software using or performing cryptographic functions with asymmetric algorithms.
+The form and manner of this Apache Software Foundation distribution makes it eligible for export under the License Exception ENC Technology Software Unrestricted (TSU) exception (see the BIS Export Administration Regulations, Section 740.13) for both object code and source code.
+
+The following provides more details on the included cryptographic software:
+
+* Apache Knox Gateway uses the ApacheDS which in turn uses Bouncy Castle generic encryption libraries.
+* See http://www.bouncycastle.org for more details on Bouncy Castle.
+* See http://directory.apache.org/apacheds for more details on ApacheDS.
+
 
 <<../common/footer.md>>
 

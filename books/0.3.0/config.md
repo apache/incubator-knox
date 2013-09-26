@@ -18,7 +18,21 @@
 {{Configuration}}
 -----------------
 
-### Enabling logging ###
+### Host Mapping ###
+
+TODO
+
+That really depends upon how you have your VM configured.
+If you can hit http://c6401.ambari.apache.org:1022/ directly from your client and knox host then you probably don't need the hostmap at all.
+The host map only exists for situations where a host in the hadoop cluster is known by one name externally and another internally.
+For example running hostname -q on sandbox returns sandbox.hortonworks.com but externally Sandbox is setup to be accesses using localhost via portmapping.
+The way the hostmap config works is that the <name/> element is what the hadoop cluster host is known as externally and the <value/> is how the hadoop cluster host identifies itself internally.
+<param><name>localhost</name><value>c6401,c6401.ambari.apache.org</value></param>
+You SHOULD be able to simply change <enabled>true</enabled> to false but I have a suspicion that that might not actually work.
+Please try it and file a jira if that doesn't work.
+If so, simply either remove the full provider config for hostmap or remove the <param/> that defines the mapping.
+
+### Logging ###
 
 If necessary you can enable additional logging by editing the `log4j.properties` file in the `conf` directory.
 Changing the rootLogger value from `ERROR` to `DEBUG` will generate a large amount of debug logging.
