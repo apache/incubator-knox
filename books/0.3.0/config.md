@@ -15,12 +15,11 @@
    limitations under the License.
 --->
 
-{{Configuration}}
------------------
+### Configuration ###
 
-### Host Mapping ###
+#### Host Mapping ####
 
-TODO
+TODO - Complete Host Mapping docs.
 
 That really depends upon how you have your VM configured.
 If you can hit http://c6401.ambari.apache.org:1022/ directly from your client and knox host then you probably don't need the hostmap at all.
@@ -33,19 +32,19 @@ Please try it and file a jira if that doesn't work.
 If so, simply either remove the full provider config for hostmap or remove the <param/> that defines the mapping.
 
 
-### Logging ###
+#### Logging ####
 
 If necessary you can enable additional logging by editing the `log4j.properties` file in the `conf` directory.
 Changing the rootLogger value from `ERROR` to `DEBUG` will generate a large amount of debug logging.
 A number of useful, more fine loggers are also provided in the file.
 
 
-### Java VM Options ###
+#### Java VM Options ####
 
-TODO
+TODO - Java VM options doc.
 
 
-### Persisting the Master Secret ###
+#### Persisting the Master Secret ####
 
 The master secret is required to start the server.
 This secret is used to access secured artifacts by the gateway instance.
@@ -64,7 +63,7 @@ Do not assume that the encryption if sufficient protection.
 A specific user should be created to run the gateway this will protect a persisted master file.
 
 
-### Management of Security Artifacts ###
+#### Management of Security Artifacts ####
 
 There are a number of artifacts that are used by the gateway in ensuring the security of wire level communications, access to protected resources and the encryption of sensitive data.
 These artifacts can be managed from outside of the gateway instances or generated and populated by the gateway instance itself.

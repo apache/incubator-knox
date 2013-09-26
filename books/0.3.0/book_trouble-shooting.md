@@ -15,13 +15,18 @@
    limitations under the License.
 --->
 
-{{Trouble Shooting}}
---------------------
+## Trouble Shooting ##
+
+### Connection Errors ###
+
+TODO - Explain how to debug connection errors.
+
 
 ### Enabling Logging ###
 
-The `log4j.properties` files `<GATEWAY_HOME>/conf` can be used to change the granularity of the logging done by Knox. &nbsp;The Knox server must be restarted in order for these changes to take effect.
-There are various useful loggers pre-populated in that file but they are commented out.
+The `log4j.properties` files `{GATEWAY_HOME}/conf` can be used to change the granularity of the logging done by Knox.
+The Knox server must be restarted in order for these changes to take effect.
+There are various useful loggers pre-populated but commented out.
 
     log4j.logger.org.apache.hadoop.gateway=DEBUG # Use this logger to increase the debugging of Apache Knox itself.
     log4j.logger.org.apache.shiro=DEBUG          # Use this logger to increase the debugging of Apache Shiro.
@@ -30,13 +35,12 @@ There are various useful loggers pre-populated in that file but they are comment
     log4j.logger.org.apache.http.headers=DEBUG   # Use this logger to increase the debugging of Apache HTTP header.
     log4j.logger.org.apache.http.wire=DEBUG      # Use this logger to increase the debugging of Apache HTTP wire traffic.
 
+
 ### Filing Bugs ###
 
-h2. Filing bugs
-
-Bugs can be filed using [Jira](https://issues.apache.org/jira/browse/KNOX).
+Bugs can be filed using [Jira][jira].
 Please include the results of this command below in the Environment section.
-Also include the version of Hadoop being used.
+Also include the version of Hadoop being used in the same section.
 
     java -jar bin/server.jar -version
 

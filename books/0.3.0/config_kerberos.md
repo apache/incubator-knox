@@ -15,12 +15,9 @@
    limitations under the License.
 --->
 
-{{Secure Clusters}}
--------------------
+### Secure Clusters ###
 
 If your Hadoop cluster is secured with Kerberos authentication, you have to do the following on Knox side.
-
-### Secure the Hadoop Cluster ###
 
 Please secure Hadoop services with Keberos authentication.
 
@@ -30,11 +27,11 @@ and
 [http://docs.hortonworks.com/HDPDocuments/HDP1/HDP-1.3.1/bk_installing_manually_book/content/rpm-chap14.html]
 
 
-### Create Unix account for Knox on Hadoop master nodes ###
+#### Create Unix account for Knox on Hadoop master nodes ####
 
-    useradd \-g hadoop knox
+    useradd -g hadoop knox
 
-### Create Kerberos principal, keytab for Knox
+#### Create Kerberos principal, keytab for Knox ####
 
 One way of doing this, assuming your KDC realm is EXAMPLE.COM
 
@@ -44,7 +41,7 @@ ssh into your host running KDC
     add_principal -randkey knox/knox@EXAMPLE.COM
     ktadd -norandkey -k /etc/security/keytabs/knox.service.keytab
 
-### Grant Proxy privileges for Knox user in `core-site.xml` on Hadoop master nodes
+#### Grant Proxy privileges for Knox user in `core-site.xml` on Hadoop master nodes ####
 
 Update `core-site.xml` and add the following lines towards the end of the file.
 
@@ -60,7 +57,7 @@ You could use * for local developer testing if Knox host does not have static IP
         <value>FQDN_OF_KNOX_HOST</value>
     </property>
 
-### Grant proxy privilege for Knox in `oozie-stie.xml` on Oozie host ###
+#### Grant proxy privilege for Knox in `oozie-stie.xml` on Oozie host ####
 
 Update `oozie-site.xml` and add the following lines towards the end of the file.
 
@@ -76,7 +73,7 @@ You could use * for local developer testing if Knox host does not have static IP
        <value>FQDN_OF_KNOX_HOST</value>
     </property>
 
-### Copy knox keytab to Knox host ###
+#### Copy knox keytab to Knox host ####
 
 Please add unix account for knox on Knox host
 
@@ -88,22 +85,22 @@ Please copy knox.service.keytab created on KDC host on to your Knox host /etc/kn
     chmod 400 knox.service.keytab
 
 
-### Update krb5.conf at /etc/knox/conf/krb5.conf on Knox host ###
+#### Update krb5.conf at /etc/knox/conf/krb5.conf on Knox host ####
 
 You could copy the `templates/krb5.conf` file provided in the Knox binary download and customize it to suit your cluster.
 
 
-### Update `krb5JAASLogin.conf` at `/etc/knox/conf/krb5JAASLogin.conf` on Knox host ###
+#### Update `krb5JAASLogin.conf` at `/etc/knox/conf/krb5JAASLogin.conf` on Knox host ####
 
 You could copy the `templates/krb5JAASLogin.conf` file provided in the Knox binary download and customize it to suit your cluster.
 
 
-### Update `gateway-site.xml` on Knox host on Knox host ###
+#### Update `gateway-site.xml` on Knox host on Knox host ####
 
 Update `conf/gateway-site.xml` in your Knox installation and set the value of `gateway.hadoop.kerberos.secured` to true.
 
 
-### Restart Knox ###
+#### Restart Knox ####
 
 After you do the above configurations and restart Knox, Knox would use SPNego to authenticate with Hadoop services and Oozie.
 There is not change in the way you make calls to Knox whether you use Curl or Knox DSL.

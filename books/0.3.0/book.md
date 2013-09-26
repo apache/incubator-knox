@@ -60,10 +60,13 @@ The goal is to simplify Hadoop security for both users (i.e. who access the clus
 The gateway runs as a server (or cluster of servers) that provide centralized access to one or more Hadoop clusters.
 In general the goals of the gateway are as follows:
 
-* Provide perimeter security for Hadoop REST APIs to make Hadoop security setup easier
-* Support authentication and token verification security scenarios
-* Deliver users a single URL end-point that aggregates capabilities for data and jobs
-* Enable integration with enterprise and cloud identity management environments
+* Provide perimeter security for Hadoop REST APIs to make Hadoop security easier to setup and use
+    * Provide authentication and token verification at the perimeter
+    * Enable authentication integration with enterprise and cloud identity management systems
+    * Provide service level authorization at the perimeter
+* Expose a single URL hierarchy that aggregates REST APIs of a Hadoop cluster
+    * Limit the network endpoints (and therefore firewall holes) required to access a Hadoop cluster
+    * Hide the internal Hadoop cluster topology from potential attackers
 
 
 <<book_getting-started.md>>
@@ -76,12 +79,18 @@ In general the goals of the gateway are as follows:
 ## Export Controls ##
 
 Apache Knox Gateway includes cryptographic software.
-The country in which you currently reside may have restrictions on the import, possession, use, and/or re-export to another country, of encryption software.
-BEFORE using any encryption software, please check your country's laws, regulations and policies concerning the import, possession, or use, and re-export of encryption software, to see if this is permitted.
+The country in which you currently reside may have restrictions on the import, possession, use, and/or
+re-export to another country, of encryption software.
+BEFORE using any encryption software, please check your country's laws, regulations and policies concerning the
+import, possession, or use, and re-export of encryption software, to see if this is permitted.
 See http://www.wassenaar.org for more information.
 
-The U.S. Government Department of Commerce, Bureau of Industry and Security (BIS), has classified this software as Export Commodity Control Number (ECCN) 5D002.C.1, which includes information security software using or performing cryptographic functions with asymmetric algorithms.
-The form and manner of this Apache Software Foundation distribution makes it eligible for export under the License Exception ENC Technology Software Unrestricted (TSU) exception (see the BIS Export Administration Regulations, Section 740.13) for both object code and source code.
+The U.S. Government Department of Commerce, Bureau of Industry and Security (BIS),
+has classified this software as Export Commodity Control Number (ECCN) 5D002.C.1,
+which includes information security software using or performing cryptographic functions with asymmetric algorithms.
+The form and manner of this Apache Software Foundation distribution makes it eligible for export under the
+License Exception ENC Technology Software Unrestricted (TSU) exception
+(see the BIS Export Administration Regulations, Section 740.13) for both object code and source code.
 
 The following provides more details on the included cryptographic software:
 

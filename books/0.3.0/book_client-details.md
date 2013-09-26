@@ -15,8 +15,7 @@
    limitations under the License.
 --->
 
-{{Client Details}}
-------------------
+## Client Details ##
 
 Hadoop requires a client that can be used to interact remotely with the services provided by Hadoop cluster.
 This will also be true when using the Apache Knox Gateway to provide perimeter security and centralized access for these services.

@@ -134,7 +134,7 @@ The above configuration enables the authorization provider but does not indicate
 
     <param>
         <name>{serviceName}.acl</name>
-        <value>username[,*|username…];group[,*|group…];ipaddr[,*|ipaddr…]</value>
+        <value>username[,*|username...];group[,*|group...];ipaddr[,*|ipaddr...]</value>
     </param>
 
 where `{serverName}` would need to be the name of a configured Hadoop service within the topology.
@@ -197,11 +197,15 @@ this configuration indicates that ONE of the following must be satisfied to be g
 
 The principal mapping aspect of the identity assertion provider is important to understand in order to fully utilize the authorization features of this provider.
 
-This feature allows us to map the authenticated principal to a runas or impersonated principal to be asserted to the Hadoop services in the backend. When a principal mapping is defined that results in an impersonated principal being created the impersonated principal is then the effective principal. If there is no mapping to another principal then the authenticated or primary principal is then the effective principal. Principal mapping has actually been available in the identity assertion provider from the beginning of Knox. Although hasn’t been adequately documented as of yet.
+This feature allows us to map the authenticated principal to a runas or impersonated principal to be asserted to the Hadoop services in the backend.
+When a principal mapping is defined that results in an impersonated principal being created the impersonated principal is then the effective principal.
+If there is no mapping to another principal then the authenticated or primary principal is then the effective principal.
+Principal mapping has actually been available in the identity assertion provider from the beginning of Knox.
+Although hasn't been adequately documented as of yet.
 
     <param>
         <name>principal.mapping</name>
-        <value>{primaryPrincipal}[,…]={impersonatedPrincipal}[;…]</value>
+        <value>{primaryPrincipal}[,...]={impersonatedPrincipal}[;...]</value>
     </param>
 
 For instance:
@@ -241,7 +245,7 @@ In addition, we allow the administrator to map groups to effective principals. T
 
     <param>
         <name>group.principal.mapping</name>
-        <value>{userName[,*|userName…]}={groupName[,groupName…]}[,…]</value>
+        <value>{userName[,*|userName...]}={groupName[,groupName...]}[,...]</value>
     </param>
 
 For instance:

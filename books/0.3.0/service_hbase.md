@@ -46,7 +46,7 @@ The command below launches the Stargate daemon on port 60080
 
     sudo /usr/lib/hbase/bin/hbase-daemon.sh start rest -p 60080
 
-60080 post is used because it was specified in sample Hadoop cluster deployment {{\{GATEWAY_HOME\}}}/deployments/sample.xml.
+60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sample.xml`.
 
 #### Configure Sandbox port mapping for VirtualBox
 
@@ -59,7 +59,7 @@ The command below launches the Stargate daemon on port 60080
 7. Press OK to close the rule window
 8. Press OK to Network window save the changes
 
-60080 post is used because it was specified in sample Hadoop cluster deployment {{\{GATEWAY_HOME\}}}/deployments/sample.xml.
+60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sample.xml`.
 
 ### HBase/Stargate via KnoxShell DSL
 
@@ -73,7 +73,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).systemVersion().now().string}}
+    * `HBase.session(session).systemVersion().now().string`
 
 ##### clusterVersion() - Query Storage Cluster Version.
 
@@ -82,7 +82,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).clusterVersion().now().string}}
+    * `HBase.session(session).clusterVersion().now().string`
 
 ##### status() - Query Storage Cluster Status.
 
@@ -91,7 +91,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).status().now().string}}
+    * `HBase.session(session).status().now().string`
 
 ##### table().list() - Query Table List.
 
@@ -100,7 +100,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-  * {{HBase.session(session).table().list().now().string}}
+  * `HBase.session(session).table().list().now().string`
 
 ##### table(String tableName).schema() - Query Table Schema.
 
@@ -109,7 +109,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).table().schema().now().string}}
+    * `HBase.session(session).table().schema().now().string`
 
 ##### table(String tableName).create() - Create Table Schema.
 * Request
@@ -120,18 +120,18 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * {{HBase.session(session).table(tableName).create()}}
-     {{.attribute("tb_attr1", "value1")}}
-     {{.attribute("tb_attr2", "value2")}}
-     {{.family("family1")}}
-         {{.attribute("fm_attr1", "value3")}}
-         {{.attribute("fm_attr2", "value4")}}
-     {{.endFamilyDef()}}
-     {{.family("family2")}}
-     {{.family("family3")}}
-     {{.endFamilyDef()}}
-     {{.attribute("tb_attr3", "value5")}}
-     {{.now()}}
+    * ```HBase.session(session).table(tableName).create()
+       .attribute("tb_attr1", "value1")
+       .attribute("tb_attr2", "value2")
+       .family("family1")
+           .attribute("fm_attr1", "value3")
+           .attribute("fm_attr2", "value4")
+       .endFamilyDef()
+       .family("family2")
+       .family("family3")
+       .endFamilyDef()
+       .attribute("tb_attr3", "value5")
+       .now()```
 
 ##### table(String tableName).update() - Update Table Schema.
 * Request
@@ -141,14 +141,14 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * {{HBase.session(session).table(tableName).update()}}
-     {{.family("family1")}}
-         {{.attribute("fm_attr1", "new_value3")}}
-     {{.endFamilyDef()}}
-     {{.family("family4")}}
-         {{.attribute("fm_attr3", "value6")}}
-     {{.endFamilyDef()}}
-     {{.now()}}
+    * ```HBase.session(session).table(tableName).update()
+         .family("family1")
+             .attribute("fm_attr1", "new_value3")
+         .endFamilyDef()
+         .family("family4")
+             .attribute("fm_attr3", "value6")
+         .endFamilyDef()
+         .now()```
 
 ##### table(String tableName).regions() - Query Table Metadata.
 * Request
@@ -156,7 +156,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).table(tableName).regions().now().string}}
+    * `HBase.session(session).table(tableName).regions().now().string`
 
 ##### table(String tableName).delete() - Delete Table.
 * Request
@@ -164,7 +164,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * {{HBase.session(session).table(tableName).delete().now()}}
+    * `HBase.session(session).table(tableName).delete().now()`
 
 ##### table(String tableName).row(String rowId).store() - Cell Store.
 * Request
@@ -172,14 +172,14 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * {{HBase.session(session).table(tableName).row("row_id_1").store()}}
-     {{.column("family1", "col1", "col_value1")}}
-     {{.column("family1", "col2", "col_value2", 1234567890l)}}
-     {{.column("family2", null, "fam_value1")}}
-     {{.now()}}
-    * {{HBase.session(session).table(tableName).row("row_id_2").store()}}
-     {{.column("family1", "row2_col1", "row2_col_value1")}}
-     {{.now()}}
+    * ```HBase.session(session).table(tableName).row("row_id_1").store()
+         .column("family1", "col1", "col_value1")
+         .column("family1", "col2", "col_value2", 1234567890l)
+         .column("family2", null, "fam_value1")
+         .now()```
+    * ```HBase.session(session).table(tableName).row("row_id_2").store()
+         .column("family1", "row2_col1", "row2_col_value1")
+         .now()```
 
 ##### table(String tableName).row(String rowId).query() - Cell or Row Query.
 * rowId is optional. Querying with null or empty rowId will select all rows.
@@ -192,16 +192,16 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).table(tableName).row("row_id_1")}}
-     {{.query()}}
-     {{.now().string}}
-    * {{HBase.session(session).table(tableName).row().query().now().string}}
-    * {{HBase.session(session).table(tableName).row().query()}}
-     {{.column("family1", "row2_col1")}}
-     {{.column("family2")}}
-     {{.times(0, Long.MAX_VALUE)}}
-     {{.numVersions(1)}}
-     {{.now().string}}
+    * ```HBase.session(session).table(tableName).row("row_id_1")
+         .query()
+         .now().string```
+    * `HBase.session(session).table(tableName).row().query().now().string`
+    * ```HBase.session(session).table(tableName).row().query()
+         .column("family1", "row2_col1")
+         .column("family2")
+         .times(0, Long.MAX_VALUE)
+         .numVersions(1)
+         .now().string```
 
 ##### table(String tableName).row(String rowId).delete() - Row, Column, or Cell Delete.
 * Request
@@ -210,15 +210,15 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * {{HBase.session(session).table(tableName).row("row_id_1")}}
-     {{.delete()}}
-     {{.column("family1", "col1")}}
-     {{.now()}}
-    * {{HBase.session(session).table(tableName).row("row_id_1")}}
-     {{.delete()}}
-     {{.column("family2")}}
-     {{.time(Long.MAX_VALUE)}}
-     {{.now()}}
+    * ```HBase.session(session).table(tableName).row("row_id_1")
+         .delete()
+         .column("family1", "col1")
+         .now()```
+    * ```HBase.session(session).table(tableName).row("row_id_1")
+         .delete()
+         .column("family2")
+         .time(Long.MAX_VALUE)
+         .now()```
 
 ##### table(String tableName).scanner().create() - Scanner Creation.
 * Request
@@ -235,17 +235,17 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * scannerId : String - the scanner ID of the created scanner. Consumes body.
 * Example
-    * {{HBase.session(session).table(tableName).scanner().create()}}
-     {{.column("family1", "col2")}}
-     {{.column("family2")}}
-     {{.startRow("row_id_1")}}
-     {{.endRow("row_id_2")}}
-     {{.batch(1)}}
-     {{.startTime(0)}}
-     {{.endTime(Long.MAX_VALUE)}}
-     {{.filter("")}}
-     {{.maxVersions(100)}}
-     {{.now()}}
+    * ```HBase.session(session).table(tableName).scanner().create()
+         .column("family1", "col2")
+         .column("family2")
+         .startRow("row_id_1")
+         .endRow("row_id_2")
+         .batch(1)
+         .startTime(0)
+         .endTime(Long.MAX_VALUE)
+         .filter("")
+         .maxVersions(100)
+         .now()```
 
 ##### table(String tableName).scanner(String scannerId).getNext() - Scanner Get Next.
 * Request
@@ -253,7 +253,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * {{HBase.session(session).table(tableName).scanner(scannerId).getNext().now().string}}
+    * `HBase.session(session).table(tableName).scanner(scannerId).getNext().now().string`
 
 ##### table(String tableName).scanner(String scannerId).delete() - Scanner Deletion.
 * Request
@@ -261,7 +261,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * {{HBase.session(session).table(tableName).scanner(scannerId).delete().now()}}
+    * `HBase.session(session).table(tableName).scanner(scannerId).delete().now()`
 
 #### Examples
 

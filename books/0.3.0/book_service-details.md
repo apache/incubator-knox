@@ -15,10 +15,9 @@
    limitations under the License.
 --->
 
-{{Service Details}}
--------------------
+## Service Details ##
 
-TODO
+TODO - Service details overview
 
 <<service_webhdfs.md>>
 <<service_webhcat.md>>

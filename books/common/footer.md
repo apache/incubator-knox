@@ -15,8 +15,7 @@
    limitations under the License.
 --->
 
-Disclaimer
-----------
+## Disclaimer ##
 
 The Apache Knox Gateway is an effort undergoing incubation at the Apache Software Foundation (ASF), sponsored by the Apache Incubator PMC.
 
@@ -25,21 +24,18 @@ Incubation is required of all newly accepted projects until a further review ind
 While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.
 
 
-Trademarks
-----------
+## Trademarks ##
 
-Apache Knox Gateway, Apache, the Apache feather logo and the Apache Knox Gateway project logos are trademarks of The Apache Software Foundation.
+Apache Knox, Apache Knox Gateway, Apache, the Apache feather logo and the Apache Knox Gateway project logos are trademarks of The Apache Software Foundation.
 All other marks mentioned may be trademarks or registered trademarks of their respective owners.
 
 
-License
--------
+## License ##
 
 Apache Knox uses the standard [Apache license][asl].
 
 
-Privacy Policy
---------------
+## Privacy Policy ##
 
 Apache Knox uses the standard Apache privacy policy.
 
@@ -52,9 +48,9 @@ The collected information consists of the following:
 * The pages you visit; and
 * The addresses of pages from where you followed a link to our site.
 
-Part of this information is gathered using a tracking cookie set by the [Google Analytics](http://www.google.com/analytics/) service and handled by Google as described in their [privacy policy](http://www.google.com/privacy.html).
-See your browser documentation for instructions on how to
-disable the cookie if you prefer not to share this data with Google.
+Part of this information is gathered using a tracking cookie set by the [Google Analytics](http://www.google.com/analytics/) service.
+Google's policy for the use of this information is described in their [privacy policy](http://www.google.com/privacy.html).
+See your browser's documentation for instructions on how to disable the cookie if you prefer not to share this data with Google.
 
 We use the gathered information to help us make our site more useful to visitors and to better understand how and when our site is used.
 We do not track or collect personally identifiable information or associate gathered data with any personally identifying information from other sources.

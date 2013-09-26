@@ -15,25 +15,35 @@
    limitations under the License.
 --->
 
-{{Sandbox Configuration}}
--------------------------
+### Sandbox 2.x Configuration ###
 
-This version of the Apache Knox Gateway is tested against [Hortonworks Sandbox 1.2|http://hortonworks.com/products/hortonworks-sandbox/]
+TODO
 
-Currently there is an issue with Sandbox that prevents it from being easily used with the gateway.  In order to correct the issue, you can use the commands below to login to the Sandbox VM and modify the configuration.  This assumes that the name sandbox is setup to resolve to the Sandbox VM.  It may be necessary to use the IP address of the Sandbox VM instead. *This is frequently but not always* {{{*}192.168.56.101{*}}}*.*
+### Sandbox 1.x Configuration ###
+
+TODO - Update this section to use hostmap if that simplifies things.
+
+This version of the Apache Knox Gateway is tested against [Hortonworks Sandbox 1.x][sandbox]
+
+Currently there is an issue with Sandbox that prevents it from being easily used with the gateway.
+In order to correct the issue, you can use the commands below to login to the Sandbox VM and modify the configuration.
+This assumes that the name sandbox is setup to resolve to the Sandbox VM.
+It may be necessary to use the IP address of the Sandbox VM instead.
+*This is frequently but not always `192.168.56.101`.*
 
     ssh root@sandbox
     cp /usr/lib/hadoop/conf/hdfs-site.xml /usr/lib/hadoop/conf/hdfs-site.xml.orig
     sed -e s/localhost/sandbox/ /usr/lib/hadoop/conf/hdfs-site.xml.orig > /usr/lib/hadoop/conf/hdfs-site.xml
     shutdown -r now
 
+In addition to make it very easy to follow along with the samples for the gateway you can configure your local system to resolve the address of the Sandbox by the names `vm` and `sandbox`.
+The IP address that is shown below should be that of the Sandbox VM as it is known on your system.
+*This will likely, but not always, be `192.168.56.101`.*
 
-In addition to make it very easy to follow along with the samples for the gateway you can configure your local system to resolve the address of the Sandbox by the names {{vm}} and {{sandbox}}.  The IP address that is shown below should be that of the Sandbox VM as it is known on your system.  This will likely, but not always, be {{192.168.56.101}}.
-
-On Linux or Macintosh systems add a line like this to the end of the file&nbsp;{{/etc/hosts}}&nbsp;on your local machine, *not the Sandbox VM*.
-_Note: The character between the {{{_}192.168.56.101{_}}} and {{{_}vm{_}}} below is a *{_}tab{_}* character._
+On Linux or Macintosh systems add a line like this to the end of the file `/etc/hosts` on your local machine, *not the Sandbox VM*.
+_Note: The character between the 192.168.56.101 and vm below is a *tab* character._
 
     192.168.56.101	vm sandbox
 
 On Windows systems a similar but different mechanism can be used.  On recent
-versions of windows the file that should be modified is {{%systemroot%\system32\drivers\etc\hosts}}
+versions of windows the file that should be modified is `%systemroot%\system32\drivers\etc\hosts`

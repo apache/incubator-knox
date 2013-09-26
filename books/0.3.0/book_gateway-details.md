@@ -15,8 +15,7 @@
    limitations under the License.
 --->
 
-{{Gateway Details}}
--------------------
+## Gateway Details ##
 
 TODO
 

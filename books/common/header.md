@@ -18,8 +18,10 @@
 <link href="book.css" rel="stylesheet"/>
 
 [asl]: http://www.apache.org/licenses/LICENSE-2.0
-[sandbox]: http://hortonworks.com/products/hortonworks-sandbox
+[site]: http://knox.incubator.apache.org
+[jira]: https://issues.apache.org/jira/browse/KNOX
 [mirror]: http://www.apache.org/dyn/closer.cgi/incubator/knox
+[sandbox]: http://hortonworks.com/products/hortonworks-sandbox
 
 [y]: check.png "Yes"
 [n]: error.png "No"
