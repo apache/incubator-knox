@@ -26,6 +26,8 @@
     <property name="gateway-artifact" value="${gateway-project}-incubating"/>
     <property name="release-manager" value="kminder"/>
     <property name="book-target" value="../site/books"/>
+    <property name="book-0-3-0-dir" value="${book-target}/${gateway-artifact}-0-3-0"/>
+    <property name="book-0-3-0-file" value="${book-0-3-0-dir}/${gateway-artifact}-0-3-0.html"/>
 
     <property name="svn.release.path" value="https://dist.apache.org/repos/dist/release/incubator/${gateway-project}" />
     <property name="svn.staging.path" value="https://dist.apache.org/repos/dist/dev/incubator/${gateway-project}" />
@@ -45,6 +47,13 @@
         <os family="unix" />
     </condition>
     <condition property="svn.cmd" value="svn">
+        <os family="windows" />
+    </condition>
+
+    <condition property="browser.cmd" value="open">
+        <os family="unix" />
+    </condition>
+    <condition property="browser.cmd" value="start">
         <os family="windows" />
     </condition>
 
@@ -70,7 +79,7 @@
         <delete dir="${book-target}/${gateway-artifact}-0-3-0" includes="**/*.html,**/*.css,**/*.png"/>
         <java jar="markbook/target/markbook.jar" fork="true">
             <arg value="-i"/><arg value="books/0.3.0/book.md"/>
-            <arg value="-o"/><arg value="${book-target}/${gateway-artifact}-0-3-0/${gateway-artifact}-0-3-0.html"/>
+            <arg value="-o"/><arg value="${book-0-3-0-file}"/>
         </java>
         <copy todir="${book-target}/${gateway-artifact}-0-3-0">
             <fileset dir="books/static"/>
@@ -81,6 +90,18 @@
         <exec executable="${mvn.cmd}">
             <arg value="clean"/>
             <arg value="package"/>
+        </exec>
+    </target>
+
+    <target name="review-book" depends="init" description="Open the default book in the default browser.">
+        <exec executable="${browser.cmd}">
+            <arg line="${book-0-3-0-file}" />
+        </exec>
+    </target>
+
+    <target name="review-site" depends="init" description="Open the book in the default browser.">
+        <exec executable="${browser.cmd}">
+            <arg line="../site/index.html" />
         </exec>
     </target>
 
