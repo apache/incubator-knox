@@ -32,11 +32,17 @@ You SHOULD be able to simply change <enabled>true</enabled> to false but I have 
 Please try it and file a jira if that doesn't work.
 If so, simply either remove the full provider config for hostmap or remove the <param/> that defines the mapping.
 
+
 ### Logging ###
 
 If necessary you can enable additional logging by editing the `log4j.properties` file in the `conf` directory.
 Changing the rootLogger value from `ERROR` to `DEBUG` will generate a large amount of debug logging.
 A number of useful, more fine loggers are also provided in the file.
+
+
+### Java VM Options ###
+
+TODO
 
 
 ### Management of Security Artifacts ###
