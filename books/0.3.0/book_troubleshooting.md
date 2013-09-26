@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-## Trouble Shooting ##
+## Troubleshooting ##
 
 ### Connection Errors ###
 

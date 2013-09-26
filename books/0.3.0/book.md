@@ -49,7 +49,7 @@
     * [Oozie](#Oozie)
     * [HBase/Starbase](#HBase)
     * [Hive](#Hive)
-* [Trouble Shooting](#Trouble+Shooting)
+* [Troubleshooting](#Troubleshooting)
 * [Export Controls](#Export+Controls)
 
 
@@ -73,7 +73,7 @@ In general the goals of the gateway are as follows:
 <<book_gateway-details.md>>
 <<book_client-details.md>>
 <<book_service-details.md>>
-<<book_trouble-shooting.md>>
+<<book_troubleshooting.md>>
 
 
 ## Export Controls ##
