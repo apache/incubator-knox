@@ -31,6 +31,7 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,7 +55,9 @@ public class MarkBook {
 //    matcher.find();
 //    System.out.println( replace( matcher, text, "X" ) );
 
-//    System.out.println( replaceIdentifiers( "{{text}}" ) );
+//    System.out.println( replaceHeadings( "#text#" ) );
+//    System.out.println( replaceHeadings( "# text #" ) );
+//    System.out.println( replaceHeadings( "## text ##" ) );
 //    System.out.println( removeComments( "line\r\n<!--- \r\n comment \r\n comment \r\n---> \r\nline" ) );
 
     CommandLine command = parseCommandLine( args );
@@ -87,7 +90,7 @@ public class MarkBook {
   private static String loadMarkdown( File file ) throws IOException {
     String text = FileUtils.readFileToString( file );
     text = removeComments( text );
-    text = replaceIdentifiers( text );
+    text = replaceHeadings( text );
     text = replaceIncludes( file, text );
     return text;
   }
@@ -102,21 +105,25 @@ public class MarkBook {
         String includeString = loadMarkdown( includeFile );
         text = replace( matcher, text, includeString );
       } else {
-        text = replace( matcher, text, includeFileName );
+        throw new FileNotFoundException( includeFile.getAbsolutePath() );
+        //text = replace( matcher, text, includeFileName );
       }
       matcher = pattern.matcher( text );
     }
     return text;
   }
 
-  private static String replaceIdentifiers( String text ) throws IOException {
-    Pattern pattern = Pattern.compile( "\\{\\{(.+?)\\}\\}" );
+  private static String replaceHeadings( String text ) throws IOException {
+    Pattern pattern = Pattern.compile( "^(#+)(.+?)#*$", Pattern.MULTILINE );
     Matcher matcher = pattern.matcher( text );
     while( matcher.find() ) {
-      String name = matcher.group( 1 ).trim();
+      String tag = matcher.group( 1 );
+      String name = matcher.group( 2 ).trim();
       String id = name.replaceAll( "\\s", "+" );
-      text = replace( matcher, text, String.format( "<a id=\"%s\"></a>%s", id, name ) );
-      matcher = pattern.matcher( text );
+      if( !name.startsWith( "<a id=" ) ) {
+        text = replace( matcher, text, String.format( "%s <a id=\"%s\"></a>%s %s", tag, id, name, tag ) );
+        matcher = pattern.matcher( text );
+      }
     }
     return text;
   }

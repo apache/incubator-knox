@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-### {{WebHCat}} ###
+### WebHCat ###
 
 TODO
 
@@ -23,7 +23,7 @@ TODO
 
 TODO
 
-#### {{WebHCat Examples}} ####
+#### WebHCat Examples ####
 
 TODO
 

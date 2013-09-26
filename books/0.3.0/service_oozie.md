@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-### {{Oozie}} ###
+### Oozie ###
 
 TODO
 
@@ -23,7 +23,7 @@ TODO
 
 TODO
 
-#### {{Oozie Examples}} ####
+#### Oozie Examples ####
 
 TODO
 

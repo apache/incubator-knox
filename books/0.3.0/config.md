@@ -45,6 +45,25 @@ A number of useful, more fine loggers are also provided in the file.
 TODO
 
 
+### Persisting the Master Secret ###
+
+The master secret is required to start the server.
+This secret is used to access secured artifacts by the gateway instance.
+Keystore, trust stores and credential stores are all protected with the master secret.
+
+You may persist the master secret by supplying the *\-persist-master* switch at startup.
+This will result in a warning indicating that persisting the secret is less secure than providing it at startup.
+We do make some provisions in order to protect the persisted password.
+
+It is encrypted with AES 128 bit encryption and where possible the file permissions are set to only be accessible by the user that the gateway is running as.
+
+After persisting the secret, ensure that the file at config/security/master has the appropriate permissions set for your environment.
+This is probably the most important layer of defense for master secret.
+Do not assume that the encryption if sufficient protection.
+
+A specific user should be created to run the gateway this will protect a persisted master file.
+
+
 ### Management of Security Artifacts ###
 
 There are a number of artifacts that are used by the gateway in ensuring the security of wire level communications, access to protected resources and the encryption of sensitive data.

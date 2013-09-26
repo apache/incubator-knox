@@ -18,6 +18,9 @@
 <link href="book.css" rel="stylesheet"/>
 
 [asl]: http://www.apache.org/licenses/LICENSE-2.0
+[sandbox]: http://hortonworks.com/products/hortonworks-sandbox
+[mirror]: http://www.apache.org/dyn/closer.cgi/incubator/knox
+
 [y]: check.png "Yes"
 [n]: error.png "No"
 [?]: question.png "Unknown"

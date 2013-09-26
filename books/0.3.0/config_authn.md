@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-### {{Authentication}} ###
+### Authentication ###
 
 #### LDAP Configuration ####
 

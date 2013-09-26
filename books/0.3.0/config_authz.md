@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-### {{Authorization}} ###
+### Authorization ###
 
 #### Service Level Authorization ####
 

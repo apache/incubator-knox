@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-### {{Hive}} ###
+### Hive ###
 
 TODO
 
@@ -23,7 +23,7 @@ TODO
 
 TODO
 
-#### {{Hive Examples}} ####
+#### Hive Examples ####
 
 This guide provides detailed examples for how to to some basic interactions with Hive via the Apache Knox Gateway.
 

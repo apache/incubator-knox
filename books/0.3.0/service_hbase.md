@@ -15,7 +15,7 @@
    limitations under the License.
 --->
 
-### {{HBase}} ###
+### HBase ###
 
 TODO
 
@@ -23,7 +23,7 @@ TODO
 
 TODO
 
-#### {{HBase Examples}} ####
+#### HBase Examples ####
 
 TODO
 
