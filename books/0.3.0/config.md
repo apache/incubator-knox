@@ -192,7 +192,53 @@ By leveraging the algorithm described above we can provide a window of opportuni
 1. Using a single gateway instance as a master instance the artifacts can be generated or placed into the expected location and then replicated across all of the slave instances before startup.
 2. Using an NFS mount as a central location for the artifacts would provide a single source of truth without the need to replicate them over the network. Of course, NFS mounts have their own challenges.
 
-Summary of Secrets to be Managed:
+#### Keystores ####
+In order to provide your own certificate for use by the gateway, you will need to either import an existing key pair into a Java keystore or generate a self-signed cert using the Java keytool.
+
+##### Importing a key pair into a Java keystore #####
+# ----NEEDS TESTING
+One way to accomplish this is to start with a PKCS12 store for your key pair and then convert it to a Java keystore or JKS.
+
+	openssl pkcs12 -export -in cert.pem -inkey key.pem > server.p12
+	
+The above example uses openssl to create a PKCS12 encoded store for your provided certificate private key.
+
+	keytool -importkeystore -srckeystore {server.p12} -destkeystore gateway.jks -srcstoretype pkcs12
+This example converts the PKCS12 store into a Java keystore (JKS). It should prompt you for the keystore and key passwords for the destination keystore. You must use the master-secret for both.
+
+While using this approach a couple of important things to be aware of:
+
+1. the alias MUST be "gateway-identity"
+2. the name of the expected identity keystore for the gateway MUST be gateway.jks
+3. the passwords for the keystore and the imported key MUST both be the master secret for the gateway install
+
+NOTE: The password for the keystore as well as that of the imported key must be the master secret for the gateway instance.
+
+# ----END NEEDS TESTING
+
+##### Generating a self-signed cert for use in testing or development environments #####
+	
+	keytool -genkey -keyalg RSA -alias gateway-identity -keystore gateway.jks -storepass {master-secret} -validity 360 -keysize 2048 
+
+Keytool will prompt you for a number of elements used that will comprise this distiniguished name (DN) within your certificate. 
+
+<b>NOTE:</b> When it prompts you for your First and Last name be sure to type in the hostname of the machine that your gateway instance will be running on. This is used by clients during hostname verification to ensure that the presented certificate matches the hostname that was used in the URL for the connection - so they need to match.
+	
+<b>NOTE:</b> When it prompts for the key password just press enter to ensure that it is the same as the keystore password. Which as was described earlier must match the master secret for the gateway instance.
+
+##### Credential Store #####
+Whenever you provide your own keystore with either a self-signed cert or a real certificate signed by a trusted authority, you will need to create an empty credential store. This is necessary for the current release in order for the system to utilize the same password for the keystore and the key.
+
+The credential stores in Knox use the JCEKS keystore type as it allows for the storage of general secrets in addition to certificates.
+
+	keytool -genkey -alias {anything} -keystore __gateway-credentials.jceks -storepass {master-secret} -validity 360 -keysize 1024 -storetype JCEKS
+
+Follow the prompts again for the DN for the cert of the credential store. This certificate isn't really used for anything at the moment but is required to create the credential store.
+
+##### Provisioning of Keystores #####
+Once you have created these keystores you must move them into place for the gateway to discover them and use them to represent its identity for SSL connections. This is done by copying the keystores to the {GATEWAY_HOME}/conf/security/keystores directory for your gateway install.
+
+#### Summary of Secrets to be Managed ####
 
 1. Master secret - the same for all gateway instances in a cluster of gateways
 2. All security related artifacts are protected with the master secret
