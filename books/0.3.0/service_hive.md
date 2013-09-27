@@ -47,12 +47,17 @@ This document assumes a few things about your environment in order to simplify t
 4. Client side (JDBC):
     1. Hive JDBC in HTTP mode depends on following libraries to run successfully(must be in the classpath):
        Hive Thrift artifacts classes, commons-codec.jar, commons-configuration.jar, commons-lang.jar, commons-logging.jar, hadoop-core.jar, hive-cli.jar, hive-common.jar, hive-jdbc.jar, hive-service.jar, hive-shims.jar, httpclient.jar, httpcore.jar, slf4j-api.jar;
-    2. import gateway certificate into default truststore. It is located in the <java-home>/lib/security/cacerts:
+    2. Import gateway certificate into the default JRE truststore.
+       It is located in the `/lib/security/cacerts`
+          `keytool -import -alias hadoop.gateway -file hadoop.gateway.cer -keystore <java-home>/lib/security/cacerts`
+       Alternatively you can run your sample with additional parameters:
+          `-Djavax.net.ssl.trustStoreType=JKS -Djavax.net.ssl.trustStore=<path-to-trust-store> -Djavax.net.ssl.trustStorePassword=<trust-store-password>`
        `keytool -import -alias hadoop.gateway -file hadoop.gateway.cer -keystore <java-home>/lib/security/cacerts`
-    3. connection URL has to be following:
+    3. Connection URL has to be following:
        `jdbc:hive2://<gateway-host>:<gateway-port>/?hive.server2.servermode=https;hive.server2.http.path=<gateway-path>/<cluster-name>/hive`
-    4. look at https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-DDLOperations for examples;
-       Hint: it would be better to execute "set hive.security.authorization.enabled=false" as the first statement - for testing purposes; http://gettingstarted.hadooponazure.com/hw/hive.html - here is a good example of Hive DDL/DML operations.
+    4. Look at https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-DDLOperations for examples.
+       Hint: For testing it would be better to execute "set hive.security.authorization.enabled=false" as the first statement.
+       Hint: Good examples of Hive DDL/DML can be found here http://gettingstarted.hadooponazure.com/hw/hive.html
 
 ##### Customization #####
 

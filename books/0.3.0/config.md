@@ -17,6 +17,11 @@
 
 ### Configuration ###
 
+#### Topology Descriptors ####
+
+The topology descriptor files provide the gateway per cluster configuration information.
+This includes configuration for both the providers within the gateway and the services within the Hadoop cluster.
+
 #### Host Mapping ####
 
 TODO - Complete Host Mapping docs.

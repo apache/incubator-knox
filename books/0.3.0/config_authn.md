@@ -17,7 +17,26 @@
 
 ### Authentication ###
 
+TODO
+
 #### LDAP Configuration ####
 
+TODO
+
+##### Creation of the Key Store with self signed certificate and enabling it on Jetty
+
+    keytool -keystore keystore -alias jetty -genkey -keyalg RSA -storepass secret
+
+See more here about [Jetty SSL setup](http://wiki.eclipse.org/Jetty/Howto/Configure_SSL)
+
+##### Shiro.ini file setup
+
+###### Shiro.ini ######
+
+    [urls]
+    /** = ssl, authc
+
 #### Session Configuration ####
+
+TODO
 
