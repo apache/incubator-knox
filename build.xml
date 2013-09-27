@@ -15,7 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="Apache Knox Gateway Site" default="site" basedir=".">
+<project name="Apache Knox Gateway Site" default="generate" basedir=".">
 
     <description>
         Release build file for the Apache Knox Gateway
@@ -64,7 +64,9 @@
         <delete file="target"/>
     </target>
 
-    <target name="site" depends="_site,books"/>
+    <target name="generate" depends="site,books" description="Clean up any build artifacts."/>
+
+    <target name="site" depends="_site"/>
     <target name="_site" depends="init">
         <delete dir="../site" includes="**/*.html,**/*.css,**/*.png"/>
         <exec executable="${mvn.cmd}">
