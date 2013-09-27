@@ -46,7 +46,7 @@ The command below launches the Stargate daemon on port 60080
 
     sudo /usr/lib/hbase/bin/hbase-daemon.sh start rest -p 60080
 
-60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sample.xml`.
+60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
 
 #### Configure Sandbox port mapping for VirtualBox
 
@@ -59,7 +59,7 @@ The command below launches the Stargate daemon on port 60080
 7. Press OK to close the rule window
 8. Press OK to Network window save the changes
 
-60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sample.xml`.
+60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
 
 ### HBase/Stargate via KnoxShell DSL
 

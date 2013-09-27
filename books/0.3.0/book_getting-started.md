@@ -36,7 +36,7 @@ One of the easiest ways to ensure this it to utilize a Hortonworks Sandbox VM.
 It is possible to use a Hadoop cluster deployed on EC2 but this will require additional configuration not covered here.
 It is also possible to use a limited set of services in Hadoop cluster secured with Kerberos.
 This too required additional configuration that is not described here.
-See the [table provided](#Supported+Services) for details on what is supported for this release.
+See #[Supported Services] for details on what is supported for this release.
 
 The Hadoop cluster should be ensured to have at least WebHDFS, WebHCat (i.e. Templeton) and Oozie configured, deployed and running.
 HBase/Stargate and Hive can also be accessed via the Knox Gateway given the proper versions and configuration.
@@ -168,8 +168,8 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 
 The steps described below are intended to get the Knox Gateway server up and running in its default configuration.
 Once that is accomplished a very simple example of using the gateway to interact with a Hadoop cluster is provided.
-More detailed configuration information is provided in the [Gateway Details](#Gateway+Details) section.
-More detailed examples for using each Hadoop service can be found in the [Service Details](#Service+Details) section.
+More detailed configuration information is provided in the #[Gateway Details] section.
+More detailed examples for using each Hadoop service can be found in the #[Service Details] section.
 
 Note that *nix conventions are used throughout this section but in general the Windows alternative should be obvious.
 In situations where this is not the case a Windows alternative will be provided.
@@ -248,7 +248,7 @@ The results of the above command should result in something to along the lines o
 The exact information returned is subject to the content within HDFS in your Hadoop cluster.
 Successfully executing this command at a minimum proves that the gateway is properly configured to provide access to WebHDFS.
 It does not necessarily provide that any of the other services are correct configured to be accessible.
-To validate that see the sections for the individual services in [Service Details](#Service+Details)
+To validate that see the sections for the individual services in #[Service Details].
 
     HTTP/1.1 200 OK
     Content-Type: application/json
@@ -273,8 +273,8 @@ For additional information on WebHDFS, WebHCat/Templeton, Oozie and HBase/Starga
 
 These examples provide more detail about how to access various Apache Hadoop services via the Apache Knox Gateway.
 
-* [WebHDFS](#WebHDFS+Examples)
-* [WebHCat/Templeton](#WebHCat+Examples)
-* [Oozie](#Oozie+Examples)
-* [HBase](#HBase+Examples)
-* [Hive](#Hive+Examples)
+* #[WebHDFS Examples]
+* #[WebHCat Examples]
+* #[Oozie Examples]
+* #[HBase Examples]
+* #[Hive Examples]

@@ -19,12 +19,14 @@
 
 TODO
 
-### Mapping Gateway URLs to Hadoop cluster URLs
+### URL Mapping ###
 
-The Gateway functions much like a reverse proxy.
+The gateway functions much like a reverse proxy.
 As such it maintains a mapping of URLs that are exposed externally by the gateway to URLs that are provided by the Hadoop cluster.
-Examples of mappings for the WebHDFS, WebHCat, Oozie and Stargate/Hive are shown below.
+Examples of mappings for the WebHDFS, WebHCat, Oozie and Stargate/HBase are shown below.
 These mapping are generated from the combination of the gateway configuration file (i.e. `{GATEWAY_HOME}/conf/gateway-site.xml`) and the cluster topology descriptors (e.g. `{GATEWAY_HOME}/deployments/{cluster-name}.xml`).
+The port numbers show for the Cluster URLs represent the default ports for these services.
+The actual port number may be different for a given cluster.
 
 * WebHDFS
     * Gateway: `https://{gateway-host}:{gateway-port}/{gateway-path}/{cluster-name}/webhdfs`
@@ -39,11 +41,11 @@ These mapping are generated from the combination of the gateway configuration fi
     * Gateway: `https://{gateway-host}:{gateway-port}/{gateway-path}/{cluster-name}/hbase`
     * Cluster: `http://{hbase-host}:60080`
 
-The values for `{gateway-host}`, `{gateway-port}`, `{gateway-path}` are provided via the Gateway configuration file (i.e. `{GATEWAY_HOME}/conf/gateway-site.xml`).
+The values for `{gateway-host}`, `{gateway-port}`, `{gateway-path}` are provided via the gateway configuration file (i.e. `{GATEWAY_HOME}/conf/gateway-site.xml`).
 
-The value for `{cluster-name}` is derived from the name of the cluster topology descriptor (e.g. `{GATEWAY_HOME}/deployments/{cluster-name}.xml`).
+The value for `{cluster-name}` is derived from the file name of the cluster topology descriptor (e.g. `{GATEWAY_HOME}/deployments/{cluster-name}.xml`).
 
-The value for `{webhdfs-host}` and `{webhcat-host}` are provided via the cluster topology descriptor (e.g. `{GATEWAY_HOME}/deployments/{cluster-name}.xml`).
+The value for `{webhdfs-host}`, `{webhcat-host}`, `{oozie-host}` and `{hbase-host}` are provided via the cluster topology descriptor (e.g. `{GATEWAY_HOME}/deployments/{cluster-name}.xml`).
 
 Note: The ports 50070, 50111, 11000 and 60080 are the defaults for WebHDFS, WebHCat, Oozie and Stargate/HBase respectively.
 Their values can also be provided via the cluster topology descriptor if your Hadoop cluster uses different ports.

@@ -86,7 +86,7 @@ Upon start of the gateway server we:
 
 Upon deployment of a Hadoop cluster topology within the gateway we:
 
-1. Look for a credential store for the topology. For instance, we have a sample topology that gets deployed out of the box.  We look for `conf/security/keystores/sample-credentials.jceks`. This topology specific credential store is used for storing secrets/passwords that are used for encrypting sensitive data with topology specific keys.
+1. Look for a credential store for the topology. For instance, we have a sample topology that gets deployed out of the box.  We look for `conf/security/keystores/sandbox-credentials.jceks`. This topology specific credential store is used for storing secrets/passwords that are used for encrypting sensitive data with topology specific keys.
     * If no credential store is found for the topology being deployed then one is created for it.
       Population of the aliases is delegated to the configured providers within the system that will require the use of a  secret for a particular task.
       They may programmatic set the value of the secret or choose to have the value for the specified alias generated through the AliasService.

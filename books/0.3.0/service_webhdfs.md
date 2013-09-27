@@ -68,7 +68,7 @@ Each line from the file below will need to be typed or copied into the interacti
     import org.apache.hadoop.gateway.shell.Hadoop
     import org.apache.hadoop.gateway.shell.hdfs.Hdfs
 
-    gateway = "https://localhost:8443/gateway/sample"
+    gateway = "https://localhost:8443/gateway/sandbox"
     username = "bob"
     password = "bob-password"
     dataFile = "README"
@@ -89,11 +89,11 @@ Each line from the file below will need to be typed or copied into the interacti
 
     # 1. Optionally cleanup the sample directory in case a previous example was run without cleaning up.
     curl -i -k -u bob:bob-password -X DELETE \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test?op=DELETE&recursive=true'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
     # 2. Create the inode for a sample input file readme.txt in /tmp/test/input.
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/input/README?op=CREATE'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input/README?op=CREATE'
 
     # 3. Upload readme.txt to /tmp/test/input.  Use the readme.txt in {GATEWAY_HOME}.
     # The sample below uses this README file found in {GATEWAY_HOME}.
@@ -102,8 +102,8 @@ Each line from the file below will need to be typed or copied into the interacti
 
     # 4. List the contents of the output directory /tmp/test/output
     curl -i -k -u bob:bob-password -X GET \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/input?op=LISTSTATUS'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input?op=LISTSTATUS'
 
     # 5. Optionally cleanup the test directory
     curl -i -k -u bob:bob-password -X DELETE \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test?op=DELETE&recursive=true'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'

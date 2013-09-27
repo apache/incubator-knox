@@ -90,7 +90,7 @@ Once the shell can be launched the DSL can be used to interact with the gateway 
 Below is a very simple example of an interactive shell session to upload a file to HDFS.
 
     java -jar bin/shell.jar
-    knox:000> hadoop = Hadoop.login( "https://localhost:8443/gateway/sample", "bob", "bob-password" )
+    knox:000> hadoop = Hadoop.login( "https://localhost:8443/gateway/sandbox", "guest", "guest-password" )
     knox:000> Hdfs.put( hadoop ).file( "README" ).to( "/tmp/example/README" ).now()
 
 The `knox:000>` in the example above is the prompt from the embedded Groovy console.
@@ -148,7 +148,7 @@ This script file is available in the distribution but for convenience, this is t
     import org.apache.hadoop.gateway.shell.hdfs.Hdfs
     import groovy.json.JsonSlurper
     
-    gateway = "https://localhost:8443/gateway/sample"
+    gateway = "https://localhost:8443/gateway/sandbox"
     username = "bob"
     password = "bob-password"
     dataFile = "README"
@@ -472,7 +472,7 @@ These happen to be Groovy source files but could with very minor changes be Java
 The easiest way to add these to the shell is to compile them directory into the `ext` directory.
 *Note: This command depends upon having the Groovy compiler installed and available on the execution path.*
 
-    groovyc \-d ext \-cp bin/shell.jar samples/SampleService.groovy samples/SampleSimpleCommand.groovy samples/SampleComplexCommand.groovy
+    groovy -d ext -cp bin/shell.jar samples/SampleService.groovy samples/SampleSimpleCommand.groovy samples/SampleComplexCommand.groovy
 
 These source files are available in the samples directory of the distribution but these are included here for convenience.
 

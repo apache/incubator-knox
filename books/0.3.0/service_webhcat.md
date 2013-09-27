@@ -76,9 +76,9 @@ Each line from the file below will need to be typed or copied into the interacti
 
     import static java.util.concurrent.TimeUnit.SECONDS
 
-    gateway = "https://localhost:8443/gateway/sample"
-    username = "bob"
-    password = "bob-password"
+    gateway = "https://localhost:8443/gateway/sandbox"
+    username = "guest"
+    password = "guest-password"
     dataFile = "LICENSE"
     jarFile = "samples/hadoop-examples.jar"
 

@@ -28,29 +28,29 @@
 
 ## Table Of Contents ##
 
-* [Introduction](#Introduction)
-* [Getting Started](#Getting+Started)
-    * [Requirements](#Requirements)
-    * [Download](#Download)
-    * [Verify](#Verify)
-    * [Install](#Install)
-    * [Supported Services](#Supported+Services)
-    * [Basic Usage](#Basic+Usage)
-    * [Sandbox Configuration](#Sandbox+Configuration)
-* [Gateway Details](#Gateway+Details)
-    * [Authentication](#Authentication)
-    * [Authorization](#Authorization)
-    * [Configuration](#Configuration)
-    * [Secure Clusters](#Secure+Clusters)
-* [Client Details](#Client+Details)
-* [Service Details](#Service+Details)
-    * [WebHDFS](#WebHDFS)
-    * [WebHCat/Templeton](#WebHCat)
-    * [Oozie](#Oozie)
-    * [HBase/Starbase](#HBase)
-    * [Hive](#Hive)
-* [Troubleshooting](#Troubleshooting)
-* [Export Controls](#Export+Controls)
+* #[Introduction]
+* #[Getting Started]
+    * #[Requirements]
+    * #[Download]
+    * #[Verify]
+    * #[Install]
+    * #[Supported Services]
+    * #[Basic Usage]
+    * #[Sandbox Configuration]
+* #[Gateway Details]
+    * #[Authentication]
+    * #[Authorization]
+    * #[Configuration]
+    * #[Secure Clusters]
+* #[Client Details]
+* #[Service Details]
+    * #[WebHDFS]
+    * #[WebHCat]
+    * #[Oozie]
+    * #[HBase]
+    * #[Hive]
+* #[Troubleshooting]
+* #[Export Controls]
 
 
 ## Introduction ##

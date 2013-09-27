@@ -49,7 +49,7 @@ All of the values that may need to be customized can be found together at the to
 * samples/ExampleSubmitJob.groovy
 * samples/ExampleSubmitWorkflow.groovy
 
-If you are using the Sandbox VM for your Hadoop cluster you may want to review [these configuration tips](#Sandbox+Configuration).
+If you are using the Sandbox VM for your Hadoop cluster you may want to review #[Sandbox Configuration].
 
 #### Example #2: WebHDFS & Oozie via KnoxShell DSL
 
@@ -76,7 +76,7 @@ Each line from the file below will need to be typed or copied into the interacti
 
     import static java.util.concurrent.TimeUnit.SECONDS
 
-    gateway = "https://localhost:8443/gateway/sample"
+    gateway = "https://localhost:8443/gateway/sandbox"
     jobTracker = "sandbox:50300";
     nameNode = "sandbox:8020";
     username = "bob"
@@ -156,26 +156,26 @@ These replacement values are identified with { } markup.
 
     # 0. Optionally cleanup the test directory in case a previous example was run without cleaning up.
     curl -i -k -u bob:bob-password -X DELETE \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test?op=DELETE&recursive=true'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
     # 1. Create a test input directory /tmp/test/input
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/input?op=MKDIRS'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input?op=MKDIRS'
 
     # 2. Create a test output directory /tmp/test/input
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/output?op=MKDIRS'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/output?op=MKDIRS'
 
     # 3. Create the inode for hadoop-examples.jar in /tmp/test
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/hadoop-examples.jar?op=CREATE'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/hadoop-examples.jar?op=CREATE'
 
     # 4. Upload hadoop-examples.jar to /tmp/test.  Use a hadoop-examples.jar from a Hadoop install.
     curl -i -k -u bob:bob-password -T samples/hadoop-examples.jar -X PUT '{Value Location header from command above}'
 
     # 5. Create the inode for a sample file README in /tmp/test/input
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/input/README?op=CREATE'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input/README?op=CREATE'
 
     # 6. Upload readme.txt to /tmp/test/input.  Use the readme.txt in {GATEWAY_HOME}.
     curl -i -k -u bob:bob-password -T README -X PUT '{Value of Location header from command above}'
@@ -197,11 +197,11 @@ These replacement values are identified with { } markup.
 
     # 10. List the contents of the output directory /tmp/test/output
     curl -i -k -u bob:bob-password -X GET \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/output?op=LISTSTATUS'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/output?op=LISTSTATUS'
 
     # 11. Optionally cleanup the test directory
     curl -i -k -u bob:bob-password -X DELETE \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test?op=DELETE&recursive=true'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
 #### Example #4: WebHDFS & Oozie via cURL
 
@@ -213,11 +213,11 @@ These replacement values are identified with { } markup.
 
     # 0. Optionally cleanup the test directory in case a previous example was run without cleaning up.
     curl -i -k -u bob:bob-password -X DELETE \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test?op=DELETE&recursive=true'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
     # 1. Create the inode for workflow definition file in /tmp/test
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/workflow.xml?op=CREATE'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/workflow.xml?op=CREATE'
 
     # 2. Upload the workflow definition file.  This file can be found in {GATEWAY_HOME}/templates
     curl -i -k -u bob:bob-password -T templates/workflow-definition.xml -X PUT \
@@ -225,7 +225,7 @@ These replacement values are identified with { } markup.
 
     # 3. Create the inode for hadoop-examples.jar in /tmp/test/lib
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/lib/hadoop-examples.jar?op=CREATE'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/lib/hadoop-examples.jar?op=CREATE'
 
     # 4. Upload hadoop-examples.jar to /tmp/test/lib.  Use a hadoop-examples.jar from a Hadoop install.
     curl -i -k -u bob:bob-password -T samples/hadoop-examples.jar -X PUT \
@@ -233,7 +233,7 @@ These replacement values are identified with { } markup.
 
     # 5. Create the inode for a sample input file readme.txt in /tmp/test/input.
     curl -i -k -u bob:bob-password -X PUT \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/input/README?op=CREATE'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input/README?op=CREATE'
 
     # 6. Upload readme.txt to /tmp/test/input.  Use the readme.txt in {GATEWAY_HOME}.
     # The sample below uses this README file found in {GATEWAY_HOME}.
@@ -261,8 +261,8 @@ These replacement values are identified with { } markup.
 
     # 10. List the contents of the output directory /tmp/test/output
     curl -i -k -u bob:bob-password -X GET \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test/output?op=LISTSTATUS'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/output?op=LISTSTATUS'
 
     # 11. Optionally cleanup the test directory
     curl -i -k -u bob:bob-password -X DELETE \
-        'https://localhost:8443/gateway/sample/namenode/api/v1/tmp/test?op=DELETE&recursive=true'
+        'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'

@@ -60,8 +60,13 @@ public class MarkBook {
 //    System.out.println( replaceHeadings( "## text ##" ) );
 //    System.out.println( removeComments( "line\r\n<!--- \r\n comment \r\n comment \r\n---> \r\nline" ) );
 
+//    System.out.println( replaceReferences( "#[ text ]" ) );
+//    System.out.println( replaceReferences( "* #[ some text ]after" ) );
+//    System.out.println( replaceReferences( "\n#[ text ]" ) );
+
     CommandLine command = parseCommandLine( args );
     String markdown = loadMarkdown( command );
+//    System.out.println( markdown );
     storeHtml( command, markdown );
   }
 
@@ -91,6 +96,7 @@ public class MarkBook {
     String text = FileUtils.readFileToString( file );
     text = removeComments( text );
     text = replaceHeadings( text );
+    text = replaceReferences( text );
     text = replaceIncludes( file, text );
     return text;
   }
@@ -119,11 +125,24 @@ public class MarkBook {
     while( matcher.find() ) {
       String tag = matcher.group( 1 );
       String name = matcher.group( 2 ).trim();
-      String id = name.replaceAll( "\\s", "+" );
+      String id = id( name );
       if( !name.startsWith( "<a id=" ) ) {
         text = replace( matcher, text, String.format( "%s <a id=\"%s\"></a>%s %s", tag, id, name, tag ) );
         matcher = pattern.matcher( text );
       }
+    }
+    return text;
+  }
+
+  private static String replaceReferences( String text ) throws IOException {
+    Pattern pattern = Pattern.compile( "(\\s)#\\[(.+?)\\]" );
+    Matcher matcher = pattern.matcher( text );
+    while( matcher.find() ) {
+      String space = matcher.group( 1 );
+      String name = matcher.group( 2 ).trim();
+      String id = id( name );
+      text = replace( matcher, text, String.format( "%s[%s](#%s)", space, name, id ) );
+      matcher = pattern.matcher( text );
     }
     return text;
   }
@@ -140,6 +159,11 @@ public class MarkBook {
 
   private static String replace( Matcher matcher, String original, String replace ) {
     return original.substring( 0, matcher.start() ) + replace + original.substring( matcher.end(), matcher.regionEnd() );
+  }
+
+  private static String id( String name ) {
+    String id = name.replaceAll( "\\s", "+" );
+    return id;
   }
 
   private static Options createOptions() {

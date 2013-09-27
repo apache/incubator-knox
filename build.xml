@@ -93,6 +93,8 @@
         </exec>
     </target>
 
+    <target name="review" depends="review-site,review-book" description="Open doc artifacts in a browser for review."/>
+
     <target name="review-book" depends="init" description="Open the default book in the default browser.">
         <exec executable="${browser.cmd}">
             <arg line="${book-0-3-0-file}" />
