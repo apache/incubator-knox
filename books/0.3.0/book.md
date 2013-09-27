@@ -38,6 +38,7 @@
     * #[Basic Usage]
     * #[Sandbox Configuration]
 * #[Gateway Details]
+    * #[Configuration]
     * #[Authentication]
     * #[Authorization]
     * #[Configuration]

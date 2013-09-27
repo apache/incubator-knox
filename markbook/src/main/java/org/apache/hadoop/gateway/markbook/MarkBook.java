@@ -73,7 +73,7 @@ public class MarkBook {
   private static void storeHtml( CommandLine command, String markdown ) throws IOException {
     PegDownProcessor processor = new PegDownProcessor(
         Extensions.AUTOLINKS | Extensions.FENCED_CODE_BLOCKS | Extensions.QUOTES +
-        Extensions.SMARTS | Extensions.TABLES | Extensions.WIKILINKS );
+        Extensions.SMARTS | Extensions.TABLES | Extensions.DEFINITIONS );
     log( "Converting markdown (" + markdown.length() + " bytes) to HTML" );
     String html = processor.markdownToHtml( markdown.toString() );
     File outputFile = new File( command.getOptionValue( "o" ) );

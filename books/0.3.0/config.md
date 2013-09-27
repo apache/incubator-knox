@@ -19,8 +19,98 @@
 
 #### Topology Descriptors ####
 
-The topology descriptor files provide the gateway per cluster configuration information.
+The topology descriptor files provide the gateway with per-cluster configuration information.
 This includes configuration for both the providers within the gateway and the services within the Hadoop cluster.
+These files are located in `{GATEWAY_HOME}/deployments`.
+The general outline of this document looks like this.
+
+    <topology>
+        <gateway>
+            <provider>
+            </provider>
+        </gateway>
+        <service>
+        </service>
+    </topology>
+
+There are typically multiple `<provider>` and `<service>` elements.
+
+/topology
+: Defines the provider and configuration and service topology for a single Hadoop cluster.
+
+/topology/gateway
+: Groups all of the provider elements
+
+/topology/gateway/provider
+: Defines the configuration of a specific provider for the cluster.
+
+/topology/service
+: Defines the location of a specific Hadoop service within the Hadoop cluster.
+
+##### Provider Configuration #####
+
+Provider configuration is used to customize the behavior of a particular gateway feature.
+The general outline of a provider element looks like this.
+
+    <provider>
+        <role>authentication</role>
+        <name>ShiroProvider</name>
+        <enabled>true</enabled>
+        <param>
+            <name></name>
+            <value></value>
+        </param>
+    </provider>
+
+/topology/gateway/provider
+: Groups information for a specific provider.
+
+/topology/gateway/provider/role
+: Defines the role of a particular provider.
+There are a number of pre-defined roles used by out-of-the-box provider plugins for the gateay.
+These roles are: authentication, identity-assertion, authentication, rewrite and hostmap
+
+/topology/gateway/provider/name
+: Defines the name of the provider for which this configuration applies.
+There can be multiple provider implementations for a given role.
+Specifying the name is used identify which particular provider is being configured.
+Typically each topology descriptor should contain only one provider for each role but there are exceptions.
+
+/topology/gateway/provider/enabled
+: Allows a particular provider to be enabled or disabled via `true` or `false` respectively.
+When a provider is disabled any filters associated with that provider are excluded from the processing chain.
+
+/topology/gateway/provider/param
+: These elements are used to supply provider configuration.
+There can be zero or more of these per provider.
+
+/topology/gateway/provider/param/name
+: The name of a parameter to pass to the provider.
+
+/topology/gateway/provider/param/value
+: The value of a parameter to pass to the provider.
+
+##### Service Configuration #####
+
+Service configuration is used to specify the location of services within the Hadoop cluster.
+The general outline of a service element looks like this.
+
+    <service>
+        <role>WEBHDFS</role>
+        <url>http://localhost:50070/webhdfs</url>
+    </service>
+
+/topology/service
+: Provider information about a particular service within the Hadoop cluster.
+Not all services are necessarily exposed as gateway endpoints.
+
+/topology/service/role
+: Identifies the role of this service.
+Currently supported roles are: WEBHDFS, WEBHCAT, WEBHBASE, OOZIE, HIVE, NAMENODE, JOBTRACKER
+Additional service roles can be supported via plugins.
+
+topology/service/url
+: The URL identifying the location of a particular service within the Hadoop cluster.
 
 #### Host Mapping ####
 

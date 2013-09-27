@@ -52,7 +52,6 @@ This document assumes a few things about your environment in order to simplify t
           `keytool -import -alias hadoop.gateway -file hadoop.gateway.cer -keystore <java-home>/lib/security/cacerts`
        Alternatively you can run your sample with additional parameters:
           `-Djavax.net.ssl.trustStoreType=JKS -Djavax.net.ssl.trustStore=<path-to-trust-store> -Djavax.net.ssl.trustStorePassword=<trust-store-password>`
-       `keytool -import -alias hadoop.gateway -file hadoop.gateway.cer -keystore <java-home>/lib/security/cacerts`
     3. Connection URL has to be following:
        `jdbc:hive2://<gateway-host>:<gateway-port>/?hive.server2.servermode=https;hive.server2.http.path=<gateway-path>/<cluster-name>/hive`
     4. Look at https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-DDLOperations for examples.
