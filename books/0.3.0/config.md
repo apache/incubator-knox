@@ -326,7 +326,7 @@ The credential stores in Knox use the JCEKS keystore type as it allows for the s
 Follow the prompts again for the DN for the cert of the credential store. This certificate isn't really used for anything at the moment but is required to create the credential store.
 
 ##### Provisioning of Keystores #####
-Once you have created these keystores you must move them into place for the gateway to discover them and use them to represent its identity for SSL connections. This is done by copying the keystores to the {GATEWAY_HOME}/conf/security/keystores directory for your gateway install.
+Once you have created these keystores you must move them into place for the gateway to discover them and use them to represent its identity for SSL connections. This is done by copying the keystores to the `{GATEWAY_HOME}/conf/security/keystores` directory for your gateway install.
 
 #### Summary of Secrets to be Managed ####
 

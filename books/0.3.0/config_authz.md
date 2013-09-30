@@ -136,9 +136,19 @@ The above configuration enables the authorization provider but does not indicate
         <name>{serviceName}.acl</name>
         <value>username[,*|username...];group[,*|group...];ipaddr[,*|ipaddr...]</value>
     </param>
-
+    
 where `{serverName}` would need to be the name of a configured Hadoop service within the topology.
-Note that the configuration without any ACLs defined is equivalent to:
+
+NOTE: ipaddr is unique among the parts of the ACL in that you are able to specify a wildcard within an ipaddr to indicate that the remote address must being with the String prior to the asterisk within the ipaddr acl. For instance:
+
+    <param>
+        <name>{serviceName}.acl</name>
+        <value>*;*;192.168.*</value>
+    </param>
+    
+This indicates that the request must come from an IP address that begins with '192.168.' in order to be granted access.
+
+Note also that configuration without any ACLs defined is equivalent to:
 
     <param>
         <name>{serviceName}.acl</name>
