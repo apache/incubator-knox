@@ -199,16 +199,24 @@ Start the LDAP server - pointing it to the config dir where it will find the `us
 
     java -jar bin/ldap.jar conf &
 
-_On windows this command can be run in its own command windows instead of running it in the background via `&`.
+_On windows this command can be run in its own command window instead of running it in the background via `&`._
 
 There are a number of log messages of the form `Created null.` that can safely be ignored.
 Take note of the port on which it was started as this needs to match later configuration.
 
 ##### 3. Start the gateway server
 
-    java -jar bin/server.jar
+The gateway can be started in one of two ways depending upon your preferences.
+The first way is to start the gateway directly using the Java's java -jar command line.
+The script bin/gateway.sh can also be used to start the gateway.
+Both options are detailed below.
 
-Take note of the port identified in the logging output as you will need this for accessing the gateway.
+###### Starting via Java
+
+This is the simplest way to start the gateway.
+Starting this way will result in all logging being written directly to standard output.
+
+    java -jar bin/server.jar
 
 The server will prompt you for the master secret (i.e. password).
 This secret is used to secure artifacts used by the gateway server for things like SSL and credential/password aliasing.
@@ -216,6 +224,42 @@ This secret will have to be entered at startup unless you choose to persist it.
 See the Persisting the Master section for more information.
 Remember this secret and keep it safe.
 It represents the keys to the kingdom.
+
+Take note of the port identified in the logging output as you will need this for accessing the gateway.
+
+###### Starting via script (*nix only)
+
+Starting the gateway using the script is a bit more in line with how other Hadoop components are started.
+Before actually starting the server this way a setup step needs to be performed.
+This step is required because directories are created in /var/log and /var/run.
+These directories can only be created by the root user so the setup command must be run with root privileges.
+
+    sudo bin/gateway.sh setup
+
+The server will prompt you for the master secret (i.e. password).
+This secret is used to secure artifacts used by the gateway server for things like SSL and credential/password aliasing.
+This secret will have to be entered at startup unless you choose to persist it.
+See the Persisting the Master section for more information.
+Remember this secret and keep it safe.
+It represents the keys to the kingdom.
+
+The server can then be started without root privileges using this command.
+
+    bin/gateway.sh start
+
+When starting the gateway this way the process will be run in the backgroud.
+The log output is written into the directory /var/log/knox.
+In addition a PID (process ID) is written into /var/run/knox.
+
+In order to stop a gateway that was started with the script use this command.
+
+    bin/gateway.sh stop
+
+If for some reason the gateway is stopped other than by using the command above you may need to clear the tracking PID.
+
+    bin/gateway.sh clean
+
+__CAUTION: This command will also clear any log output in /var/log/knox so use this with caution.__
 
 ##### 4. Configure the Gateway with the topology of your Hadoop cluster
 
