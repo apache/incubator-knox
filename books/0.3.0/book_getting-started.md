@@ -151,17 +151,17 @@ The table below provides a brief explanation of the important files and director
 This table enumerates the versions of various Hadoop services that have been tested to work with the Knox Gateway.
 Only more recent versions of some Hadoop components when secured via Kerberos can be accessed via the Knox Gateway.
 
-| Service           | Version    | Non-Secure  | Secure |
-| ----------------- | ---------- | ----------- | ------ |
-| WebHDFS           | 2.1.0      | ![y]        | ![y]   |
-| WebHCat/Templeton | 0.11.0     | ![y]        | ![y]   |
-| Ozzie             | 4.0.0      | ![y]        | ![y]   |
-| HBase/Stargate    | 0.95.2     | ![y]        | ![?]   |
-| Hive/WebHCat      | 0.11.0     | ![y]        | ![y]   |
-|                   | 0.12.0     | ![y]        | ![y]   |
-| Hive/JDBC         | 0.11.0     | ![n]        | ![n]   |
-|                   | 0.12.0     | ![?]![y]    | ![?]   |
-| Hive/ODBC         | 0.12.0     | ![?]        | ![?]   |
+| Service            | Version    | Non-Secure  | Secure |
+| ------------------ | ---------- | ----------- | ------ |
+| WebHDFS            | 2.1.0      | ![y]        | ![y]   |
+| WebHCat/Templeton  | 0.11.0     | ![y]        | ![y]   |
+| Ozzie              | 4.0.0      | ![y]        | ![y]   |
+| HBase/Stargate     | 0.95.2     | ![y]        | ![?]   |
+| Hive (via WebHCat) | 0.11.0     | ![y]        | ![y]   |
+|                    | 0.12.0     | ![y]        | ![y]   |
+| Hive (via JDBC)    | 0.11.0     | ![n]        | ![n]   |
+|                    | 0.12.0     | ![?]![y]    | ![?]   |
+| Hive (via ODBC)    | 0.12.0     | ![?]        | ![?]   |
 
 
 ### Basic Usage ###

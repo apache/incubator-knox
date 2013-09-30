@@ -112,19 +112,109 @@ Additional service roles can be supported via plugins.
 topology/service/url
 : The URL identifying the location of a particular service within the Hadoop cluster.
 
-#### Host Mapping ####
+#### Hostmap Provider ####
 
-TODO - Complete Host Mapping docs.
+The purpose of the Hostmap provider is to handle situations where host are know by one name within the cluster and another name externally.
+This frequently occurs when virtual machines are used and in particular using cloud hosting services.
+Currently the Hostmap provider is configured as part of the topology file.
+The basic structure is shown below.
 
-That really depends upon how you have your VM configured.
-If you can hit http://c6401.ambari.apache.org:1022/ directly from your client and knox host then you probably don't need the hostmap at all.
-The host map only exists for situations where a host in the hadoop cluster is known by one name externally and another internally.
-For example running hostname -q on sandbox returns sandbox.hortonworks.com but externally Sandbox is setup to be accesses using localhost via portmapping.
-The way the hostmap config works is that the <name/> element is what the hadoop cluster host is known as externally and the <value/> is how the hadoop cluster host identifies itself internally.
-<param><name>localhost</name><value>c6401,c6401.ambari.apache.org</value></param>
-You SHOULD be able to simply change <enabled>true</enabled> to false but I have a suspicion that that might not actually work.
-Please try it and file a jira if that doesn't work.
-If so, simply either remove the full provider config for hostmap or remove the <param/> that defines the mapping.
+    <topology>
+        <gateway>
+            ...
+            <provider>
+                <role>hostmap</role>
+                <name>static</name>
+                <enabled>true</enabled>
+                <param><name>external-host-name</name><value>internal-host-name</value></param>
+            </provider>
+            ...
+        </gateway>
+        ...
+    </topology>
+
+This mapping is required because the Hadoop servies running within the cluster are unaware that they are being accessed from outside the cluster.
+Therefore URLs returned as part of REST API responses will typically contain internal host names.
+Since clients outside the cluster will be unable to resolve those host name they must be mapped to external host names.
+
+##### Hostmap Provider Example - EC2 #####
+
+Consider an EC2 example where two VMs have been allocated.
+Each VM has an external host name by which it can be accessed via the internet.
+However the EC2 VM is unaware of this external host name and instead is configured with the internal host name.
+
+    External HOSTNAMES:
+    ec2-23-22-31-165.compute-1.amazonaws.com
+    ec2-23-23-25-10.compute-1.amazonaws.com
+
+    Internal HOSTNAMES:
+    ip-10-118-99-172.ec2.internal
+    ip-10-39-107-209.ec2.internal
+
+The Hostmap configuration required to allow access external to the Hadoop cluster via the Apache Knox Gateway would be this.
+
+    <topology>
+        <gateway>
+            ...
+            <provider>
+                <role>hostmap</role>
+                <name>static</name>
+                <enabled>true</enabled>
+                <param><name>ec2-23-22-31-165.compute-1.amazonaws.com</name><value>ip-10-118-99-172.ec2.internal</value></param>
+                <param><name>ec2-23-23-25-10.compute-1.amazonaws.com</name><value>ip-10-39-107-209.ec2.internal</value></param>
+            </provider>
+            ...
+        </gateway>
+        ...
+    </topology>
+
+##### Hostmap Provider Example - Sandbox #####
+
+Hortonwork's Sandbox 2.x poses a different challenge for host name mapping.
+This version of the Sandbox uses port mapping to make the Sandbox VM appear as though it is accessible via localhost.
+However the Sandbox VM is internally configured to consider sandbox.hortonworks.com as the host name.
+So from the perspective of a client accessing Sandbox the external host name is localhost.
+The Hostmap configuration required to allow access to Sandbox from the host operating system is this.
+
+    <topology>
+        <gateway>
+            ...
+            <provider>
+                <role>hostmap</role>
+                <name>static</name>
+                <enabled>true</enabled>
+                <param><name>localhost</name><value>sandbox,sandbox.hortonworks.com</value></param>
+            </provider>
+            ...
+        </gateway>
+        ...
+    </topology>
+
+##### Hostmap Provider Configuration #####
+
+Details about each provider configuration element is enumerated below.
+
+topology/gateway/provider/role
+: The role for a Hostmap provider must always be `hostmap`.
+
+topology/gateway/provider/name
+: The Hostmap provider supplied out-of-the-box is selected via the name `static`.
+
+topology/gateway/provider/enabled
+: Host mapping can be enabled or disabled by providing `true` or `false`.
+
+topology/gateway/provider/param
+: Host mapping is configured by providing parameters for each external to internal mapping.
+
+topology/gateway/provider/param/name
+: The parameter names represent an external host names associated with the internal host names provided by the value element.
+This can be a comma separated list of host names that all represent the same physical host.
+When mapping from internal to external host name the first external host name in the list is used.
+
+topology/gateway/provider/param/value
+: The parameter values represent the internal host names associated with the external host names provider by the name element.
+This can be a comma separated list of host names that all represent the same physical host.
+When mapping from external to internal host names the first internal host name in the list is used.
 
 
 #### Logging ####
@@ -248,6 +338,6 @@ Once you have created these keystores you must move them into place for the gate
    This allows for fail-over from one gateway instance to another even when encryption is being used while not allowing the compromise of one encryption key to expose the data for all clusters.
 
 NOTE: the SSL certificate will need special consideration depending on the type of certificate. Wildcard certs may be able to be shared across all gateway instances in a cluster.
-When certs are dedicated to specific machines the gateway identity store will not be able to be blindly replicated as hostname verification problems will ensue.
+When certs are dedicated to specific machines the gateway identity store will not be able to be blindly replicated as host name verification problems will ensue.
 Obviously, trust-stores will need to be taken into account as well.
 
