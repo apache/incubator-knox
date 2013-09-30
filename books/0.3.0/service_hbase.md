@@ -288,15 +288,13 @@ There are several ways to do this depending upon your preference.
 
 You can use the Groovy interpreter provided with the distribution.
 
-    java -jar bin/shell.jar samples/ExampleHBaseUseCase.groovy
+    java -jar bin/shell.jar samples/ExampleHBase.groovy
 
 You can manually type in the KnoxShell DSL script into the interactive Groovy interpreter provided with the distribution.
 
     java -jar bin/shell.jar
 
 Each line from the file below will need to be typed or copied into the interactive shell.
-
-{code:title="samples/ExampleHBaseUseCase.groovy"}
 
     /**
      * Licensed to the Apache Software Foundation (ASF) under one
