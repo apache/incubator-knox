@@ -24,7 +24,7 @@
 ![Apache](apache-logo.gif)
 ![Incubator](apache-incubator-logo.png)
 
-# Apache Knox Gateway 0.3.0 (Incubator) #
+# Apache Knox Gateway 0.3.0 (Incubator) User's Guide #
 
 ## Table Of Contents ##
 
