@@ -40,6 +40,7 @@
 * #[Gateway Details]
     * #[Configuration]
     * #[Authentication]
+    * #[Identity Assertion]
     * #[Authorization]
     * #[Configuration]
     * #[Secure Clusters]
