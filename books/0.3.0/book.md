@@ -18,10 +18,10 @@
 <<../common/header.md>>
 
 <div id="logo" style="width:100%; text-align:center">
-  <img src="knox-logo.gif" alt="Knox"/>
+  <!--img src="knox-logo.gif" alt="Knox"/-->
 </div>
 <br>
-![Apache](apache-logo.gif)
+![Apache](knox-logo.gif)
 ![Incubator](apache-incubator-logo.png)
 
 # Apache Knox Gateway 0.3.0 (Incubator) User's Guide #
