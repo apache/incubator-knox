@@ -21,8 +21,8 @@
   <!--img src="knox-logo.gif" alt="Knox"/-->
 </div>
 <br>
-![Apache](knox-logo.gif)
-![Incubator](apache-incubator-logo.png)
+  <img src="knox-logo.gif" alt="Knox"/>
+  <img src="apache-incubator-logo.png" align="right" alt="Incubator"/>
 
 # Apache Knox Gateway 0.3.0 (Incubator) User's Guide #
 
