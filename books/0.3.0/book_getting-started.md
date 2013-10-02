@@ -119,8 +119,26 @@ The directory `knox-incubating-{VERSION}` will considered your `{GATEWAY_HOME}`
 
 #### RPM ####
 
-TODO
+If you downloaded the RPM distribution you can install it using normal RPM package tools.
+It is important that the user that will be running the gateway server is used to install.
+This is because several directories are created that are owned by this user.
 
+    sudo yum localinstall knox-incubating-{VERSION}.rpm
+
+or
+
+    sudo rpm -ihv knox-incubating-{VERSION}.rpm
+
+
+This will create several directories.
+
+    /usr/lib/knox
+    /var/log/knox
+    /var/run/knox
+
+The directory `/usr/lib/knox` is considered your `{GATEWAY_HOME}` and will adhere to the layout described below.
+The directory `/var/log/knox` will contain the output files from the server.
+The directory `/var/run/knox` will contain the process ID for a currently running gateway server.
 
 #### Layout ####
 
