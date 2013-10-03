@@ -249,7 +249,7 @@ Take note of the port identified in the logging output as you will need this for
 
 Starting the gateway using the script is a bit more in line with how other Hadoop components are started.
 Before actually starting the server this way a setup step needs to be performed.
-This step is required because directories are created in /var/log and /var/run.
+This step is required because directories are created in /var/log and /var/run if required.
 These directories can only be created by the root user so the setup command must be run with root privileges.
 
     sudo bin/gateway.sh setup
