@@ -50,7 +50,7 @@ This particular configuration indicates that the Pseudo identity assertion provi
 
 This configuration identifies the same identity assertion provider but does provide principal and group mapping rules. In this case, when a user is authenticated as "bob" his identity is actually asserted to the Hadoop cluster as "hdfs". In addition, since there are group principal mappings defined, he will also be considered as a member of the groups "users" and "admin". In this particular example the wildcard "*" is used to indicate that all authenticated users need to be considered members of the "users" group and that only the user "hdfs" is mapped to be a member of the "admin" group.
 
-	NOTE: These group memberships are currently only meaningful for Service Level Authorization using the AclsAuthorization provider. The groups are not currently asserted to the Hadoop cluster at this time. See the Authorization section within this guide to see how this is used.
+**NOTE: These group memberships are currently only meaningful for Service Level Authorization using the AclsAuthorization provider. The groups are not currently asserted to the Hadoop cluster at this time. See the Authorization section within this guide to see how this is used.**
 
 The principal mapping aspect of the identity assertion provider is important to understand in order to fully utilize the authorization features of this provider.
 

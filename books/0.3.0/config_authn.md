@@ -90,7 +90,7 @@ In order to fit into the context of an INI file format, at deployment time we in
             </param>
         </provider>
 
-This happens to be the way that we are currently configuring Shiro for BASIC/LDAP authenticatipon. This same config approach may be used to achieve other authentication mechanisms or variations on this one. We however have not tested additional uses for it for this release.
+This happens to be the way that we are currently configuring Shiro for BASIC/LDAP authentication. This same config approach may be used to achieve other authentication mechanisms or variations on this one. We however have not tested additional uses for it for this release.
 
 #### LDAP Configuration ####
 
@@ -112,24 +112,6 @@ In order to communicate with your LDAP server over SSL (again, highly recommende
 1. **main.ldapRealm.contextFactory.url** must be changed to have the `ldaps` protocol scheme and the port must be the SSL listener port on your LDAP server.
 2. Identity certificate (keypair) provisioned to LDAP server - your LDAP server specific documentation should indicate what is requried for providing a cert or keypair to represent the LDAP server identity to connecting clients.
 3. Trusting the LDAP Server's public key - if the LDAP Server's identity certificate is issued by a well known and trusted certificate authority and is already represented in the JRE's cacerts truststore then you don't need to do anything for trusting the LDAP server's cert. If, however, the cert is selfsigned or issued by an untrusted authority you will need to either add it to the cacerts keystore or to another truststore that you may direct Knox to utilize through a system property.
-
-
-# ??????? - I'm not sure what this section is supposed to be documenting
-
-##### Creation of the Keystore with self signed certificate and enabling it on Jetty
-
-    keytool -keystore keystore -alias jetty -genkey -keyalg RSA -storepass secret
-
-See more here about [Jetty SSL setup](http://wiki.eclipse.org/Jetty/Howto/Configure_SSL)
-
-##### Shiro.ini file setup
-
-###### Shiro.ini ######
-
-    [urls]
-    /** = ssl, authc
-
-# END ???????
 
 #### Session Configuration ####
 

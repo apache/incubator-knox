@@ -161,7 +161,7 @@ Each of the elements of the acl param support multiple values via comma separate
 For instance:
 
     <param>
-        <name>namenode.acl</name>
+        <name>webhdfs.acl</name>
         <value>hdfs;admin;127.0.0.2,127.0.0.3</value>
     </param>
 
@@ -185,7 +185,7 @@ this processing behavior requires that the effective user satisfy one of the par
 For instance:
 
     <param>
-        <name>namenode.acl</name>
+        <name>webhdfs.acl</name>
         <value>hdfs,bob;admin;127.0.0.2,127.0.0.3</value>
     </param>
 
@@ -210,8 +210,7 @@ The principal mapping aspect of the identity assertion provider is important to 
 This feature allows us to map the authenticated principal to a runas or impersonated principal to be asserted to the Hadoop services in the backend.
 When a principal mapping is defined that results in an impersonated principal being created the impersonated principal is then the effective principal.
 If there is no mapping to another principal then the authenticated or primary principal is then the effective principal.
-Principal mapping has actually been available in the identity assertion provider from the beginning of Knox.
-Although hasn't been adequately documented as of yet.
+Principal mapping has actually been available in the identity assertion provider from the beginning of Knox and is documented fully in the Identity Assertion section of this guide.
 
     <param>
         <name>principal.mapping</name>
@@ -224,32 +223,6 @@ For instance:
         <name>principal.mapping</name>
         <value>bob=hdfs</value>
     </param>
-
-For multiple mappings:
-
-    <param>
-        <name>principal.mapping</name>
-        <value>bob=hdfs;alice=alice2</value>
-    </param>
-
-More context for the identity assertion provider config:
-
-    <provider>
-        <role>identity-assertion</role>
-        <name>Pseudo</name>
-        <enabled>true</enabled>
-        <param>
-            <name>principal.mapping</name>
-            <value>bob=hdfs;</value>
-        </param>
-        <param>
-            <name>group.principal.mapping</name>
-            <value>*=users;hdfs=admin</value>
-        </param>
-    </provider>
-
-this configuration defines a principal mapping between an incoming identity of "bob" to an impersonated principal of "hdfs".
-For an authenticated request from bob the effective principal ends up being "hdfs".
 
 In addition, we allow the administrator to map groups to effective principals. This is done through another param within the identity assertion provider:
 
@@ -266,6 +239,8 @@ For instance:
     </param>
 
 this configuration indicates that all (*) authenticated users are members of the "users" group and that user "hdfs" is a member of the admin group. Group principal mapping has been added along with the authorization provider described in this document.
+
+For more information on principal and group principal mapping see the Identity Assertion section of this guide.
 
 These additional mapping capabilities are used together with the authorization ACL policy.
 An example of a full topology that illustrates these together is below.
@@ -310,7 +285,6 @@ An example of a full topology that illustrates these together is below.
                     <value>*=users;hdfs=admin</value>
                 </param>
             </provider>
-
             <provider>
                 <role>authorization</role>
                 <name>AclsAuthz</name>
@@ -320,15 +294,15 @@ An example of a full topology that illustrates these together is below.
                     <value>OR</value>
                 </param>
                 <param>
-                    <name>namenode.acl.mode</name>
+                    <name>webhdfs.acl.mode</name>
                     <value>AND</value>
                 </param>
                 <param>
-                    <name>namenode.acl</name>
+                    <name>webhdfs.acl</name>
                     <value>hdfs;admin;127.0.0.2,127.0.0.3</value>
                 </param>
                 <param>
-                    <name>templeton.acl</name>
+                    <name>webhcat.acl</name>
                     <value>hdfs;admin;127.0.0.2,127.0.0.3</value>
                 </param>
             </provider>
@@ -343,24 +317,33 @@ An example of a full topology that illustrates these together is below.
             </provider>
         </gateway>
 
-        <service>
-            <role>NAMENODE</role>
-            <url>http://localhost:50070/webhdfs/v1</url>
-        </service>
-        <service>
-            <role>TEMPLETON</role>
-            <url>http://localhost:50111/templeton/v1</url>
-        </service>
-        <service>
-            <role>OOZIE</role>
-            <url>http://localhost:11000/oozie</url>
-        </service>
-        <service>
-            <role>HBASE</role>
-            <url>http://localhost:60000/</url>
-        </service>
-        <service>
-            <role>HIVE</role>
-            <url>http://localhost:10000/</url>
-        </service>
+		<service>
+        	<role>JOBTRACKER</role>
+        	<url>rpc://localhost:8050</url>
+    	</service>
+
+    	<service>
+        	<role>WEBHDFS</role>
+        	<url>http://localhost:50070/webhdfs</url>
+    	</service>
+
+    	<service>
+        	<role>WEBHCAT</role>
+        	<url>http://localhost:50111/templeton</url>
+    	</service>
+
+    	<service>
+        	<role>OOZIE</role>
+        	<url>http://localhost:11000/oozie</url>
+    	</service>
+
+    	<service>
+        	<role>WEBHBASE</role>
+        	<url>http://localhost:60080</url>
+    	</service>
+
+    	<service>
+        	<role>HIVE</role>
+        	<url>http://localhost:10000</url>
+    	</service>
     </topology>
