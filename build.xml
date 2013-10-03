@@ -79,7 +79,7 @@
     <target name="_books" depends="_book-0-3-0"/>
     <target name="_book-0-3-0" depends="init">
         <delete dir="${book-target}/${gateway-artifact}-0-3-0" includes="**/*.html,**/*.css,**/*.png"/>
-        <java jar="markbook/target/markbook.jar" fork="true">
+        <java jar="markbook/target/markbook.jar" fork="true" failonerror="true">
             <arg value="-i"/><arg value="books/0.3.0/book.md"/>
             <arg value="-o"/><arg value="${book-0-3-0-file}"/>
         </java>
