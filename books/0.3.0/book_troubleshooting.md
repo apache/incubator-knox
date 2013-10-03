@@ -42,5 +42,5 @@ Bugs can be filed using [Jira][jira].
 Please include the results of this command below in the Environment section.
 Also include the version of Hadoop being used in the same section.
 
-    java -jar bin/server.jar -version
+    java -jar bin/gateway.jar -version
 

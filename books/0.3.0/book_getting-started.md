@@ -234,7 +234,7 @@ Both options are detailed below.
 This is the simplest way to start the gateway.
 Starting this way will result in all logging being written directly to standard output.
 
-    java -jar bin/server.jar
+    java -jar bin/gateway.jar
 
 The server will prompt you for the master secret (i.e. password).
 This secret is used to secure artifacts used by the gateway server for things like SSL and credential/password aliasing.
