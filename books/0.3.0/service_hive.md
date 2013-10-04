@@ -27,19 +27,7 @@ TODO
 
 This guide provides detailed examples for how to to some basic interactions with Hive via the Apache Knox Gateway.
 
-##### Assumptions #####
-
-This document assumes a few things about your environment in order to simplify the examples.
-
-1. The JVM is executable as simply java.
-2. The Apache Knox Gateway is installed and functional.
-3. Minor Hive version is 0.12.0.
-4. The example commands are executed within the context of the GATEWAY_HOME current directory.
-   The GATEWAY_HOME directory is the directory within the Apache Knox Gateway installation that contains the README file and the bin, conf and deployments directories.
-5. A few examples optionally require the use of commands from a standard Groovy installation.
-   These examples are optional but to try them you will need Groovy [installed|http://groovy.codehaus.org/Installing+Groovy].
-
-##### Setup #####
+##### Hive Setup #####
 
 1. Make sure you are running the correct version of Hive to ensure JDBC/Thrift/HTTP support.
 2. Make sure Hive is running on the correct port.

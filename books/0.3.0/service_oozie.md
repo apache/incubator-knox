@@ -27,30 +27,6 @@ TODO
 
 TODO
 
-##### Assumptions
-
-This document assumes a few things about your environment in order to simplify the examples.
-
-* The JVM is executable as simply java.
-* The Apache Knox Gateway is installed and functional.
-* The example commands are executed within the context of the GATEWAY_HOME current directory.
-The GATEWAY_HOME directory is the directory within the Apache Knox Gateway installation that contains the README file and the bin, conf and deployments directories.
-* A few examples optionally require the use of commands from a standard Groovy installation.
-These examples are optional but to try them you will need Groovy [installed](http://groovy.codehaus.org/Installing+Groovy).
-
-#### Customization
-
-These examples may need to be tailored to the execution environment.
-In particular hostnames and ports may need to be changes to match your environment.
-In particular there are two example files in the distribution that may need to be customized.
-Take a moment to review these files.
-All of the values that may need to be customized can be found together at the top of each file.
-
-* samples/ExampleSubmitJob.groovy
-* samples/ExampleSubmitWorkflow.groovy
-
-If you are using the Sandbox VM for your Hadoop cluster you may want to review #[Sandbox Configuration].
-
 #### Example #2: WebHDFS & Oozie via KnoxShell DSL
 
 This example will also submit the familiar WordCount Java MapReduce job to the Hadoop cluster via the gateway using the KnoxShell DSL.

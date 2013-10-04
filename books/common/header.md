@@ -18,6 +18,7 @@
 <link href="book.css" rel="stylesheet"/>
 
 [asl]: http://www.apache.org/licenses/LICENSE-2.0
+[curl]: http://curl.haxx.se/
 [site]: http://knox.incubator.apache.org
 [jira]: https://issues.apache.org/jira/browse/KNOX
 [mirror]: http://www.apache.org/dyn/closer.cgi/incubator/knox

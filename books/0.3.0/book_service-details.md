@@ -17,7 +17,53 @@
 
 ## Service Details ##
 
-TODO - Service details overview
+In the sections that follow the integrations currently available out of the box with the gateway will be described.
+In general these sections will include examples that demonstrate how to access each of these services via the gateway.
+In many cases this will include both the use of [cURL][curl] as a REST API client as well as the use of the Knox Client DSL.
+You may notice that there are some minor differences between using the REST API of a given service via the gateway.
+In general this is necessary in order to achieve the goal of leaking internal Hadoop cluster details to the client.
+
+Keep in mind that the gateway uses a plugin model for supporting Hadoop services.
+Check back with a the [Apache Knox][site] site for the latest news on plugin availability.
+You can also create your own custom plugin to extend the capabilities of the gateway.
+
+### Assumptions
+
+This document assumes a few things about your environment in order to simplify the examples.
+
+* The JVM is executable as simply java.
+* The Apache Knox Gateway is installed and functional.
+* The example commands are executed within the context of the GATEWAY_HOME current directory.
+The GATEWAY_HOME directory is the directory within the Apache Knox Gateway installation that contains the README file and the bin, conf and deployments directories.
+* The [cURL][curl] command line HTTP client utility is installed and functional.
+* A few examples optionally require the use of commands from a standard Groovy installation.
+These examples are optional but to try them you will need Groovy [installed](http://groovy.codehaus.org/Installing+Groovy).
+* The default configuration for all of the samples is setup for use with Hortonworks' [Sandbox][sandbox] version 2.
+
+### Customization
+
+Using these samples with other Hadoop installations will require changes to the steps describe here as well as changes to referenced sample scripts.
+This will also likely require changes to the gateway's default configuration.
+In particular host names, ports user names and password may need to be changes to match your environment.
+These changes may need to be made to gateway configuration and also the Groovy sample script files in the distribution.
+All of the values that may need to be customized in the sample scripts can be found together at the top of each of these files.
+
+### cURL
+
+The cURL HTTP client command line utility is used extensively in the examples for each service.
+In particular this form of the cURL command line is used repeatedly.
+
+    curl -i -k -u guest:guest-password ...
+
+The option -i (aka --include) is used to output HTTP response header information.
+This will be important when the content of the HTTP Location header is required for subsequent requests.
+
+The option -k (aka --insecure) is used to avoid any issues resulting the use of demonstration SSL certificates.
+
+The option -u (aka --user) is used to provide the credentials to be used when the client is challenged by the gateway.
+
+Keep in mind that the samples do not use the cookie features of cURL for the sake of simplicity.
+Therefore each request via cURL will result in an authentication.
 
 <<service_webhdfs.md>>
 <<service_webhcat.md>>

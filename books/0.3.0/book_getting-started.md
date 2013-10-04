@@ -182,6 +182,11 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 | Hive (via ODBC)    | 0.12.0     | ![?]        | ![?]   |
 
 
+### Sandbox Configuration ###
+
+TODO
+
+
 ### Basic Usage ###
 
 The steps described below are intended to get the Knox Gateway server up and running in its default configuration.

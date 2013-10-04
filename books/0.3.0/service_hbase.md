@@ -30,18 +30,10 @@ TODO
 The examples below illustrate the set of basic operations with HBase instance using Stargate REST API.
 Use following link to get more more details about HBase/Stargate API: http://wiki.apache.org/hadoop/Hbase/Stargate.
 
-### Assumptions ###
-
-This document assumes a few things about your environment in order to simplify the examples.
-
-1. The JVM is executable as simply java.
-2. The Apache Knox Gateway is installed and functional.
-3. The example commands are executed within the context of the GATEWAY_HOME current directory.  The GATEWAY_HOME directory is the directory within the Apache Knox Gateway installation that contains the README file and the bin, conf and deployments directories.
-4. A few examples optionally require the use of commands from a standard Groovy installation.  These examples are optional but to try them you will need Groovy [installed|http://groovy.codehaus.org/Installing+Groovy].
-
 ### HBase Stargate Setup ###
 
 #### Launch Stargate ####
+
 The command below launches the Stargate daemon on port 60080
 
     sudo /usr/lib/hbase/bin/hbase-daemon.sh start rest -p 60080
@@ -61,9 +53,10 @@ The command below launches the Stargate daemon on port 60080
 
 60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
 
-### HBase/Stargate via KnoxShell DSL
+### HBase/Stargate client DSL
 
 #### Usage
+
 For more details about client DSL usage please follow this [page|https://cwiki.apache.org/confluence/display/KNOX/Client+Usage].
  
 ##### systemVersion() - Query Software Version.
@@ -112,6 +105,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
     * `HBase.session(session).table().schema().now().string`
 
 ##### table(String tableName).create() - Create Table Schema.
+
 * Request
     * attribute(String name, Object value) - the table's attribute.
     * family(String name) - starts family definition. Has sub requests:
@@ -134,6 +128,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
        .now()```
 
 ##### table(String tableName).update() - Update Table Schema.
+
 * Request
     * family(String name) - starts family definition. Has sub requests:
     * attribute(String name, Object value) - the family's attribute.
@@ -151,6 +146,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .now()```
 
 ##### table(String tableName).regions() - Query Table Metadata.
+
 * Request
     * No request parameters.
 * Response
@@ -159,6 +155,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
     * `HBase.session(session).table(tableName).regions().now().string`
 
 ##### table(String tableName).delete() - Delete Table.
+
 * Request
     * No request parameters.
 * Response
@@ -167,6 +164,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
     * `HBase.session(session).table(tableName).delete().now()`
 
 ##### table(String tableName).row(String rowId).store() - Cell Store.
+
 * Request
     * column(String family, String qualifier, Object value, Long time) - the data to store; "qualifier" may be "null"; "time" is optional.
 * Response
@@ -182,6 +180,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .now()```
 
 ##### table(String tableName).row(String rowId).query() - Cell or Row Query.
+
 * rowId is optional. Querying with null or empty rowId will select all rows.
 * Request
     * column(String family, String qualifier) - the column to select; "qualifier" is optional.
@@ -204,6 +203,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .now().string```
 
 ##### table(String tableName).row(String rowId).delete() - Row, Column, or Cell Delete.
+
 * Request
     * column(String family, String qualifier) - the column to delete; "qualifier" is optional.
     * time(Long) - the upper bound for time filtration.
@@ -221,6 +221,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .now()```
 
 ##### table(String tableName).scanner().create() - Scanner Creation.
+
 * Request
     * startRow(String) - the lower bound for filtration by row id.
     * endRow(String) - the upper bound for filtration by row id.
@@ -248,6 +249,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .now()```
 
 ##### table(String tableName).scanner(String scannerId).getNext() - Scanner Get Next.
+
 * Request
     * No request parameters.
 * Response
@@ -256,6 +258,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
     * `HBase.session(session).table(tableName).scanner(scannerId).getNext().now().string`
 
 ##### table(String tableName).scanner(String scannerId).delete() - Scanner Deletion.
+
 * Request
     * No request parameters.
 * Response
