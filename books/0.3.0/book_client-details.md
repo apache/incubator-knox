@@ -112,7 +112,7 @@ Without this an error would have resulted.
 Of course the DSL also provides a command to list the contents of a directory.
 
     knox:000> println Hdfs.ls( hadoop ).dir( "/tmp/example" ).now().string
-    {"FileStatuses":{"FileStatus":[{"accessTime":1363711366977,"blockSize":134217728,"group":"hdfs","length":19395,"modificationTime":1363711366977,"owner":"bob","pathSuffix":"README","permission":"644","replication":1,"type":"FILE"},{"accessTime":1363711375617,"blockSize":134217728,"group":"hdfs","length":19395,"modificationTime":1363711375617,"owner":"bob","pathSuffix":"README2","permission":"644","replication":1,"type":"FILE"}]}}
+    {"FileStatuses":{"FileStatus":[{"accessTime":1363711366977,"blockSize":134217728,"group":"hdfs","length":19395,"modificationTime":1363711366977,"owner":"guest","pathSuffix":"README","permission":"644","replication":1,"type":"FILE"},{"accessTime":1363711375617,"blockSize":134217728,"group":"hdfs","length":19395,"modificationTime":1363711375617,"owner":"guest","pathSuffix":"README2","permission":"644","replication":1,"type":"FILE"}]}}
 
 It is a design decision of the DSL to not provide type safe classes for various request and response payloads.
 Doing so would provide an undesirable coupling between the DSL and the service implementation.
@@ -149,8 +149,8 @@ This script file is available in the distribution but for convenience, this is t
     import groovy.json.JsonSlurper
     
     gateway = "https://localhost:8443/gateway/sandbox"
-    username = "bob"
-    password = "bob-password"
+    username = "guest"
+    password = "guest-password"
     dataFile = "README"
     
     hadoop = Hadoop.login( gateway, username, password )

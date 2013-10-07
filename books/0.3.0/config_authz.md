@@ -31,7 +31,7 @@ Note: In the examples below \{serviceName\} represents a real service name (e.g.
 
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;*;*</value>
+        <value>guest;*;*</value>
     </param>
 
 ###### USECASE-2: Restrict access to specific Hadoop services to specific Groups
@@ -56,7 +56,7 @@ Note: In the examples below \{serviceName\} represents a real service name (e.g.
     </param>
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;admin;*</value>
+        <value>guest;admin;*</value>
     </param>
 
 ###### USECASE-5: Restrict access to specific Hadoop services to specific Users OR users from specific Remote IPs
@@ -67,7 +67,7 @@ Note: In the examples below \{serviceName\} represents a real service name (e.g.
     </param>
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;*;127.0.0.1</value>
+        <value>guest;*;127.0.0.1</value>
     </param>
 
 ###### USECASE-6: Restrict access to specific Hadoop services to users within specific Groups OR from specific Remote IPs
@@ -89,21 +89,21 @@ Note: In the examples below \{serviceName\} represents a real service name (e.g.
     </param>
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;admin;127.0.0.1</value>
+        <value>guest;admin;127.0.0.1</value>
     </param>
 
 ###### USECASE-8: Restrict access to specific Hadoop services to specific Users AND users within specific Groups
 
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;admin;*</value>
+        <value>guest;admin;*</value>
     </param>
 
 ###### USECASE-9: Restrict access to specific Hadoop services to specific Users AND users from specific Remote IPs
 
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;*;127.0.0.1</value>
+        <value>guest;*;127.0.0.1</value>
     </param>
 
 ###### USECASE-10: Restrict access to specific Hadoop services to users within specific Groups AND from specific Remote IPs
@@ -117,7 +117,7 @@ Note: In the examples below \{serviceName\} represents a real service name (e.g.
 
     <param>
         <name>{serviceName}.acl</name>
-        <value>bob;admins;127.0.0.1</value>
+        <value>guest;admins;127.0.0.1</value>
     </param>
 
 #### Configuration ####
@@ -186,7 +186,7 @@ For instance:
 
     <param>
         <name>webhdfs.acl</name>
-        <value>hdfs,bob;admin;127.0.0.2,127.0.0.3</value>
+        <value>hdfs,guest;admin;127.0.0.2,127.0.0.3</value>
     </param>
 
 You may also set the ACL processing mode at the top level for the topology. This essentially sets the default for the managed cluster.
@@ -199,7 +199,7 @@ It may then be overridden at the service level as well.
 
 this configuration indicates that ONE of the following must be satisfied to be granted access:
 
-1. the user is "hdfs" or "bob" OR
+1. the user is "hdfs" or "guest" OR
 2. the user is in "admin" group OR
 3. the request is coming from 127.0.0.2 or 127.0.0.3
 
@@ -221,7 +221,7 @@ For instance:
 
     <param>
         <name>principal.mapping</name>
-        <value>bob=hdfs</value>
+        <value>guest=hdfs</value>
     </param>
 
 In addition, we allow the administrator to map groups to effective principals. This is done through another param within the identity assertion provider:
@@ -278,7 +278,7 @@ An example of a full topology that illustrates these together is below.
                 <enabled>true</enabled>
                 <param>
                     <name>principal.mapping</name>
-                    <value>bob=hdfs;</value>
+                    <value>guest=hdfs;</value>
                 </param>
                 <param>
                     <name>group.principal.mapping</name>

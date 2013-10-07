@@ -40,7 +40,7 @@ This particular configuration indicates that the Pseudo identity assertion provi
         <enabled>true</enabled>
         <param>
             <name>principal.mapping</name>
-            <value>bob=hdfs;</value>
+            <value>guest=hdfs;</value>
         </param>
         <param>
             <name>group.principal.mapping</name>
@@ -48,7 +48,7 @@ This particular configuration indicates that the Pseudo identity assertion provi
         </param>
     </provider>
 
-This configuration identifies the same identity assertion provider but does provide principal and group mapping rules. In this case, when a user is authenticated as "bob" his identity is actually asserted to the Hadoop cluster as "hdfs". In addition, since there are group principal mappings defined, he will also be considered as a member of the groups "users" and "admin". In this particular example the wildcard "*" is used to indicate that all authenticated users need to be considered members of the "users" group and that only the user "hdfs" is mapped to be a member of the "admin" group.
+This configuration identifies the same identity assertion provider but does provide principal and group mapping rules. In this case, when a user is authenticated as "guest" his identity is actually asserted to the Hadoop cluster as "hdfs". In addition, since there are group principal mappings defined, he will also be considered as a member of the groups "users" and "admin". In this particular example the wildcard "*" is used to indicate that all authenticated users need to be considered members of the "users" group and that only the user "hdfs" is mapped to be a member of the "admin" group.
 
 **NOTE: These group memberships are currently only meaningful for Service Level Authorization using the AclsAuthorization provider. The groups are not currently asserted to the Hadoop cluster at this time. See the Authorization section within this guide to see how this is used.**
 
@@ -71,14 +71,14 @@ For instance:
 
     <param>
         <name>principal.mapping</name>
-        <value>bob=hdfs</value>
+        <value>guest=hdfs</value>
     </param>
 
 For multiple mappings:
 
     <param>
         <name>principal.mapping</name>
-        <value>bob,alice=hdfs;mary=alice2</value>
+        <value>guest,alice=hdfs;mary=alice2</value>
     </param>
 
 #### Group Principal Mapping ####

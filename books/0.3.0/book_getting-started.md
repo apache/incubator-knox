@@ -308,7 +308,7 @@ For example the `sandbox.xml` file will result in gateway URLs of the form `http
 Invoke the LISTSATUS operation on WebHDFS via the gateway.
 This will return a directory listing of the root (i.e. /) directory of HDFS.
 
-    curl -i -k -u bob:bob-password -X GET \
+    curl -i -k -u guest:guest-password -X GET \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/?op=LISTSTATUS'
 
 The results of the above command should result in something to along the lines of the output below.

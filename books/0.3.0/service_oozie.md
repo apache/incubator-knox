@@ -55,8 +55,8 @@ Each line from the file below will need to be typed or copied into the interacti
     gateway = "https://localhost:8443/gateway/sandbox"
     jobTracker = "sandbox:50300";
     nameNode = "sandbox:8020";
-    username = "bob"
-    password = "bob-password"
+    username = "guest"
+    password = "guest-password"
     inputFile = "LICENSE"
     jarFile = "samples/hadoop-examples.jar"
 
@@ -131,52 +131,52 @@ Take care to follow the instructions below for steps 4/5 and 6/7 where the Locat
 These replacement values are identified with { } markup.
 
     # 0. Optionally cleanup the test directory in case a previous example was run without cleaning up.
-    curl -i -k -u bob:bob-password -X DELETE \
+    curl -i -k -u guest:guest-password -X DELETE \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
     # 1. Create a test input directory /tmp/test/input
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input?op=MKDIRS'
 
     # 2. Create a test output directory /tmp/test/input
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/output?op=MKDIRS'
 
     # 3. Create the inode for hadoop-examples.jar in /tmp/test
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/hadoop-examples.jar?op=CREATE'
 
     # 4. Upload hadoop-examples.jar to /tmp/test.  Use a hadoop-examples.jar from a Hadoop install.
-    curl -i -k -u bob:bob-password -T samples/hadoop-examples.jar -X PUT '{Value Location header from command above}'
+    curl -i -k -u guest:guest-password -T samples/hadoop-examples.jar -X PUT '{Value Location header from command above}'
 
     # 5. Create the inode for a sample file README in /tmp/test/input
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input/README?op=CREATE'
 
     # 6. Upload readme.txt to /tmp/test/input.  Use the readme.txt in {GATEWAY_HOME}.
-    curl -i -k -u bob:bob-password -T README -X PUT '{Value of Location header from command above}'
+    curl -i -k -u guest:guest-password -T README -X PUT '{Value of Location header from command above}'
 
     # 7. Submit the word count job via WebHCat/Templeton.
     # Take note of the Job ID in the JSON response as this will be used in the next step.
-    curl -v -i -k -u bob:bob-password -X POST \
+    curl -v -i -k -u guest:guest-password -X POST \
         -d jar=/tmp/test/hadoop-examples.jar -d class=wordcount \
         -d arg=/tmp/test/input -d arg=/tmp/test/output \
         'https://localhost:8443/gateway/sample/templeton/api/v1/mapreduce/jar'
 
     # 8. Look at the status of the job
-    curl -i -k -u bob:bob-password -X GET \
+    curl -i -k -u guest:guest-password -X GET \
         'https://localhost:8443/gateway/sample/templeton/api/v1/queue/{Job ID returned in JSON body from previous step}'
 
     # 9. Look at the status of the job queue
-    curl -i -k -u bob:bob-password -X GET \
+    curl -i -k -u guest:guest-password -X GET \
         'https://localhost:8443/gateway/sample/templeton/api/v1/queue'
 
     # 10. List the contents of the output directory /tmp/test/output
-    curl -i -k -u bob:bob-password -X GET \
+    curl -i -k -u guest:guest-password -X GET \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/output?op=LISTSTATUS'
 
     # 11. Optionally cleanup the test directory
-    curl -i -k -u bob:bob-password -X DELETE \
+    curl -i -k -u guest:guest-password -X DELETE \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
 #### Example #4: WebHDFS & Oozie via cURL
@@ -188,32 +188,32 @@ Take care to follow the instructions below where replacement values are required
 These replacement values are identified with { } markup.
 
     # 0. Optionally cleanup the test directory in case a previous example was run without cleaning up.
-    curl -i -k -u bob:bob-password -X DELETE \
+    curl -i -k -u guest:guest-password -X DELETE \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
 
     # 1. Create the inode for workflow definition file in /tmp/test
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/workflow.xml?op=CREATE'
 
     # 2. Upload the workflow definition file.  This file can be found in {GATEWAY_HOME}/templates
-    curl -i -k -u bob:bob-password -T templates/workflow-definition.xml -X PUT \
+    curl -i -k -u guest:guest-password -T templates/workflow-definition.xml -X PUT \
         '{Value Location header from command above}'
 
     # 3. Create the inode for hadoop-examples.jar in /tmp/test/lib
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/lib/hadoop-examples.jar?op=CREATE'
 
     # 4. Upload hadoop-examples.jar to /tmp/test/lib.  Use a hadoop-examples.jar from a Hadoop install.
-    curl -i -k -u bob:bob-password -T samples/hadoop-examples.jar -X PUT \
+    curl -i -k -u guest:guest-password -T samples/hadoop-examples.jar -X PUT \
         '{Value Location header from command above}'
 
     # 5. Create the inode for a sample input file readme.txt in /tmp/test/input.
-    curl -i -k -u bob:bob-password -X PUT \
+    curl -i -k -u guest:guest-password -X PUT \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/input/README?op=CREATE'
 
     # 6. Upload readme.txt to /tmp/test/input.  Use the readme.txt in {GATEWAY_HOME}.
     # The sample below uses this README file found in {GATEWAY_HOME}.
-    curl -i -k -u bob:bob-password -T README -X PUT \
+    curl -i -k -u guest:guest-password -T README -X PUT \
         '{Value of Location header from command above}'
 
     # 7. Create the job configuration file by replacing the {NameNode host:port} and {JobTracker host:port}
@@ -228,17 +228,17 @@ These replacement values are identified with { } markup.
 
     # 8. Submit the job via Oozie
     # Take note of the Job ID in the JSON response as this will be used in the next step.
-    curl -i -k -u bob:bob-password -T workflow-configuration.xml -H Content-Type:application/xml -X POST \
+    curl -i -k -u guest:guest-password -T workflow-configuration.xml -H Content-Type:application/xml -X POST \
         'https://localhost:8443/gateway/sample/oozie/api/v1/jobs?action=start'
 
     # 9. Query the job status via Oozie.
-    curl -i -k -u bob:bob-password -X GET \
+    curl -i -k -u guest:guest-password -X GET \
         'https://localhost:8443/gateway/sample/oozie/api/v1/job/{Job ID returned in JSON body from previous step}'
 
     # 10. List the contents of the output directory /tmp/test/output
-    curl -i -k -u bob:bob-password -X GET \
+    curl -i -k -u guest:guest-password -X GET \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test/output?op=LISTSTATUS'
 
     # 11. Optionally cleanup the test directory
-    curl -i -k -u bob:bob-password -X DELETE \
+    curl -i -k -u guest:guest-password -X DELETE \
         'https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp/test?op=DELETE&recursive=true'
