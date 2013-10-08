@@ -160,8 +160,14 @@ The Hostmap configuration required to allow access external to the Hadoop cluste
                 <role>hostmap</role>
                 <name>static</name>
                 <enabled>true</enabled>
-                <param><name>ec2-23-22-31-165.compute-1.amazonaws.com</name><value>ip-10-118-99-172.ec2.internal</value></param>
-                <param><name>ec2-23-23-25-10.compute-1.amazonaws.com</name><value>ip-10-39-107-209.ec2.internal</value></param>
+                <param>
+                    <name>ec2-23-22-31-165.compute-1.amazonaws.com</name>
+                    <value>ip-10-118-99-172.ec2.internal</value>
+                </param>
+                <param>
+                    <name>ec2-23-23-25-10.compute-1.amazonaws.com</name>
+                    <value>ip-10-39-107-209.ec2.internal</value>
+                </param>
             </provider>
             ...
         </gateway>
@@ -289,11 +295,12 @@ In order to provide your own certificate for use by the gateway, you will need t
 # ----NEEDS TESTING
 One way to accomplish this is to start with a PKCS12 store for your key pair and then convert it to a Java keystore or JKS.
 
-	openssl pkcs12 -export -in cert.pem -inkey key.pem > server.p12
-	
+    openssl pkcs12 -export -in cert.pem -inkey key.pem > server.p12
+
 The above example uses openssl to create a PKCS12 encoded store for your provided certificate private key.
 
-	keytool -importkeystore -srckeystore {server.p12} -destkeystore gateway.jks -srcstoretype pkcs12
+    keytool -importkeystore -srckeystore {server.p12} -destkeystore gateway.jks -srcstoretype pkcs12
+
 This example converts the PKCS12 store into a Java keystore (JKS). It should prompt you for the keystore and key passwords for the destination keystore. You must use the master-secret for both.
 
 While using this approach a couple of important things to be aware of:
@@ -307,21 +314,23 @@ NOTE: The password for the keystore as well as that of the imported key must be 
 # ----END NEEDS TESTING
 
 ##### Generating a self-signed cert for use in testing or development environments #####
-	
-	keytool -genkey -keyalg RSA -alias gateway-identity -keystore gateway.jks -storepass {master-secret} -validity 360 -keysize 2048 
+
+    keytool -genkey -keyalg RSA -alias gateway-identity -keystore gateway.jks \
+        -storepass {master-secret} -validity 360 -keysize 2048
 
 Keytool will prompt you for a number of elements used that will comprise this distiniguished name (DN) within your certificate. 
 
-<b>NOTE:</b> When it prompts you for your First and Last name be sure to type in the hostname of the machine that your gateway instance will be running on. This is used by clients during hostname verification to ensure that the presented certificate matches the hostname that was used in the URL for the connection - so they need to match.
-	
-<b>NOTE:</b> When it prompts for the key password just press enter to ensure that it is the same as the keystore password. Which as was described earlier must match the master secret for the gateway instance.
+*NOTE:* When it prompts you for your First and Last name be sure to type in the hostname of the machine that your gateway instance will be running on. This is used by clients during hostname verification to ensure that the presented certificate matches the hostname that was used in the URL for the connection - so they need to match.
+
+*NOTE:* When it prompts for the key password just press enter to ensure that it is the same as the keystore password. Which as was described earlier must match the master secret for the gateway instance.
 
 ##### Credential Store #####
 Whenever you provide your own keystore with either a self-signed cert or a real certificate signed by a trusted authority, you will need to create an empty credential store. This is necessary for the current release in order for the system to utilize the same password for the keystore and the key.
 
 The credential stores in Knox use the JCEKS keystore type as it allows for the storage of general secrets in addition to certificates.
 
-	keytool -genkey -alias {anything} -keystore __gateway-credentials.jceks -storepass {master-secret} -validity 360 -keysize 1024 -storetype JCEKS
+    keytool -genkey -alias {anything} -keystore __gateway-credentials.jceks \
+        -storepass {master-secret} -validity 360 -keysize 1024 -storetype JCEKS
 
 Follow the prompts again for the DN for the cert of the credential store. This certificate isn't really used for anything at the moment but is required to create the credential store.
 

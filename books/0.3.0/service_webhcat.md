@@ -17,74 +17,136 @@
 
 ### WebHCat ###
 
-TODO
+WebHCat is a related but separate service from Hive.
+As such it is installed and configured independently.
+The [WebHCat wiki pages](https://cwiki.apache.org/confluence/display/Hive/WebHCat) describe this processes.
+In sandbox this configuration file for WebHCat is located at /etc/hadoop/hcatalog/webhcat-site.xml.
+Note the properties shown below as they are related to configuration required by the gateway.
+
+    <property>
+        <name>templeton.port</name>
+        <value>50111</value>
+    </property>
+
+Also important is the configuration of the JOBTRACKER RPC endpoint.
+For Hadoop 2 this can be found in the yarn-site.xml file.
+In Sandbox this file can be found at /etc/hadoop/conf/yarn-site.xml.
+The property yarn.resourcemanager.address within that file is relevant for the gateway's configuration.
+
+    <property>
+        <name>yarn.resourcemanager.address</name>
+        <value>sandbox.hortonworks.com:8050</value>
+    </property>
+
+See #[WebHDFS] for details about locating the Haddop configuration for the NAMENODE endpoint.
+
+The gateway by default includes a sample topology descriptor file `{GATEWAY_HOME}/deployments/sandbox.xml`.
+The values in this sample are configured to work with an installed Sandbox VM.
+
+    <service>
+        <role>NAMENODE</role>
+        <url>hdfs://localhost:8020</url>
+    </service>
+    <service>
+        <role>JOBTRACKER</role>
+        <url>rpc://localhost:8050</url>
+    </service>
+    <service>
+        <role>WEBHCAT</role>
+        <url>http://localhost:50111/templeton</url>
+    </service>
+
+The URLs provided for the role NAMENODE and JOBTRACKER do not result in an endpoint being exposed by the gateway.
+This information is only required so that other URLs can be rewritten that reference the appropriate RPC address for Hadoop services.
+This prevents clients from needed to be aware of the internal cluster details.
+Note that for Hadoop 2 the JOBTRACKER RPC endpoint is provided by the Resource Manager component.
+
+By default the gateway is configured to use the HTTP endpoint for WebHCat in the Sandbox.
+This could alternatively be configured to use the HTTPS endpoint by provided the correct address.
 
 #### WebHCat URL Mapping ####
 
-TODO
+For WebHCat URLs, the mapping of Knox Gateway accessible URLs to direct WebHCat URLs is simple.
 
-#### WebHCat Examples ####
+| ------- | ------------------------------------------------------------------------------- |
+| Gateway | `https://{gateway-host}:{gateway-port}/{gateway-path}/{cluster-name}/templeton` |
+| Cluster | `http://{webhcat-host}:{webhcat-port}/templeton}`                               |
 
-TODO
 
-#### Example #1: WebHDFS & Templeton/WebHCat via KnoxShell DSL
+#### WebHCat Example ####
 
 This example will submit the familiar WordCount Java MapReduce job to the Hadoop cluster via the gateway using the KnoxShell DSL.
 There are several ways to do this depending upon your preference.
 
 You can use the "embedded" Groovy interpreter provided with the distribution.
 
-    java -jar bin/shell.jar samples/ExampleSubmitJob.groovy
+    java -jar bin/shell.jar samples/ExampleWebHCatJob.groovy
 
 You can manually type in the KnoxShell DSL script into the "embedded" Groovy interpreter provided with the distribution.
 
     java -jar bin/shell.jar
 
-Each line from the file below will need to be typed or copied into the interactive shell.
+Each line from the file `samples/ExampleWebHCatJob.groovy` would then need to be typed or copied into the interactive shell.
 
-##### samples/ExampleSubmitJob
 
-    import com.jayway.jsonpath.JsonPath
-    import org.apache.hadoop.gateway.shell.Hadoop
-    import org.apache.hadoop.gateway.shell.hdfs.Hdfs
-    import org.apache.hadoop.gateway.shell.job.Job
+#### WebHCat Client DSL ####
 
-    import static java.util.concurrent.TimeUnit.SECONDS
+##### submitJava() - Submit a Java MapReduce job.
 
-    gateway = "https://localhost:8443/gateway/sandbox"
-    username = "guest"
-    password = "guest-password"
-    dataFile = "LICENSE"
-    jarFile = "samples/hadoop-examples.jar"
+* Request
+    * jar (String) - The remote file name of the JAR containing the app to execute.
+    * app (String) - The app name to execute.  This is wordcount for example not the class name.
+    * input (String) - The remote directory name to use as input for the job.
+    * output (String) - The remote directory name to store output from the job.
+* Response
+    * jobId : String - The job ID of the submitted job.  Consumes body.
+* Example
 
-    hadoop = Hadoop.login( gateway, username, password )
 
-    println "Delete /tmp/test " + Hdfs.rm(hadoop).file( "/tmp/test" ).recursive().now().statusCode
-    println "Create /tmp/test " + Hdfs.mkdir(hadoop).dir( "/tmp/test").now().statusCode
+    Job.submitJava(session)
+        .jar(remoteJarName)
+        .app(appName)
+        .input(remoteInputDir)
+        .output(remoteOutputDir)
+        .now()
+        .jobId
 
-    putData = Hdfs.put(hadoop).file( dataFile ).to( "/tmp/test/input/FILE" ).later() {
-        println "Put /tmp/test/input/FILE " + it.statusCode }
-    putJar = Hdfs.put(hadoop).file( jarFile ).to( "/tmp/test/hadoop-examples.jar" ).later() {
-         println "Put /tmp/test/hadoop-examples.jar " + it.statusCode }
-    hadoop.waitFor( putData, putJar )
+##### submitPig() - Submit a Pig job.
 
-    jobId = Job.submitJava(hadoop) \
-        .jar( "/tmp/test/hadoop-examples.jar" ) \
-        .app( "wordcount" ) \
-        .input( "/tmp/test/input" ) \
-        .output( "/tmp/test/output" ) \
-        .now().jobId
-    println "Submitted job " + jobId
+* Request
+    * file (String) - The remote file name of the pig script.
+    * arg (String) - An argument to pass to the script.
+    * statusDir (String) - The remote directory to store status output.
+* Response
+    * jobId : String - The job ID of the submitted job.  Consumes body.
+* Example
+    * `Job.submitPig(session).file(remotePigFileName).arg("-v").statusDir(remoteStatusDir).now()`
 
-    done = false
-    count = 0
-    while( !done && count++ < 60 ) {
-        sleep( 1000 )
-        json = Job.queryStatus(hadoop).jobId(jobId).now().string
-        done = JsonPath.read( json, "${SDS}.status.jobComplete" )
-    }
-    println "Done " + done
+##### submitHive() - Submit a Hive job.
 
-    println "Shutdown " + hadoop.shutdown( 10, SECONDS )
+* Request
+    * file (String) - The remote file name of the hive script.
+    * arg (String) - An argument to pass to the script.
+    * statusDir (String) - The remote directory to store status output.
+* Response
+    * jobId : String - The job ID of the submitted job.  Consumes body.
+* Example
+    * `Job.submitHive(session).file(remoteHiveFileName).arg("-v").statusDir(remoteStatusDir).now()`
 
-    exit
+##### queryQueue() - Return a list of all job IDs registered to the user.
+
+* Request
+    * No request parameters.
+* Response
+    * BasicResponse
+* Example
+    * `Job.queryQueue(session).now().string`
+
+##### queryStatus() - Check the status of a job and get related job information given its job ID.
+
+* Request
+    * jobId (String) - The job ID to check. This is the ID received when the job was created.
+* Response
+    * BasicResponse
+* Example
+    * `Job.queryStatus(session).jobId(jobId).now().string`

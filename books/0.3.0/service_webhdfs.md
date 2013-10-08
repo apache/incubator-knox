@@ -93,8 +93,8 @@ The examples below upload a file, download the file and list the contents of the
 
 You can use the Groovy example scripts and interpreter provided with the distribution.
 
-    java -jar bin/shell.jar samples/ExampleWebHfsPutGet.groovy
-    java -jar bin/shell.jar samples/ExampleWebHfsLs.groovy
+    java -jar bin/shell.jar samples/ExampleWebHdfsPutGet.groovy
+    java -jar bin/shell.jar samples/ExampleWebHdfsLs.groovy
 
 You can manually type the client DSL script into the KnoxShell interactive Groovy interpreter provided with the distribution.
 The command below starts the KnoxShell in interactive mode.
@@ -104,38 +104,38 @@ The command below starts the KnoxShell in interactive mode.
 Each line below could be typed or copied into the interactive shell and executed.
 This is provided as an example to illustrate the use of the client DSL.
 
-    # Import the client DSL and a useful utilities for working with JSON.
+    // Import the client DSL and a useful utilities for working with JSON.
     import org.apache.hadoop.gateway.shell.Hadoop
     import org.apache.hadoop.gateway.shell.hdfs.Hdfs
     import groovy.json.JsonSlurper
 
-    # Setup some basic config.
+    // Setup some basic config.
     gateway = "https://localhost:8443/gateway/sandbox"
     username = "guest"
     password = "guest-password"
 
-    # Start the session.
+    // Start the session.
     session = Hadoop.login( gateway, username, password )
 
-    # Cleanup anything leftover from a previous run.
+    // Cleanup anything leftover from a previous run.
     Hdfs.rm( session ).file( "/user/guest/example" ).recursive().now()
 
-    # Upload the README to HDFS.
-    Hdfs.put( session ).file( README ).to( "/user/guest/example/README" ).now()
+    // Upload the README to HDFS.
+    Hdfs.put( session ).file( "README" ).to( "/user/guest/example/README" ).now()
 
-    # Download the README from HDFS.
+    // Download the README from HDFS.
     text = Hdfs.get( session ).from( "/user/guest/example/README" ).now().string
     println text
 
-    # List the contents of the directory.
+    // List the contents of the directory.
     text = Hdfs.ls( session ).dir( "/user/guest/example" ).now().string
     json = (new JsonSlurper()).parseText( text )
     println json.FileStatuses.FileStatus.pathSuffix
 
-    # Cleanup the directory.
+    // Cleanup the directory.
     Hdfs.rm( session ).file( "/user/guest/example" ).recursive().now()
 
-    # Clean the session.
+    // Clean the session.
     session.shutdown()
 
 
@@ -181,18 +181,19 @@ Use can use cURL to directly invoke the REST APIs via the gateway.
 
 ##### WebHDFS client DSL
 
-###### get - Get a file from HDFS (OPEN).
+###### get() - Get a file from HDFS (OPEN).
 
 * Request
     * from( String name ) - The full name of the file in HDFS.
     * file( String name ) - The name name of a local file to create with the content.
+    If this isn't specified the file content must be read from the response.
 * Response
     * BasicResponse
     * If file parameter specified content will be streamed to file.
 * Example
     * `Hdfs.get( session ).from( "/user/guest/example/README" ).now().string`
 
-###### ls - Query the contents of a directory (LISTSTATUS)
+###### ls() - Query the contents of a directory (LISTSTATUS)
 
 * Request
     * dir( String name ) - The full name of the directory in HDFS.
@@ -201,34 +202,34 @@ Use can use cURL to directly invoke the REST APIs via the gateway.
 * Example
     * `Hdfs.ls( session ).dir( "/user/guest/example" ).now().string`
 
-###### mkdir - Create a directory in HDFS (MKDIRS)
+###### mkdir() - Create a directory in HDFS (MKDIRS)
 
 * Request
     * dir( String name ) - The full name of the directory to create in HDFS.
-    * perm( String perm ) - The permissions for the directory (e.g. 644).
+    * perm( String perm ) - The permissions for the directory (e.g. 644).  Optional: default="777"
 * Response
-    * BasicResponse
+    * EmptyResponse - Implicit close().
 * Example
     * `Hdfs.mkdir( session ).dir( "/user/guest/example" ).now()`
 
-###### put - Write a file into HDFS (CREATE)
+###### put() - Write a file into HDFS (CREATE)
 
 * Request
     * text( String text ) - Text to upload to HDFS.  Takes precidence over file if both present.
     * file( String name ) - The name of a local file to upload to HDFS.
     * to( String name ) - The fully qualified name to create in HDFS.
 * Response
-    * BasicResponse
+    * EmptyResponse - Implicit close().
 * Example
     * `Hdfs.put( session ).file( README ).to( "/user/guest/example/README" ).now()`
 
-###### rm - Delete a file or directory (DELETE)
+###### rm() - Delete a file or directory (DELETE)
 
 * Request
     * file( String name ) - The fully qualified file or directory name in HDFS.
-    * recursive( Boolean recursive ) - Delete directory and all of its contents if True.
+    * recursive( Boolean recursive ) - Delete directory and all of its contents if True.  Optional: default=False
 * Response
-    * BasicResponse
+    * BasicResponse - Implicit close().
 * Example
     * `Hdfs.rm( session ).file( "/user/guest/example" ).recursive().now()`
 

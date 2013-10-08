@@ -114,7 +114,9 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * ```HBase.session(session).table(tableName).create()
+
+
+    HBase.session(session).table(tableName).create()
        .attribute("tb_attr1", "value1")
        .attribute("tb_attr2", "value2")
        .family("family1")
@@ -125,7 +127,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
        .family("family3")
        .endFamilyDef()
        .attribute("tb_attr3", "value5")
-       .now()```
+       .now()
 
 ##### table(String tableName).update() - Update Table Schema.
 
@@ -136,7 +138,9 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * ```HBase.session(session).table(tableName).update()
+
+
+    HBase.session(session).table(tableName).update()
          .family("family1")
              .attribute("fm_attr1", "new_value3")
          .endFamilyDef()
@@ -170,14 +174,18 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * ```HBase.session(session).table(tableName).row("row_id_1").store()
+
+
+    HBase.session(session).table(tableName).row("row_id_1").store()
          .column("family1", "col1", "col_value1")
          .column("family1", "col2", "col_value2", 1234567890l)
          .column("family2", null, "fam_value1")
-         .now()```
-    * ```HBase.session(session).table(tableName).row("row_id_2").store()
+         .now()
+
+
+    HBase.session(session).table(tableName).row("row_id_2").store()
          .column("family1", "row2_col1", "row2_col_value1")
-         .now()```
+         .now()
 
 ##### table(String tableName).row(String rowId).query() - Cell or Row Query.
 
@@ -191,16 +199,22 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * BasicResponse
 * Example
-    * ```HBase.session(session).table(tableName).row("row_id_1")
+
+
+    HBase.session(session).table(tableName).row("row_id_1")
          .query()
-         .now().string```
-    * `HBase.session(session).table(tableName).row().query().now().string`
-    * ```HBase.session(session).table(tableName).row().query()
+         .now().string
+
+
+    HBase.session(session).table(tableName).row().query().now().string
+
+
+    HBase.session(session).table(tableName).row().query()
          .column("family1", "row2_col1")
          .column("family2")
          .times(0, Long.MAX_VALUE)
          .numVersions(1)
-         .now().string```
+         .now().string
 
 ##### table(String tableName).row(String rowId).delete() - Row, Column, or Cell Delete.
 
@@ -210,11 +224,15 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * EmptyResponse
 * Example
-    * ```HBase.session(session).table(tableName).row("row_id_1")
+
+
+    HBase.session(session).table(tableName).row("row_id_1")
          .delete()
          .column("family1", "col1")
          .now()```
-    * ```HBase.session(session).table(tableName).row("row_id_1")
+
+
+    HBase.session(session).table(tableName).row("row_id_1")
          .delete()
          .column("family2")
          .time(Long.MAX_VALUE)
@@ -236,7 +254,9 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Response
     * scannerId : String - the scanner ID of the created scanner. Consumes body.
 * Example
-    * ```HBase.session(session).table(tableName).scanner().create()
+
+
+    HBase.session(session).table(tableName).scanner().create()
          .column("family1", "col2")
          .column("family2")
          .startRow("row_id_1")

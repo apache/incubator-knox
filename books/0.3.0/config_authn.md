@@ -123,18 +123,19 @@ The definition would look like the following in the topoloogy file:
 
     ...
     <provider>
-                <role>authentication</role>
-                <name>ShiroProvider</name>
-                <enabled>true</enabled>
-                <param>
-                    <!-- 
-                    session timeout in minutes,  this is really idle timeout,
-                    defaults to 30mins, if the property value is not defined,, 
-                    current client authentication would expire if client idles contiuosly for more than this value
-                    -->
-                    <name>sessionTimeout</name>
-                    <value>30</value>
-                </param>
+        <role>authentication</role>
+        <name>ShiroProvider</name>
+        <enabled>true</enabled>
+        <param>
+            <!--
+            Session timeout in minutes. This is really idle timeout.
+            Defaults to 30 minutes, if the property value is not defined.
+            Current client authentication will expire if client idles
+            continuously for more than this value
+            -->
+            <name>sessionTimeout</name>
+            <value>30</value>
+        </param>
     <provider>
     ...
 

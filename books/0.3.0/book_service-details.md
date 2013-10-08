@@ -24,8 +24,16 @@ You may notice that there are some minor differences between using the REST API 
 In general this is necessary in order to achieve the goal of leaking internal Hadoop cluster details to the client.
 
 Keep in mind that the gateway uses a plugin model for supporting Hadoop services.
-Check back with a the [Apache Knox][site] site for the latest news on plugin availability.
+Check back with the [Apache Knox][site] site for the latest news on plugin availability.
 You can also create your own custom plugin to extend the capabilities of the gateway.
+
+These are the current Hadoop services with built-in support.
+
+* #[WebHDFS]
+* #[WebHCat]
+* #[Oozie]
+* #[HBase]
+* #[Hive]
 
 ### Assumptions
 

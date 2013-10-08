@@ -59,7 +59,7 @@ The GATEWAY_HOME directory is the directory within the Apache Knox Gateway insta
 * A few examples require the use of commands from a standard Groovy installation.  These examples are optional but to try them you will need Groovy [installed](http://groovy.codehaus.org/Installing+Groovy).
 
 
-### Assumptions ###
+### Basics ###
 
 The DSL requires a shell to interpret the Groovy script.
 The shell can either be used interactively or to execute a script file.
@@ -81,7 +81,7 @@ Using `^C` to exit can sometimes leaves the parent shell in a problematic state.
 
 The shell can also be used to execute a script by passing a single filename argument.
 
-    java -jar bin/shell.jar samples/ExamplePutFile.groovy
+    java -jar bin/shell.jar samples/ExampleWebHdfsPutGetFile.groovy
 
 
 ### Examples ###
@@ -90,8 +90,8 @@ Once the shell can be launched the DSL can be used to interact with the gateway 
 Below is a very simple example of an interactive shell session to upload a file to HDFS.
 
     java -jar bin/shell.jar
-    knox:000> hadoop = Hadoop.login( "https://localhost:8443/gateway/sandbox", "guest", "guest-password" )
-    knox:000> Hdfs.put( hadoop ).file( "README" ).to( "/tmp/example/README" ).now()
+    knox:000> session = Hadoop.login( "https://localhost:8443/gateway/sandbox", "guest", "guest-password" )
+    knox:000> Hdfs.put( session ).file( "README" ).to( "/tmp/example/README" ).now()
 
 The `knox:000>` in the example above is the prompt from the embedded Groovy console.
 If you output doesn't look like this you may need to set the verbosity and show-last-result preferences as described above in the Usage section.
@@ -99,19 +99,19 @@ If you output doesn't look like this you may need to set the verbosity and show-
 If you relieve an error `HTTP/1.1 403 Forbidden` it may be because that file already exists.
 Try deleting it with the following command and then try again.
 
-    knox:000> Hdfs.rm(hadoop).file("/tmp/example/README").now()
+    knox:000> Hdfs.rm(session).file("/tmp/example/README").now()
 
 Without using some other tool to browse HDFS it is hard to tell that that this command did anything.
 Execute this to get a bit more feedback.
 
-    knox:000> println "Status=" + Hdfs.put( hadoop ).file( "README" ).to( "/tmp/example/README2" ).now().statusCode
+    knox:000> println "Status=" + Hdfs.put( session ).file( "README" ).to( "/tmp/example/README2" ).now().statusCode
     Status=201
 
 Notice that a different filename is used for the destination.
 Without this an error would have resulted.
 Of course the DSL also provides a command to list the contents of a directory.
 
-    knox:000> println Hdfs.ls( hadoop ).dir( "/tmp/example" ).now().string
+    knox:000> println Hdfs.ls( session ).dir( "/tmp/example" ).now().string
     {"FileStatuses":{"FileStatus":[{"accessTime":1363711366977,"blockSize":134217728,"group":"hdfs","length":19395,"modificationTime":1363711366977,"owner":"guest","pathSuffix":"README","permission":"644","replication":1,"type":"FILE"},{"accessTime":1363711375617,"blockSize":134217728,"group":"hdfs","length":19395,"modificationTime":1363711375617,"owner":"guest","pathSuffix":"README2","permission":"644","replication":1,"type":"FILE"}]}}
 
 It is a design decision of the DSL to not provide type safe classes for various request and response payloads.
@@ -121,7 +121,7 @@ See the Groovy section below for a variety capabilities and tools for working wi
 The example below shows the use of JsonSlurper and GPath to extract content from a JSON response.
 
     knox:000> import groovy.json.JsonSlurper
-    knox:000> text = Hdfs.ls( hadoop ).dir( "/tmp/example" ).now().string
+    knox:000> text = Hdfs.ls( session ).dir( "/tmp/example" ).now().string
     knox:000> json = (new JsonSlurper()).parseText( text )
     knox:000> println json.FileStatuses.FileStatus.pathSuffix
     [README, README2]
@@ -129,20 +129,20 @@ The example below shows the use of JsonSlurper and GPath to extract content from
 *In the future, "built-in" methods to slurp JSON and XML may be added to make this a bit easier.*
 *This would allow for this type if single line interaction.*
 
-    println Hdfs.ls(hadoop).dir("/tmp").now().json().FileStatuses.FileStatus.pathSuffix
+    println Hdfs.ls(session).dir("/tmp").now().json().FileStatuses.FileStatus.pathSuffix
 
 Shell session should always be ended with shutting down the session.
 The examples above do not touch on it but the DSL supports the simple execution of commands asynchronously.
 The shutdown command attempts to ensures that all asynchronous commands have completed before existing the shell.
 
-    knox:000> hadoop.shutdown()
+    knox:000> session.shutdown()
     knox:000> exit
 
 All of the commands above could have been combined into a script file and executed as a single line.
 
-    java -jar bin/shell.jar samples/ExamplePutFile.groovy
+    java -jar bin/shell.jar samples/ExampleWebHdfsPutGet.groovy
 
-This script file is available in the distribution but for convenience, this is the content.
+This would be the content of that script.
 
     import org.apache.hadoop.gateway.shell.Hadoop
     import org.apache.hadoop.gateway.shell.hdfs.Hdfs
@@ -153,13 +153,13 @@ This script file is available in the distribution but for convenience, this is t
     password = "guest-password"
     dataFile = "README"
     
-    hadoop = Hadoop.login( gateway, username, password )
-    Hdfs.rm( hadoop ).file( "/tmp/example" ).recursive().now()
-    Hdfs.put( hadoop ).file( dataFile ).to( "/tmp/example/README" ).now()
-    text = Hdfs.ls( hadoop ).dir( "/tmp/example" ).now().string
+    session = Hadoop.login( gateway, username, password )
+    Hdfs.rm( session ).file( "/tmp/example" ).recursive().now()
+    Hdfs.put( session ).file( dataFile ).to( "/tmp/example/README" ).now()
+    text = Hdfs.ls( session ).dir( "/tmp/example" ).now().string
     json = (new JsonSlurper()).parseText( text )
     println json.FileStatuses.FileStatus.pathSuffix
-    hadoop.shutdown()
+    session.shutdown()
     exit
 
 Notice the `Hdfs.rm` command.  This is included simply to ensure that the script can be rerun.
@@ -172,19 +172,19 @@ The DSL supports the ability to invoke commands asynchronously via the later() i
 The object returned from the later() method is a java.util.concurrent.Future parametrized with the response type of the command.
 This is an example of how to asynchronously put a file to HDFS.
 
-    future = Hdfs.put(hadoop).file("README").to("tmp/example/README").later()
+    future = Hdfs.put(session).file("README").to("tmp/example/README").later()
     println future.get().statusCode
 
 The future.get() method will block until the asynchronous command is complete.
 To illustrate the usefulness of this however multiple concurrent commands are required.
 
-    readmeFuture = Hdfs.put(hadoop).file("README").to("tmp/example/README").later()
-    licenseFuture = Hdfs.put(hadoop).file("LICENSE").to("tmp/example/LICENSE").later()
-    hadoop.waitFor( readmeFuture, licenseFuture )
+    readmeFuture = Hdfs.put(session).file("README").to("tmp/example/README").later()
+    licenseFuture = Hdfs.put(session).file("LICENSE").to("tmp/example/LICENSE").later()
+    session.waitFor( readmeFuture, licenseFuture )
     println readmeFuture.get().statusCode
     println licenseFuture.get().statusCode
 
-The hadoop.waitFor() method will wait for one or more asynchronous commands to complete.
+The session.waitFor() method will wait for one or more asynchronous commands to complete.
 
 
 ### Closures ###
@@ -196,17 +196,17 @@ Closures are blocks of code that are passed into the later() invocation method.
 In Groovy these are contained within {} immediately after a method.
 These blocks of code are executed once the asynchronous command is complete.
 
-    Hdfs.put(hadoop).file("README").to("tmp/example/README").later(){ println it.statusCode }
+    Hdfs.put(session).file("README").to("tmp/example/README").later(){ println it.statusCode }
 
 In this example the put() command is executed on a separate thread and once complete the `println it.statusCode` block is executed on that thread.
 The it variable is automatically populated by Groovy and is a reference to the result that is returned from the future or now() method.
 The future example above can be rewritten to illustrate the use of closures.
 
-    readmeFuture = Hdfs.put(hadoop).file("README").to("tmp/example/README").later() { println it.statusCode }
-    licenseFuture = Hdfs.put(hadoop).file("LICENSE").to("tmp/example/LICENSE").later() { println it.statusCode }
-    hadoop.waitFor( readmeFuture, licenseFuture )
+    readmeFuture = Hdfs.put(session).file("README").to("tmp/example/README").later() { println it.statusCode }
+    licenseFuture = Hdfs.put(session).file("LICENSE").to("tmp/example/LICENSE").later() { println it.statusCode }
+    session.waitFor( readmeFuture, licenseFuture )
 
-Again, the hadoop.waitFor() method will wait for one or more asynchronous commands to complete.
+Again, the session.waitFor() method will wait for one or more asynchronous commands to complete.
 
 
 ### Constructs ###
@@ -214,7 +214,7 @@ Again, the hadoop.waitFor() method will wait for one or more asynchronous comman
 In order to understand the DSL there are three primary constructs that need to be understood.
 
 
-### Hadoop ###
+#### Session ####
 
 This construct encapsulates the client side session state that will be shared between all command invocations.
 In particular it will simplify the management of any tokens that need to be presented with each command invocation.
@@ -224,31 +224,31 @@ The syntax associated with this is expected to change we expect that credentials
 Rather it is expected that some form of access token will be used to initialize the session.
 
 
-### Services ###
+#### Services ####
 
 Services are the primary extension point for adding new suites of commands.
-The built in examples are: Hdfs, Job and Workflow.
-The desire for extensibility is the reason for the slightly awkward Hdfs.ls(hadoop) syntax.
-Certainly something more like `hadoop.hdfs().ls()` would have been preferred but this would prevent adding new commands easily.
+The current built in examples are: Hdfs, Job and Workflow.
+The desire for extensibility is the reason for the slightly awkward Hdfs.ls(session) syntax.
+Certainly something more like `session.hdfs().ls()` would have been preferred but this would prevent adding new commands easily.
 At a minimum it would result in extension commands with a different syntax from the "built-in" commands.
 
 The service objects essentially function as a factory for a suite of commands.
 
 
-### Commands ###
+#### Commands ####
 
 Commands provide the behavior of the DSL.
 They typically follow a Fluent interface style in order to allow for single line commands.
 There are really three parts to each command: Request, Invocation, Response
 
 
-### Request ###
+#### Request ####
 
 The request is populated by all of the methods following the "verb" method and the "invoke" method.
-For example in `Hdfs.rm(hadoop).ls(dir).now()` the request is populated between the "verb" method `rm()` and the "invoke" method `now()`.
+For example in `Hdfs.rm(session).ls(dir).now()` the request is populated between the "verb" method `rm()` and the "invoke" method `now()`.
 
 
-### Invocation ###
+#### Invocation ####
 
 The invocation method controls how the request is invoked.
 Currently supported synchronous and asynchronous invocation.
@@ -258,7 +258,7 @@ In addition later() invocation method can optionally be provided a closure to ex
 See the Futures and Closures sections below for additional detail and examples.
 
 
-### Response ###
+#### Response ####
 
 The response contains the results of the invocation of the request.
 In most cases the response is a thin wrapper over the HTTP response.
@@ -276,12 +276,12 @@ In fact many commands will share a single BasicResponse type that only provides 
 Thanks to Groovy these methods can be accessed as attributes.
 In the some of the examples the staticCode was retrieved for example.
 
-    println Hdfs.put(hadoop).rm(dir).now().statusCode
+    println Hdfs.put(session).rm(dir).now().statusCode
 
 Groovy will invoke the getStatusCode method to retrieve the statusCode attribute.
 
 The three methods getStream(), getBytes() and getString deserve special attention.
-Care must be taken that the HTTP body is read only once.
+Care must be taken that the HTTP body is fully read once and only once.
 Therefore one of these methods (and only one) must be called once and only once.
 Calling one of these more than once will cause an error.
 Failing to call one of these methods once will result in lingering open HTTP connections.
@@ -294,160 +294,12 @@ The close() method may be called after reading the body partially to discard the
 
 ### Services ###
 
-There are three basic DSL services and commands bundled with the shell.
-
-
-#### HDFS ####
-
-Provides basic HDFS commands.
-*Using these DSL commands requires that WebHDFS be running in the Hadoop cluster.*
-
-#### Jobs (Templeton/WebHCat) ####
-
-Provides basic job submission and status commands.
-*Using these DSL commands requires that Templeton/WebHCat be running in the Hadoop cluster.*
-
-
-#### Workflow (Oozie) ####
-
-Provides basic workflow submission and status commands.
-*Using these DSL commands requires that Oozie be running in the Hadoop cluster.*
-
-
-### HDFS Commands (WebHDFS) ###
-
-#### ls() - List the contents of a HDFS directory.
-
-* Request
-    * dir (String) - The HDFS directory to list.
-* Response
-    * BasicResponse
-* Example
-    * `Hdfs.ls(hadoop).ls().dir("/").now()`
-
-#### rm() - Remove a HDFS file or directory.
-
-* Request
-    * file (String) - The HDFS file or directory to remove.
-    * recursive (Boolean) - If the file is a directory also remove any contained files and directories. Optional: default=false
-* Response
-    * EmptyResponse - Implicit close().
-* Example
-    * `Hdfs.rm(hadoop).file("/tmp/example").recursive().now()`
-
-#### put() - Copy a file from the local file system to HDFS.
-
-* Request
-    * text (String) - The text to copy to the remote file.
-    * file (String) - The name of a local file to copy to the remote file.
-    * to (String) - The name of the remote file create.
-* Response
-    * EmptyResponse - Implicit close().
-* Example
-    * `Hdfs.put(hadoop).file("localFile").to("/tmp/example/remoteFile").now()`
-
-#### get() - Copy a file from HDFS to the local file system.
-
-* Request
-    * file (String) - The name of the local file to create from the remote file.  If this isn't specified the file content must be read from the response.
-    * from (String) - The name of the remote file to copy.
-* Response
-    * BasicResponse
-* Example
-    * `Hdfs.get(hadoop).file("localFile").from("/tmp/example/remoteFile").now()`
-
-#### mkdir() - Create a directory in HDFS.
-
-* Request
-    * dir (String) - The name of the remote directory to create.
-    * perm (String) - The permissions to create the remote directory with.  Optional: default="777"
-* Response
-    * EmptyResponse - Implicit close().
-* Example
-    * `Hdfs.mkdir(hadoop).dir("/tmp/example").perm("777").now()`
-
-
-### Job Commands (WebHCat/Templeton)
-
-#### submitJava() - Submit a Java MapReduce job.
-
-* Request
-    * jar (String) - The remote file name of the JAR containing the app to execute.
-    * app (String) - The app name to execute.  This is wordcount for example not the class name.
-    * input (String) - The remote directory name to use as input for the job.
-    * output (String) - The remote directory name to store output from the job.
-* Response
-    * jobId : String - The job ID of the submitted job.  Consumes body.
-* Example
-    * `Job.submitJava(hadoop).jar(remoteJarName).app(appName).input(remoteInputDir).output(remoteOutputDir).now().jobId`
-
-#### submitPig() - Submit a Pig job.
-
-* Request
-    * file (String) - The remote file name of the pig script.
-    * arg (String) - An argument to pass to the script.
-    * statusDir (String) - The remote directory to store status output.
-* Response
-    * jobId : String - The job ID of the submitted job.  Consumes body.
-* Example
-    * `Job.submitPig(hadoop).file(remotePigFileName).arg("-v").statusDir(remoteStatusDir).now()`
-
-#### submitHive() - Submit a Hive job.
-
-* Request
-    * file (String) - The remote file name of the hive script.
-    * arg (String) - An argument to pass to the script.
-    * statusDir (String) - The remote directory to store status output.
-* Response
-    * jobId : String - The job ID of the submitted job.  Consumes body.
-* Example
-    * `Job.submitHive(hadoop).file(remoteHiveFileName).arg("-v").statusDir(remoteStatusDir).now()`
-
-#### queryQueue() - Return a list of all job IDs registered to the user.
-
-* Request
-    * No request parameters.
-* Response
-    * BasicResponse
-* Example
-    * `Job.queryQueue(hadoop).now().string`
-
-#### queryStatus() - Check the status of a job and get related job information given its job ID.
-
-* Request
-    * jobId (String) - The job ID to check. This is the ID received when the job was created.
-* Response
-    * BasicResponse
-* Example
-    * `Job.queryStatus(hadoop).jobId(jobId).now().string`
-
-
-### Workflow Commands (Oozie) ###
-
-#### submit() - Submit a workflow job.
-
-* Request
-    * text (String) - XML formatted workflow configuration string.
-    * file (String) - A filename containing XML formatted workflow configuration.
-    * action (String) - The initial action to take on the job.  Optional: Default is "start".
-* Response
-    * BasicResponse
-* Example
-    * `Workflow.submit(hadoop).file(localFile).action("start").now()`
-
-#### status() - Query the status of a workflow job.
-
-* Request
-    * jobId (String) - The job ID to check. This is the ID received when the job was created.
-* Response
-    * BasicResponse
-* Example
-    * `Workflow.status(hadoop).jobId(jobId).now().string`
+The built-in supported client DLS for each Hadoop service can be found in the #[Service Details] section.
 
 
 ### Extension ###
 
-Extensibility is a key design goal of the KnoxShell and DSL.
+Extensibility is a key design goal of the KnoxShell and client DSL.
 There are two ways to provide extended functionality for use with the shell.
 The first is to simply create Groovy scripts that use the DSL to perform a useful task.
 The second is to add new services and commands.
@@ -472,9 +324,11 @@ These happen to be Groovy source files but could with very minor changes be Java
 The easiest way to add these to the shell is to compile them directory into the `ext` directory.
 *Note: This command depends upon having the Groovy compiler installed and available on the execution path.*
 
-    groovy -d ext -cp bin/shell.jar samples/SampleService.groovy samples/SampleSimpleCommand.groovy samples/SampleComplexCommand.groovy
+    groovy -d ext -cp bin/shell.jar samples/SampleService.groovy \
+        samples/SampleSimpleCommand.groovy samples/SampleComplexCommand.groovy
 
 These source files are available in the samples directory of the distribution but these are included here for convenience.
+
 
 #### Sample Service (Groovy)
 
@@ -482,14 +336,14 @@ These source files are available in the samples directory of the distribution bu
 
     class SampleService {
 
-        static String PATH = "/namenode/api/v1"
+        static String PATH = "/webhdfs/v1"
 
-        static SimpleCommand simple( Hadoop hadoop ) {
-            return new SimpleCommand( hadoop )
+        static SimpleCommand simple( Hadoop session ) {
+            return new SimpleCommand( session )
         }
 
-        static ComplexCommand.Request complex( Hadoop hadoop ) {
-            return new ComplexCommand.Request( hadoop )
+        static ComplexCommand.Request complex( Hadoop session ) {
+            return new ComplexCommand.Request( session )
         }
 
     }
@@ -506,8 +360,8 @@ These source files are available in the samples directory of the distribution bu
 
     class SimpleCommand extends AbstractRequest<BasicResponse> {
 
-        SimpleCommand( Hadoop hadoop ) {
-            super( hadoop )
+        SimpleCommand( Hadoop session ) {
+            super( session )
         }
 
         private String param
@@ -531,6 +385,7 @@ These source files are available in the samples directory of the distribution bu
 
     }
 
+
 #### Sample Complex Command (Groovy)
 
     import com.jayway.jsonpath.JsonPath
@@ -547,8 +402,8 @@ These source files are available in the samples directory of the distribution bu
 
         static class Request extends AbstractRequest<Response> {
 
-            Request( Hadoop hadoop ) {
-                super( hadoop )
+            Request( Hadoop session ) {
+                super( session )
             }
 
             private String param;
@@ -586,6 +441,7 @@ These source files are available in the samples directory of the distribution bu
 
     }
 
+
 ### Groovy
 
 The shell included in the distribution is basically an unmodified packaging of the Groovy shell.
@@ -594,13 +450,13 @@ In fact the JARs required to execute the DSL are included on the class path by d
 Therefore these command are functionally equivalent if you have Groovy [installed][15].
 See below for a description of what is required for JARs required by the DSL from `lib` and `dep` directories.
 
-    java -jar bin/shell.jar samples/ExamplePutFile.groovy
-    groovy -classpath {JARs required by the DSL from lib and dep} samples/ExamplePutFile.groovy
+    java -jar bin/shell.jar samples/ExampleWebHdfsPutGet.groovy
+    groovy -classpath {JARs required by the DSL from lib and dep} samples/ExampleWebHdfsPutGet.groovy
 
 The interactive shell isn't exactly equivalent.
-However the only difference is that the shell.jar automatically executes some additional imports that are useful for the KnoxShell DSL.
+However the only difference is that the shell.jar automatically executes some additional imports that are useful for the KnoxShell client DSL.
 So these two sets of commands should be functionality equivalent.
-*However there is currently a class loading issue that prevents the groovysh command from working propertly.*
+*However there is currently a class loading issue that prevents the groovysh command from working properly.*
 
     java -jar bin/shell.jar
 
@@ -621,7 +477,7 @@ Alternatively, you can use the Groovy Console which does not appear to have the 
     import org.apache.hadoop.gateway.shell.workflow.Workflow
     import java.util.concurrent.TimeUnit
 
-The list of JARs currently required by the DSL is
+The JARs currently required by the client DSL are
 
     lib/gateway-shell-${gateway-version}.jar
     dep/httpclient-4.2.3.jar
@@ -631,17 +487,17 @@ The list of JARs currently required by the DSL is
 
 So on Linux/MacOS you would need this command
 
-    groovy -cp lib/gateway-shell-0.2.0-SNAPSHOT.jar:dep/httpclient-4.2.3.jar:dep/httpcore-4.2.2.jar:dep/commons-lang3-3.1.jar:dep/commons-codec-1.7.jar samples/ExamplePutFile.groovy
+    groovy -cp lib/gateway-shell-0.2.0-SNAPSHOT.jar:dep/httpclient-4.2.3.jar:dep/httpcore-4.2.2.jar:dep/commons-lang3-3.1.jar:dep/commons-codec-1.7.jar samples/ExampleWebHdfsPutGet.groovy
 
 and on Windows you would need this command
 
-    groovy -cp lib/gateway-shell-0.2.0-SNAPSHOT.jar;dep/httpclient-4.2.3.jar;dep/httpcore-4.2.2.jar;dep/commons-lang3-3.1.jar;dep/commons-codec-1.7.jar samples/ExamplePutFile.groovy
+    groovy -cp lib/gateway-shell-0.2.0-SNAPSHOT.jar;dep/httpclient-4.2.3.jar;dep/httpcore-4.2.2.jar;dep/commons-lang3-3.1.jar;dep/commons-codec-1.7.jar samples/ExampleWebHdfsPutGet.groovy
 
 The exact list of required JARs is likely to change from release to release so it is recommended that you utilize the wrapper `bin/shell.jar`.
 
 In addition because the DSL can be used via standard Groovy, the Groovy integrations in many popular IDEs (e.g. IntelliJ , Eclipse) can also be used.
 This makes it particularly nice to develop and execute scripts to interact with Hadoop.
-The code-completion feature in particular provides immense value.
+The code-completion features in modern IDEs in particular provides immense value.
 All that is required is to add the shell-0.2.0.jar to the projects class path.
 
 There are a variety of Groovy tools that make it very easy to work with the standard interchange formats (i.e. JSON and XML).
