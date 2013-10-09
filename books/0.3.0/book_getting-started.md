@@ -173,7 +173,7 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 | WebHDFS            | 2.1.0      | ![y]        | ![y]   |
 | WebHCat/Templeton  | 0.11.0     | ![y]        | ![y]   |
 | Ozzie              | 4.0.0      | ![y]        | ![y]   |
-| HBase/Stargate     | 0.95.2     | ![y]        | ![?]   |
+| HBase/Stargate     | 0.95.2     | ![y]        | ![n]   |
 | Hive (via WebHCat) | 0.11.0     | ![y]        | ![n]   |
 |                    | 0.12.0     | ![y]        | ![?]   |
 | Hive (via JDBC)    | 0.11.0     | ![n]        | ![n]   |

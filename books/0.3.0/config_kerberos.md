@@ -29,19 +29,24 @@ Once you have a Hadoop cluster that is using Kerberos for authentication, you ha
 
 #### Create Kerberos principal, keytab for Knox ####
 
-One way of doing this, assuming your KDC realm is EXAMPLE.COM
+One way of doing this, assuming your KDC realm is EXAMPLE.COM, is to ssh into your host running KDC and execute `kadmin.local`
+That will result in an interactive session in which you can execute commands.
 
 ssh into your host running KDC
 
     kadmin.local
     add_principal -randkey knox/knox@EXAMPLE.COM
     ktadd -norandkey -k /etc/security/keytabs/knox.service.keytab
+    ktadd -k /etc/security/keytabs/knox.service.keytab -norandkey knox/knox@EXAMPLE.COM
+    exit
 
 #### Grant Proxy privileges for Knox user in `core-site.xml` on Hadoop master nodes ####
 
 Update `core-site.xml` and add the following lines towards the end of the file.
 
-Replace FQDN_OF_KNOX_HOST with right value in your cluster.
+Replace FQDN_OF_KNOX_HOST with the fully qualified domain name of the host running the gateway.
+You can usually find this by running `hostname -f` on that host.
+
 You could use * for local developer testing if Knox host does not have static IP.
 
     <property>
@@ -87,7 +92,7 @@ You could use * for local developer testing if Knox host does not have static IP
 
 #### Copy knox keytab to Knox host ####
 
-Add unix account for knox on Knox host
+Add unix account for the knox user on Knox host
 
     useradd -g hadoop knox
 
@@ -111,4 +116,4 @@ Update `conf/gateway-site.xml` in your Knox installation and set the value of `g
 #### Restart Knox ####
 
 After you do the above configurations and restart Knox, Knox would use SPNego to authenticate with Hadoop services and Oozie.
-There is not change in the way you make calls to Knox whether you use Curl or Knox DSL.
+There is no change in the way you make calls to Knox whether you use Curl or Knox DSL.
