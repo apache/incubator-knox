@@ -158,7 +158,6 @@ The table below provides a brief explanation of the important files and director
 | README        | Provides basic information about the Apache Knox Gateway.                                           |
 | ISSUES        | Describes significant know issues.                                                                  |
 | CHANGES       | Enumerates the changes between releases.                                                            |
-| INSTALL       | Provides simple installation instructions.                                                          |
 | LICENSE       | Documents the license under which this software is provided.                                        |
 | NOTICE        | Documents required attribution notices for included dependencies.                                   |
 | DISCLAIMER    | Documents that this release is from a project undergoing incubation at Apache.                      |
@@ -175,11 +174,12 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 | WebHCat/Templeton  | 0.11.0     | ![y]        | ![y]   |
 | Ozzie              | 4.0.0      | ![y]        | ![y]   |
 | HBase/Stargate     | 0.95.2     | ![y]        | ![?]   |
-| Hive (via WebHCat) | 0.11.0     | ![y]        | ![y]   |
-|                    | 0.12.0     | ![y]        | ![y]   |
+| Hive (via WebHCat) | 0.11.0     | ![y]        | ![n]   |
+|                    | 0.12.0     | ![y]        | ![?]   |
 | Hive (via JDBC)    | 0.11.0     | ![n]        | ![n]   |
-|                    | 0.12.0     | ![?]![y]    | ![?]   |
-| Hive (via ODBC)    | 0.12.0     | ![?]        | ![?]   |
+|                    | 0.12.0     | ![?]        | ![?]   |
+| Hive (via ODBC)    | 0.11.0     | ![n]        | ![n]   |
+| Hive               | 0.12.0     | ![?]        | ![?]   |
 
 
 ### Sandbox Configuration ###

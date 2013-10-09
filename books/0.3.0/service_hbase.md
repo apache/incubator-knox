@@ -38,9 +38,9 @@ The command below launches the Stargate daemon on port 60080
 
     sudo /usr/lib/hbase/bin/hbase-daemon.sh start rest -p 60080
 
-60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
+Port 60080 is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
 
-#### Configure Sandbox port mapping for VirtualBox
+#### Configure Sandbox port mapping for VirtualBox ####
 
 1. Select the VM
 2. Select menu Machine>Settings...
@@ -51,15 +51,25 @@ The command below launches the Stargate daemon on port 60080
 7. Press OK to close the rule window
 8. Press OK to Network window save the changes
 
-60080 post is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
+60080 pot is used because it was specified in sample Hadoop cluster deployment `{GATEWAY_HOME}/deployments/sandbox.xml`.
 
-### HBase/Stargate client DSL
+#### HBase Restart ####
 
-#### Usage
+If it becomes necessary to restart HBase you can log into the hosts running HBase and use these steps.
+
+    sudo /usr/lib/hbase/bin/hbase-daemon.sh stop rest
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh stop regionserver
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh stop master
+
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh start regionserver
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh start master
+    sudo /usr/lib/hbase/bin/hbase-daemon.sh start rest -p 60080
+
+### HBase/Stargate client DSL ###
 
 For more details about client DSL usage please follow this [page|https://cwiki.apache.org/confluence/display/KNOX/Client+Usage].
  
-##### systemVersion() - Query Software Version.
+#### systemVersion() - Query Software Version.
 
 * Request
     * No request parameters.
@@ -68,7 +78,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).systemVersion().now().string`
 
-##### clusterVersion() - Query Storage Cluster Version.
+#### clusterVersion() - Query Storage Cluster Version.
 
 * Request
     * No request parameters.
@@ -77,7 +87,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).clusterVersion().now().string`
 
-##### status() - Query Storage Cluster Status.
+#### status() - Query Storage Cluster Status.
 
 * Request
     * No request parameters.
@@ -86,7 +96,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).status().now().string`
 
-##### table().list() - Query Table List.
+#### table().list() - Query Table List.
 
 * Request
     * No request parameters.
@@ -95,7 +105,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
   * `HBase.session(session).table().list().now().string`
 
-##### table(String tableName).schema() - Query Table Schema.
+#### table(String tableName).schema() - Query Table Schema.
 
 * Request
     * No request parameters.
@@ -104,7 +114,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).table().schema().now().string`
 
-##### table(String tableName).create() - Create Table Schema.
+#### table(String tableName).create() - Create Table Schema.
 
 * Request
     * attribute(String name, Object value) - the table's attribute.
@@ -129,7 +139,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
        .attribute("tb_attr3", "value5")
        .now()
 
-##### table(String tableName).update() - Update Table Schema.
+#### table(String tableName).update() - Update Table Schema.
 
 * Request
     * family(String name) - starts family definition. Has sub requests:
@@ -149,7 +159,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .endFamilyDef()
          .now()```
 
-##### table(String tableName).regions() - Query Table Metadata.
+#### table(String tableName).regions() - Query Table Metadata.
 
 * Request
     * No request parameters.
@@ -158,7 +168,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).table(tableName).regions().now().string`
 
-##### table(String tableName).delete() - Delete Table.
+#### table(String tableName).delete() - Delete Table.
 
 * Request
     * No request parameters.
@@ -167,7 +177,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).table(tableName).delete().now()`
 
-##### table(String tableName).row(String rowId).store() - Cell Store.
+#### table(String tableName).row(String rowId).store() - Cell Store.
 
 * Request
     * column(String family, String qualifier, Object value, Long time) - the data to store; "qualifier" may be "null"; "time" is optional.
@@ -187,7 +197,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .column("family1", "row2_col1", "row2_col_value1")
          .now()
 
-##### table(String tableName).row(String rowId).query() - Cell or Row Query.
+#### table(String tableName).row(String rowId).query() - Cell or Row Query.
 
 * rowId is optional. Querying with null or empty rowId will select all rows.
 * Request
@@ -216,7 +226,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .numVersions(1)
          .now().string
 
-##### table(String tableName).row(String rowId).delete() - Row, Column, or Cell Delete.
+#### table(String tableName).row(String rowId).delete() - Row, Column, or Cell Delete.
 
 * Request
     * column(String family, String qualifier) - the column to delete; "qualifier" is optional.
@@ -238,7 +248,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .time(Long.MAX_VALUE)
          .now()```
 
-##### table(String tableName).scanner().create() - Scanner Creation.
+#### table(String tableName).scanner().create() - Scanner Creation.
 
 * Request
     * startRow(String) - the lower bound for filtration by row id.
@@ -268,7 +278,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
          .maxVersions(100)
          .now()```
 
-##### table(String tableName).scanner(String scannerId).getNext() - Scanner Get Next.
+#### table(String tableName).scanner(String scannerId).getNext() - Scanner Get Next.
 
 * Request
     * No request parameters.
@@ -277,7 +287,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).table(tableName).scanner(scannerId).getNext().now().string`
 
-##### table(String tableName).scanner(String scannerId).delete() - Scanner Deletion.
+#### table(String tableName).scanner(String scannerId).delete() - Scanner Deletion.
 
 * Request
     * No request parameters.
@@ -286,7 +296,7 @@ For more details about client DSL usage please follow this [page|https://cwiki.a
 * Example
     * `HBase.session(session).table(tableName).scanner(scannerId).delete().now()`
 
-#### Examples
+### HBase/Stargate via Client DSL ###
 
 This example illustrates sequence of all basic HBase operations: 
 1. get system version
@@ -515,7 +525,7 @@ Set Accept Header to "text/plain", "text/xml" or "application/x-protobuf"
 
 Set Accept Header to "text/plain", "text/xml", "application/json" or "application/x-protobuf"
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X GET 'https://localhost:8443/gateway/sandbox/hbase/status/cluster'
 
@@ -523,33 +533,33 @@ Set Accept Header to "text/plain", "text/xml", "application/json" or "applicatio
 
 Set Accept Header to "text/plain", "text/xml", "application/json" or "application/x-protobuf"
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X GET 'https://localhost:8443/gateway/sandbox/hbase'
 
 #### Create table with two column families using xml input
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"   -H "Content-Type: text/xml"\
      -d '<?xml version="1.0" encoding="UTF-8"?><TableSchema name="table1"><ColumnSchema name="family1"/><ColumnSchema name="family2"/></TableSchema>'\
      -X PUT 'https://localhost:8443/gateway/sandbox/hbase/table1/schema'
 
 #### Create table with two column families using JSON input
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: application/json"  -H "Content-Type: application/json"\
      -d '{"name":"table2","ColumnSchema":[{"name":"family3"},{"name":"family4"}]}'\
      -X PUT 'https://localhost:8443/gateway/sandbox/hbase/table2/schema'
 
 #### Get table metadata
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X GET 'https://localhost:8443/gateway/sandbox/hbase/table1/regions'
 
 #### Insert single row table
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Content-Type: text/xml"\
      -H "Accept: text/xml"\
      -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><CellSet><Row key="cm93MQ=="><Cell column="ZmFtaWx5MTpjb2wx" >dGVzdA==</Cell></Row></CellSet>'\
@@ -557,7 +567,7 @@ Set Accept Header to "text/plain", "text/xml", "application/json" or "applicatio
 
 #### Insert multiple rows into table
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Content-Type: text/xml"\
      -H "Accept: text/xml"\
      -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><CellSet><Row key="cm93MA=="><Cell column=" ZmFtaWx5Mzpjb2x1bW4x" >dGVzdA==</Cell></Row><Row key="cm93MQ=="><Cell column=" ZmFtaWx5NDpjb2x1bW4x" >dGVzdA==</Cell></Row></CellSet>'\
@@ -567,7 +577,7 @@ Set Accept Header to "text/plain", "text/xml", "application/json" or "applicatio
 
 Set Accept Header to "text/plain", "text/xml", "application/json" or "application/x-protobuf"
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X GET 'https://localhost:8443/gateway/sandbox/hbase/table1/*'
 
@@ -575,25 +585,25 @@ Set Accept Header to "text/plain", "text/xml", "application/json" or "applicatio
 
 Set Accept Header to "text/plain", "text/xml", "application/json" or "application/x-protobuf"
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X GET 'https://localhost:8443/gateway/sandbox/hbase/table1/row1/family1:col1'
 
 #### Delete entire row from table
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X DELETE 'https://localhost:8443/gateway/sandbox/hbase/table2/row0'
 
 #### Delete column family from row
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X DELETE 'https://localhost:8443/gateway/sandbox/hbase/table2/row0/family3'
 
 #### Delete specific column from row
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X DELETE 'https://localhost:8443/gateway/sandbox/hbase/table2/row0/family3'
 
@@ -601,24 +611,24 @@ Set Accept Header to "text/plain", "text/xml", "application/json" or "applicatio
 
 Scanner URL will be in Location response header
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Content-Type: text/xml"\
      -d '<Scanner batch="1"/>'\
      -X PUT 'https://localhost:8443/gateway/sandbox/hbase/table1/scanner'
 
 #### Get the values of the next cells found by the scanner
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: application/json"\
      -X GET 'https://localhost:8443/gateway/sandbox/hbase/table1/scanner/13705290446328cff5ed'
 
 #### Delete scanner
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -H "Accept: text/xml"\
      -X DELETE 'https://localhost:8443/gateway/sandbox/hbase/table1/scanner/13705290446328cff5ed'
 
 #### Delete table
 
-    % curl -ik -u guest:guest-password\
+    curl -ik -u guest:guest-password\
      -X DELETE 'https://localhost:8443/gateway/sandbox/hbase/table1/schema'
