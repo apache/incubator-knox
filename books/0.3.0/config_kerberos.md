@@ -53,6 +53,22 @@ You could use * for local developer testing if Knox host does not have static IP
         <value>FQDN_OF_KNOX_HOST</value>
     </property>
 
+#### Grant proxy privilege for Knox in `webhcat-stie.xml` on Hadoop master nodes ####
+
+Update `webhcat-site.xml` and add the following lines towards the end of the file.
+
+Replace FQDN_OF_KNOX_HOST with right value in your cluster.
+You could use * for local developer testing if Knox host does not have static IP.
+
+    <property>
+        <name>hadoop.proxyuser.knox.groups</name>
+        <value>users</value>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.knox.hosts</name>
+        <value>FQDN_OF_KNOX_HOST</value>
+    </property>
+
 #### Grant proxy privilege for Knox in `oozie-stie.xml` on Oozie host ####
 
 Update `oozie-site.xml` and add the following lines towards the end of the file.
