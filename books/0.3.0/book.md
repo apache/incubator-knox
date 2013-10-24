@@ -29,14 +29,11 @@
 ## Table Of Contents ##
 
 * #[Introduction]
-* #[Getting Started]
-    * #[Requirements]
-    * #[Download]
-    * #[Verify]
-    * #[Install]
+* #[Quick Start]
+* #[Apache Knox Details]
+    * #[Layout]
     * #[Supported Services]
     * #[Sandbox Configuration]
-    * #[Basic Usage]
 * #[Gateway Details]
     * #[Configuration]
     * #[Authentication]
@@ -70,7 +67,7 @@ In general the goals of the gateway are as follows:
     * Limit the network endpoints (and therefore firewall holes) required to access a Hadoop cluster
     * Hide the internal Hadoop cluster topology from potential attackers
 
-
+<<quick_start.md>>
 <<book_getting-started.md>>
 <<book_gateway-details.md>>
 <<book_client-details.md>>
