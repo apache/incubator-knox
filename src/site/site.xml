@@ -92,14 +92,9 @@
         </menu>
 
         <menu name="Documentation">
+            <item name="User's Guide" href="http://knox.incubator.apache.org/books/knox-incubating-0-3-0/knox-incubating-0-3-0.html"/>
             <!-- item name="Getting Started" href="https://cwiki.apache.org/KNOX/getting-started.html"/ -->
-            <item name="Getting Started" href="https://cwiki.apache.org/confluence/display/KNOX/Getting+Started"/>
-            <!--item name="Usage Examples" href="https://cwiki.apache.org/KNOX/examples.html"/ -->
-            <item name="Usage Examples" href="https://cwiki.apache.org/confluence/display/KNOX/Examples"/>
-            <!-- item name="Client (KnoxShell DSL)" href="https://cwiki.apache.org/KNOX/client-usage.html"/ -->
-            <item name="Client (KnoxShell DSL)" href="https://cwiki.apache.org/confluence/display/KNOX/Client+Usage"/>
-            <!-- item name="Sandbox Configuration" href="https://cwiki.apache.org/KNOX/sandbox-configuration.html"/ -->
-            <item name="Sandbox Configuration" href="https://cwiki.apache.org/confluence/display/KNOX/Sandbox+Configuration"/>
+            <item name="Getting Started" href="http://knox.incubator.apache.org/books/knox-incubating-0-3-0/knox-incubating-0-3-0.html#Getting+Started"/>
             <!-- item name="Dependencies" href="https://cwiki.apache.org/KNOX/dependencies.html"/ -->
             <item name="Dependencies" href="https://cwiki.apache.org/confluence/display/KNOX/Dependencies"/>
             <!-- item name="Wiki" href="https://cwiki.apache.org/confluence/display/KNOX/Index"/ -->
@@ -107,6 +102,7 @@
         </menu>
 
         <menu name="Releases">
+            <item name="0.3.0" href="https://cwiki.apache.org/confluence/display/KNOX/Release+0.3.0"/>
             <!-- item name="0.2.0" href="https://cwiki.apache.org/KNOX/release-020.html"/ -->
             <item name="0.2.0" href="https://cwiki.apache.org/confluence/display/KNOX/Release+0.2.0"/>
             <!-- item name="Roadmap" href="https://cwiki.apache.org/KNOX/roadmap.html"/ -->
