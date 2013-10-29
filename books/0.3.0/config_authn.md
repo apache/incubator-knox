@@ -24,7 +24,7 @@ There are two types of providers supported in Knox for establishing a user's ide
 
 Authentication providers directly accept a user's credentials and validates them against some particular user store. Federation providers, on the other hand, validate a token that has been issued for the user by a trusted Identity Provider (IdP).
 
-The current release of Knox ships with an authentication provider based on the Apache Shiro project and is initially configured for BASIC authentication against an LDAP store.
+The current release of Knox ships with an authentication provider based on the Apache Shiro project and is initially configured for BASIC authentication against an LDAP store. This has been specifically tested against Apache Directory Server and Active Directory.
 
 This section will cover the general approach to leveraging Shiro within the bundled provider including:
 
@@ -105,6 +105,21 @@ This section discusses the LDAP configuration used above for the Shiro Provider.
 **main.ldapRealm.contextFactory.authenticationMechanism** - this element indicates the type of authentication that should be performed against the LDAP server. The current default value is `simple` which indicates a simple bind operation. This element should not need to be modified and no mechanism other than a simple bind has been tested for this particular release.
 
 **urls./**** - this element represents a single URL_Ant_Path_Expression and the value the Shiro filter chain to apply to it. This particular sample indicates that all paths into the application have the same Shiro filter chain applied. The paths are relative to the application context path. The use of the value `authcBasic` here indicates that BASIC authentication is expected for every path into the application. Adding an additional Shiro filter to that chain for validating that the request isSecure() and over SSL can be achieved by changing the value to `ssl, authcBasic`. It is not likely that you need to change this element for your environment.
+
+#### Active Directory - Special Note ####
+
+You would use LDAP configuration as documented above to authenticate against Active Directory as well.
+
+Some Active Directory specifc things to keep in mind:
+
+Typical AD main.ldapRealm.userDnTemplate value looks slightly different, such as
+    cn={0},cn=users,DC=lab,DC=sample,dc=com
+
+Please compare this with a typical Apache DS main.ldapRealm.userDnTemplate value and make note of the difference.
+    uid={0},ou=people,dc=hadoop,dc=apache,dc=org
+
+If your AD is configured to authenticate based on just the cn and password and does not require user DN, you do not have to specify value for  main.ldapRealm.userDnTemplate.
+
 
 #### LDAP over SSL (LDAPS) Configuration ####
 In order to communicate with your LDAP server over SSL (again, highly recommended), you will need to modify the topology file in a couple ways and possibly provision some keying material.
