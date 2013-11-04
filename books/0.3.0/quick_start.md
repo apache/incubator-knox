@@ -125,6 +125,8 @@ The directory `knox-incubating-{VERSION}` will considered your `{GATEWAY_HOME}`
 If you downloaded the RPM distribution you can install it using normal RPM package tools.
 It is important that the user that will be running the gateway server is used to install.
 This is because several directories are created that are owned by this user.
+These command will install Knox to `/usr/lib/knox` following the pattern of other Hadoop components.
+This directory will be considered your `{GATEWAY_HOME}`.
 
     sudo yum localinstall knox-incubating-{VERSION}.rpm
 
