@@ -24,7 +24,7 @@
   <img src="knox-logo.gif" alt="Knox"/>
   <img src="apache-incubator-logo.png" align="right" alt="Incubator"/>
 
-# Apache Knox Gateway 0.3.0 (Incubator) User's Guide #
+# Apache Knox Gateway 0.3.x (Incubator) User's Guide #
 
 ## Table Of Contents ##
 
@@ -48,6 +48,7 @@
     * #[Oozie]
     * #[HBase]
     * #[Hive]
+* #[Limitations]
 * #[Troubleshooting]
 * #[Export Controls]
 
@@ -72,6 +73,7 @@ In general the goals of the gateway are as follows:
 <<book_gateway-details.md>>
 <<book_client-details.md>>
 <<book_service-details.md>>
+<<book_limitations.md>>
 <<book_troubleshooting.md>>
 
 

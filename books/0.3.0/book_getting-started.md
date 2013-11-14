@@ -93,10 +93,6 @@ Only more recent versions of some Hadoop components when secured via Kerberos ca
 |                    | 0.12.0     | ![n]        | ![n]   |
 
 
-### Sandbox Configuration ###
-
-TODO
-
 ### More Examples ###
 
 These examples provide more detail about how to access various Apache Hadoop services via the Apache Knox Gateway.

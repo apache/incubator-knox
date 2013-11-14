@@ -139,7 +139,8 @@ or
 
 Knox comes with an LDAP server for demonstration purposes.
 
-    java -jar {GATEWAY_HOME}/bin/ldap.jar conf &
+    cd {GATEWAY_HOME}
+    java -jar bin/ldap.jar conf &
 
 
 ### 7 - Start Knox  ###
@@ -152,7 +153,8 @@ The gateway can be started in one of two ways, as java -jar or with a shell scri
 This is the simplest way to start the gateway.
 Starting this way will result in all logging being written directly to standard output.
 
-    java -jar {GATEWAY_HOME}/bin/gateway.jar
+    cd {GATEWAY_HOME}
+    java -jar bin/gateway.jar
 
 
 Upon start, Knox server will prompt you for the master secret (i.e. password).
@@ -164,13 +166,15 @@ This secret will have to be entered at startup unless you choose to persist it.
 
 Run the setup command with root privileges.
 
-    sudo {GATEWAY_HOME}/bin/gateway.sh setup
+    cd {GATEWAY_HOME}
+    sudo bin/gateway.sh setup
 
 The server will prompt you for the master secret (i.e. password).
 
 The server can then be started without root privileges using this command.
 
-    {GATEWAY_HOME}/bin/gateway.sh start
+    cd {GATEWAY_HOME}
+    bin/gateway.sh start
 
 When starting the gateway this way the process will be run in the backgroud.
 The log output is written into the directory /var/log/knox.
@@ -178,11 +182,13 @@ In addition a PID (process ID) is written into /var/run/knox.
 
 In order to stop a gateway that was started with the script use this command.
 
-    {GATEWAY_HOME}/bin/gateway.sh stop
+    cd {GATEWAY_HOME}
+    bin/gateway.sh stop
 
 If for some reason the gateway is stopped other than by using the command above you may need to clear the tracking PID.
 
-    {GATEWAY_HOME}/bin/gateway.sh clean
+    cd {GATEWAY_HOME}
+    bin/gateway.sh clean
 
 __NOTE: This command will also clear any log output in /var/log/knox so use this with caution.__
 
