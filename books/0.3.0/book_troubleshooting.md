@@ -53,7 +53,18 @@ There are various useful loggers pre-populated but commented out.
 
 If the gateway cannot contact the configured LDAP server you will see errors in the gateway diagnostic output.
 
-    TODO:Kevin - What does it look like when the LDAP server isn't running.
+	13/11/15 16:30:17 DEBUG authc.BasicHttpAuthenticationFilter: Attempting to execute login with headers [Basic Z3Vlc3Q6Z3Vlc3QtcGFzc3dvcmQ=]
+	13/11/15 16:30:17 DEBUG ldap.JndiLdapRealm: Authenticating user 'guest' through LDAP
+	13/11/15 16:30:17 DEBUG ldap.JndiLdapContextFactory: Initializing LDAP context using URL 	[ldap://localhost:33389] and principal [uid=guest,ou=people,dc=hadoop,dc=apache,dc=org] with pooling disabled
+	13/11/15 16:30:17 DEBUG servlet.SimpleCookie: Added HttpServletResponse Cookie [rememberMe=deleteMe; Path=/gateway/vaultservice; Max-Age=0; Expires=Thu, 14-Nov-2013 21:30:17 GMT]
+	13/11/15 16:30:17 DEBUG authc.BasicHttpAuthenticationFilter: Authentication required: sending 401 Authentication challenge response.
+	
+The client should see something along the lines of:
+
+	HTTP/1.1 401 Unauthorized
+	WWW-Authenticate: BASIC realm="application"
+	Content-Length: 0
+	Server: Jetty(8.1.12.v20130726)
 
 Resolving this will require ensuring that the LDAP server is running and that connection information is correct.
 The LDAP server connection information is configured in the cluster's topology file (e.g. {GATEWAY_HOME}/deployments/sandbox.xml).
@@ -90,9 +101,23 @@ Then the command below should verify that WebHDFS in the Hadoop cluster is acces
 
 
 ### Authentication Issues ###
+The following log information is available when you enable debug level logging for shiro. This can be done within the conf/log4j.properties file. Not the "Password not correct for user" message.
 
-TODO:Kevin - What does it look like when the username/password don't match what is in LDAP?
+	13/11/15 16:37:15 DEBUG authc.BasicHttpAuthenticationFilter: Attempting to execute login with headers [Basic Z3Vlc3Q6Z3Vlc3QtcGFzc3dvcmQw]
+	13/11/15 16:37:15 DEBUG ldap.JndiLdapRealm: Authenticating user 'guest' through LDAP
+	13/11/15 16:37:15 DEBUG ldap.JndiLdapContextFactory: Initializing LDAP context using URL [ldap://localhost:33389] and principal [uid=guest,ou=people,dc=hadoop,dc=apache,dc=org] with pooling disabled
+	2013-11-15 16:37:15,899 INFO  Password not correct for user 'uid=guest,ou=people,dc=hadoop,dc=apache,dc=org'
+	2013-11-15 16:37:15,899 INFO  Authenticator org.apache.directory.server.core.authn.SimpleAuthenticator@354c78e3 failed to authenticate: BindContext for DN 'uid=guest,ou=people,dc=hadoop,dc=apache,dc=org', credentials <0x67 0x75 0x65 0x73 0x74 0x2D 0x70 0x61 0x73 0x73 0x77 0x6F 0x72 0x64 0x30 >
+	2013-11-15 16:37:15,899 INFO  Cannot bind to the server
+	13/11/15 16:37:15 DEBUG servlet.SimpleCookie: Added HttpServletResponse Cookie [rememberMe=deleteMe; Path=/gateway/vaultservice; Max-Age=0; Expires=Thu, 14-Nov-2013 21:37:15 GMT]
+	13/11/15 16:37:15 DEBUG authc.BasicHttpAuthenticationFilter: Authentication required: sending 401 Authentication challenge response.
 
+The client will likely see something along the lines of:
+
+	HTTP/1.1 401 Unauthorized
+	WWW-Authenticate: BASIC realm="application"
+	Content-Length: 0
+	Server: Jetty(8.1.12.v20130726)
 
 ### Hostname Resolution Issues ###
 
@@ -115,8 +140,18 @@ TODO:Kevin - What does it look like when HBase/Stargate hangs and how do you fix
 
 
 ### SSL Certificate Issues ###
+Clients that do not trust the certificate presented by the server will behave in different ways. A browser will typically warn you of the inability to trust the receieved certificate and give you an opportunity to add an exception for the particular certificate. Curl will present you with the follow message and instructions for turning of certificate verification:
 
-TODO:Larry - What does it look like when a client doesn't trust the gateway's SSL identity certificate?
+	curl performs SSL certificate verification by default, using a "bundle"
+ 	 of Certificate Authority (CA) public keys (CA certs). If the default
+ 	 bundle file isn't adequate, you can specify an alternate file
+ 	 using the --cacert option.
+	If this HTTPS server uses a certificate signed by a CA represented in
+ 	 the bundle, the certificate verification probably failed due to a
+ 	 problem with the certificate (it might be expired, or the name might
+ 	 not match the domain name in the URL).
+	If you'd like to turn off curl's verification of the certificate, use
+ 	 the -k (or --insecure) option.
 
 
 ### Filing Bugs ###
