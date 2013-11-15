@@ -142,16 +142,16 @@ TODO:Kevin - What does it look like when HBase/Stargate hangs and how do you fix
 ### SSL Certificate Issues ###
 Clients that do not trust the certificate presented by the server will behave in different ways. A browser will typically warn you of the inability to trust the receieved certificate and give you an opportunity to add an exception for the particular certificate. Curl will present you with the follow message and instructions for turning of certificate verification:
 
-	curl performs SSL certificate verification by default, using a "bundle"
- 	 of Certificate Authority (CA) public keys (CA certs). If the default
- 	 bundle file isn't adequate, you can specify an alternate file
- 	 using the --cacert option.
-	If this HTTPS server uses a certificate signed by a CA represented in
- 	 the bundle, the certificate verification probably failed due to a
- 	 problem with the certificate (it might be expired, or the name might
- 	 not match the domain name in the URL).
+	curl performs SSL certificate verification by default, using a "bundle" 
+	 of Certificate Authority (CA) public keys (CA certs). If the default
+	 bundle file isn't adequate, you can specify an alternate file
+	 using the --cacert option.
+	If this HTTPS server uses a certificate signed by a CA represented 
+	 the bundle, the certificate verification probably failed due to a
+	 problem with the certificate (it might be expired, or the name might
+	 not match the domain name in the URL).
 	If you'd like to turn off curl's verification of the certificate, use
- 	 the -k (or --insecure) option.
+	 the -k (or --insecure) option.
 
 
 ### Filing Bugs ###
