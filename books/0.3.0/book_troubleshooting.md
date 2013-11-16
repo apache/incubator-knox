@@ -126,12 +126,31 @@ TODO:Kevin - What does it look like when host mapping is enabled and shouldn't b
 
 ### Job Submission Issues - HDFS Home Directories ###
 
-TODO:Dilli - What does it look like if the LDAP authenticated user doesn't have a HDFS home directory and submits a job.
+If you see error like the following in your console  while submitting a Job using groovy shell, it is likely that the authenticated user does not have a home directory on HDFS.
+
+Caught: org.apache.hadoop.gateway.shell.HadoopException: org.apache.hadoop.gateway.shell.ErrorResponse: HTTP/1.1 403 Forbidden
+org.apache.hadoop.gateway.shell.HadoopException: org.apache.hadoop.gateway.shell.ErrorResponse: HTTP/1.1 403 Forbidden
+
+You would also see this error if you try file operation on the home directory of the authenticating user.
+
+The error would look a little different as shown below  if you are attempting to the operation with cURL.
+
+{"RemoteException":{"exception":"AccessControlException","javaClassName":"org.apache.hadoop.security.AccessControlException","message":"Permission denied: user=tom, access=WRITE, inode=\"/user\":hdfs:hdfs:drwxr-xr-x"}}* 
+
+Resolution
+
+Create the home directory for the user on HDFS.
+The home directory is typically of the form /user/<userid> and should be owened by the user.
+user 'hdfs" can create such a directory and make the user owner of the directory.
 
 
 ### Job Submission Issues - OS Accounts ###
 
-TODO:Dilli - What does it look like if the LDAP authenticated user submits a job but doesn't have an OS account.
+If the hadoop cluster is not secured with Kerberos, The user submitting a job need not have an OS account on the hadoop nodemanagers.
+
+If the hadoop cluster is secured with Kerberos, the user submitting the job should have an OS account on hadoop nodemanagers. 
+
+In either case if  the user does not have such OS account, his file permissions are based on user ownership of files or "other" permisison in "ugo" posix permission. The user does not get any file permission as a member of any group if you are using default hadoop.security.group.mapping. 
 
 
 ### HBase Issues ###
