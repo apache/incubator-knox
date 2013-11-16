@@ -128,16 +128,20 @@ TODO:Kevin - What does it look like when host mapping is enabled and shouldn't b
 
 If you see error like the following in your console  while submitting a Job using groovy shell, it is likely that the authenticated user does not have a home directory on HDFS.
 
+<pre><code>
 Caught: org.apache.hadoop.gateway.shell.HadoopException: org.apache.hadoop.gateway.shell.ErrorResponse: HTTP/1.1 403 Forbidden
 org.apache.hadoop.gateway.shell.HadoopException: org.apache.hadoop.gateway.shell.ErrorResponse: HTTP/1.1 403 Forbidden
+</code></pre>
 
 You would also see this error if you try file operation on the home directory of the authenticating user.
 
 The error would look a little different as shown below  if you are attempting to the operation with cURL.
 
+<pre><code>
 {"RemoteException":{"exception":"AccessControlException","javaClassName":"org.apache.hadoop.security.AccessControlException","message":"Permission denied: user=tom, access=WRITE, inode=\"/user\":hdfs:hdfs:drwxr-xr-x"}}* 
+</code></pre>
 
-Resolution
+#### Resolution
 
 Create the home directory for the user on HDFS.
 The home directory is typically of the form /user/<userid> and should be owened by the user.
@@ -152,6 +156,7 @@ If the hadoop cluster is secured with Kerberos, the user submitting the job shou
 
 In either case if  the user does not have such OS account, his file permissions are based on user ownership of files or "other" permisison in "ugo" posix permission. The user does not get any file permission as a member of any group if you are using default hadoop.security.group.mapping. 
 
+TODO: add sample error message from running test on secure cluster with missing OS account
 
 ### HBase Issues ###
 
