@@ -144,8 +144,8 @@ The error would look a little different as shown below  if you are attempting to
 #### Resolution
 
 Create the home directory for the user on HDFS.
-The home directory is typically of the form /user/<userid> and should be owened by the user.
-user 'hdfs" can create such a directory and make the user owner of the directory.
+The home directory is typically of the form `/user/{userid}` and should be owned by the user.
+user 'hdfs' can create such a directory and make the user owner of the directory.
 
 
 ### Job Submission Issues - OS Accounts ###
