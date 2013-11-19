@@ -53,18 +53,18 @@ There are various useful loggers pre-populated but commented out.
 
 If the gateway cannot contact the configured LDAP server you will see errors in the gateway diagnostic output.
 
-	13/11/15 16:30:17 DEBUG authc.BasicHttpAuthenticationFilter: Attempting to execute login with headers [Basic Z3Vlc3Q6Z3Vlc3QtcGFzc3dvcmQ=]
-	13/11/15 16:30:17 DEBUG ldap.JndiLdapRealm: Authenticating user 'guest' through LDAP
-	13/11/15 16:30:17 DEBUG ldap.JndiLdapContextFactory: Initializing LDAP context using URL 	[ldap://localhost:33389] and principal [uid=guest,ou=people,dc=hadoop,dc=apache,dc=org] with pooling disabled
-	13/11/15 16:30:17 DEBUG servlet.SimpleCookie: Added HttpServletResponse Cookie [rememberMe=deleteMe; Path=/gateway/vaultservice; Max-Age=0; Expires=Thu, 14-Nov-2013 21:30:17 GMT]
-	13/11/15 16:30:17 DEBUG authc.BasicHttpAuthenticationFilter: Authentication required: sending 401 Authentication challenge response.
-	
+    13/11/15 16:30:17 DEBUG authc.BasicHttpAuthenticationFilter: Attempting to execute login with headers [Basic Z3Vlc3Q6Z3Vlc3QtcGFzc3dvcmQ=]
+    13/11/15 16:30:17 DEBUG ldap.JndiLdapRealm: Authenticating user 'guest' through LDAP
+    13/11/15 16:30:17 DEBUG ldap.JndiLdapContextFactory: Initializing LDAP context using URL 	[ldap://localhost:33389] and principal [uid=guest,ou=people,dc=hadoop,dc=apache,dc=org] with pooling disabled
+    13/11/15 16:30:17 DEBUG servlet.SimpleCookie: Added HttpServletResponse Cookie [rememberMe=deleteMe; Path=/gateway/vaultservice; Max-Age=0; Expires=Thu, 14-Nov-2013 21:30:17 GMT]
+    13/11/15 16:30:17 DEBUG authc.BasicHttpAuthenticationFilter: Authentication required: sending 401 Authentication challenge response.
+
 The client should see something along the lines of:
 
-	HTTP/1.1 401 Unauthorized
-	WWW-Authenticate: BASIC realm="application"
-	Content-Length: 0
-	Server: Jetty(8.1.12.v20130726)
+    HTTP/1.1 401 Unauthorized
+    WWW-Authenticate: BASIC realm="application"
+    Content-Length: 0
+    Server: Jetty(8.1.12.v20130726)
 
 Resolving this will require ensuring that the LDAP server is running and that connection information is correct.
 The LDAP server connection information is configured in the cluster's topology file (e.g. {GATEWAY_HOME}/deployments/sandbox.xml).
@@ -74,7 +74,40 @@ The LDAP server connection information is configured in the cluster's topology f
 
 If the gateway cannot contact one of the services in the configured Hadoop cluster you will see errors in the gateway diagnostic output.
 
-    TODO:Kevin - What does it look like when the Sandbox isn't running.
+    13/11/18 18:49:45 WARN hadoop.gateway: Connection exception dispatching request: http://localhost:50070/webhdfs/v1/?user.name=guest&op=LISTSTATUS org.apache.http.conn.HttpHostConnectException: Connection to http://localhost:50070 refused
+    org.apache.http.conn.HttpHostConnectException: Connection to http://localhost:50070 refused
+    	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:190)
+    	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:294)
+    	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:645)
+    	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:480)
+    	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:906)
+    	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:805)
+    	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:784)
+    	at org.apache.hadoop.gateway.dispatch.HttpClientDispatch.executeRequest(HttpClientDispatch.java:99)
+
+The the resulting behavior on the client will differ by client.
+For the client DSL executing the {GATEWAY_HOME}/samples/ExampleWebHdfsLs.groovy the output will look look like this.
+
+    Caught: org.apache.hadoop.gateway.shell.HadoopException: org.apache.hadoop.gateway.shell.ErrorResponse: HTTP/1.1 500 Server Error
+    org.apache.hadoop.gateway.shell.HadoopException: org.apache.hadoop.gateway.shell.ErrorResponse: HTTP/1.1 500 Server Error
+      at org.apache.hadoop.gateway.shell.AbstractRequest.now(AbstractRequest.java:72)
+      at org.apache.hadoop.gateway.shell.AbstractRequest$now.call(Unknown Source)
+      at ExampleWebHdfsLs.run(ExampleWebHdfsLs.groovy:28)
+
+When executing commands requests via cURL the output might look similar to the following example.
+
+    Set-Cookie: JSESSIONID=16xwhpuxjr8251ufg22f8pqo85;Path=/gateway/sandbox;Secure
+    Content-Type: text/html;charset=ISO-8859-1
+    Cache-Control: must-revalidate,no-cache,no-store
+    Content-Length: 21856
+    Server: Jetty(8.1.12.v20130726)
+
+    <html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <title>Error 500 Server Error</title>
+    </head>
+    <body><h2>HTTP ERROR 500</h2>
 
 Resolving this will require ensuring that the Hadoop services are running and that connection information is correct.
 Basic Hadoop connectivity can be evaluated using cURL as described elsewhere.
@@ -103,25 +136,47 @@ Then the command below should verify that WebHDFS in the Hadoop cluster is acces
 ### Authentication Issues ###
 The following log information is available when you enable debug level logging for shiro. This can be done within the conf/log4j.properties file. Not the "Password not correct for user" message.
 
-	13/11/15 16:37:15 DEBUG authc.BasicHttpAuthenticationFilter: Attempting to execute login with headers [Basic Z3Vlc3Q6Z3Vlc3QtcGFzc3dvcmQw]
-	13/11/15 16:37:15 DEBUG ldap.JndiLdapRealm: Authenticating user 'guest' through LDAP
-	13/11/15 16:37:15 DEBUG ldap.JndiLdapContextFactory: Initializing LDAP context using URL [ldap://localhost:33389] and principal [uid=guest,ou=people,dc=hadoop,dc=apache,dc=org] with pooling disabled
-	2013-11-15 16:37:15,899 INFO  Password not correct for user 'uid=guest,ou=people,dc=hadoop,dc=apache,dc=org'
-	2013-11-15 16:37:15,899 INFO  Authenticator org.apache.directory.server.core.authn.SimpleAuthenticator@354c78e3 failed to authenticate: BindContext for DN 'uid=guest,ou=people,dc=hadoop,dc=apache,dc=org', credentials <0x67 0x75 0x65 0x73 0x74 0x2D 0x70 0x61 0x73 0x73 0x77 0x6F 0x72 0x64 0x30 >
-	2013-11-15 16:37:15,899 INFO  Cannot bind to the server
-	13/11/15 16:37:15 DEBUG servlet.SimpleCookie: Added HttpServletResponse Cookie [rememberMe=deleteMe; Path=/gateway/vaultservice; Max-Age=0; Expires=Thu, 14-Nov-2013 21:37:15 GMT]
-	13/11/15 16:37:15 DEBUG authc.BasicHttpAuthenticationFilter: Authentication required: sending 401 Authentication challenge response.
+    13/11/15 16:37:15 DEBUG authc.BasicHttpAuthenticationFilter: Attempting to execute login with headers [Basic Z3Vlc3Q6Z3Vlc3QtcGFzc3dvcmQw]
+    13/11/15 16:37:15 DEBUG ldap.JndiLdapRealm: Authenticating user 'guest' through LDAP
+    13/11/15 16:37:15 DEBUG ldap.JndiLdapContextFactory: Initializing LDAP context using URL [ldap://localhost:33389] and principal [uid=guest,ou=people,dc=hadoop,dc=apache,dc=org] with pooling disabled
+    2013-11-15 16:37:15,899 INFO  Password not correct for user 'uid=guest,ou=people,dc=hadoop,dc=apache,dc=org'
+    2013-11-15 16:37:15,899 INFO  Authenticator org.apache.directory.server.core.authn.SimpleAuthenticator@354c78e3 failed to authenticate: BindContext for DN 'uid=guest,ou=people,dc=hadoop,dc=apache,dc=org', credentials <0x67 0x75 0x65 0x73 0x74 0x2D 0x70 0x61 0x73 0x73 0x77 0x6F 0x72 0x64 0x30 >
+    2013-11-15 16:37:15,899 INFO  Cannot bind to the server
+    13/11/15 16:37:15 DEBUG servlet.SimpleCookie: Added HttpServletResponse Cookie [rememberMe=deleteMe; Path=/gateway/vaultservice; Max-Age=0; Expires=Thu, 14-Nov-2013 21:37:15 GMT]
+    13/11/15 16:37:15 DEBUG authc.BasicHttpAuthenticationFilter: Authentication required: sending 401 Authentication challenge response.
 
 The client will likely see something along the lines of:
 
-	HTTP/1.1 401 Unauthorized
-	WWW-Authenticate: BASIC realm="application"
-	Content-Length: 0
-	Server: Jetty(8.1.12.v20130726)
+    HTTP/1.1 401 Unauthorized
+    WWW-Authenticate: BASIC realm="application"
+    Content-Length: 0
+    Server: Jetty(8.1.12.v20130726)
 
 ### Hostname Resolution Issues ###
 
-TODO:Kevin - What does it look like when host mapping is enabled and shouldn't be or vice versa.
+The deployments/sandbox.xml topology file has the host mapping feature enabled.
+This is required due to the way networking is setup in the Sandbox VM.
+Specifically the VM's internal hostname is sandbox.hortonworks.com.
+Since this hostname cannot be resolved to the actual VM Knox needs to map that hostname to something resolvable.
+
+If for example host mapping is disabled but the Sandbox VM is still used you will see an error in the diagnostic output similar to the below.
+
+    13/11/18 19:11:35 WARN hadoop.gateway: Connection exception dispatching request: http://sandbox.hortonworks.com:50075/webhdfs/v1/user/guest/example/README?op=CREATE&namenoderpcaddress=sandbox.hortonworks.com:8020&user.name=guest&overwrite=false java.net.UnknownHostException: sandbox.hortonworks.com
+    java.net.UnknownHostException: sandbox.hortonworks.com
+    	at java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+
+On the other hand if you are migrating from the Sandbox based configuration to a cluster you have deployment you may see a similar error.
+However in this case you may need to disable host mapping.
+This can be done by modifying the topology file (e.g. deployments/sandbox.xml) for the cluster.
+
+    ...
+    <provider>
+        <role>hostmap</role>
+        <name>static</name>
+        <enabled>false</enabled>
+        <param><name>localhost</name><value>sandbox,sandbox.hortonworks.com</value></param>
+    </provider>
+    ....
 
 
 ### Job Submission Issues - HDFS Home Directories ###
@@ -150,21 +205,39 @@ user 'hdfs' can create such a directory and make the user owner of the directory
 
 ### Job Submission Issues - OS Accounts ###
 
-If the hadoop cluster is not secured with Kerberos, The user submitting a job need not have an OS account on the hadoop nodemanagers.
+If the hadoop cluster is not secured with Kerberos, the user submitting a job need not have an OS account on the hadoop nodemanagers.
 
-If the hadoop cluster is secured with Kerberos, the user submitting the job should have an OS account on hadoop nodemanagers. 
+If the hadoop cluster is secured with Kerberos, the user submitting the job should have an OS account on hadoop nodemanagers.
 
-In either case if  the user does not have such OS account, his file permissions are based on user ownership of files or "other" permisison in "ugo" posix permission. The user does not get any file permission as a member of any group if you are using default hadoop.security.group.mapping. 
+In either case if the user does not have such OS account, his file permissions are based on user ownership of files or "other" permission in "ugo" posix permission.
+The user does not get any file permission as a member of any group if you are using default hadoop.security.group.mapping.
 
 TODO: add sample error message from running test on secure cluster with missing OS account
 
 ### HBase Issues ###
 
-TODO:Kevin - What does it look like when HBase/Stargate hangs and how do you fix it.
+If you experience problems running the HBase samples with the Sandbox VM it may be necessary to restart HBase and Stargate.
+This can sometimes occur with the Sandbox VM is restarted from a saved state.
+If the client hangs after emitting the last line in the sample output below you are most likely affected.
+
+    System version : {...}
+    Cluster version : 0.96.0.2.0.6.0-76-hadoop2
+    Status : {...}
+    Creating table 'test_table'...
+
+HBase and Starget can be restred using the following commands on the Hadoop Sandbox VM.
+You will need to ssh into the VM in order to run these commands.
+
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh stop master
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh start master
+    sudo -u hbase /usr/lib/hbase/bin/hbase-daemon.sh restart rest -p 60080
 
 
 ### SSL Certificate Issues ###
-Clients that do not trust the certificate presented by the server will behave in different ways. A browser will typically warn you of the inability to trust the receieved certificate and give you an opportunity to add an exception for the particular certificate. Curl will present you with the follow message and instructions for turning of certificate verification:
+
+Clients that do not trust the certificate presented by the server will behave in different ways.
+A browser will typically warn you of the inability to trust the receieved certificate and give you an opportunity to add an exception for the particular certificate.
+Curl will present you with the follow message and instructions for turning of certificate verification:
 
 	curl performs SSL certificate verification by default, using a "bundle" 
 	 of Certificate Authority (CA) public keys (CA certs). If the default
