@@ -152,6 +152,48 @@ The client will likely see something along the lines of:
     Content-Length: 0
     Server: Jetty(8.1.12.v20130726)
 
+#### Using ldapsearch to verify ldap connectivtiy and credentials
+
+If your authentication to knox fails and you believe your are using correct creedentilas, you could try to verify the connectivity and credentials usong ldapsearch, assuming you are using ldap directory for authentication.
+
+Assuming you are using the default values that came out of box with knox, your ldapsearch command would be like the following
+
+<pre>
+ldapsearch -h localhost -p 33389 -D "uid=guest,ou=people,dc=hadoop,dc=apache,dc=org" -w guest-password -b "uid=guest,ou=people,dc=hadoop,dc=apache,dc=org" "objectclass=*"
+
+This should produce output like the following
+
+# extended LDIF
+#
+# LDAPv3
+# base <uid=guest,ou=people,dc=hadoop,dc=apache,dc=org> with scope subtree
+# filter: objectclass=*
+# requesting: ALL
+#
+
+# guest, people, hadoop.apache.org
+dn: uid=guest,ou=people,dc=hadoop,dc=apache,dc=org
+objectClass: organizationalPerson
+objectClass: person
+objectClass: inetOrgPerson
+objectClass: top
+uid: guest
+cn: Guest
+sn: User
+userpassword:: Z3Vlc3QtcGFzc3dvcmQ=
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 2
+# numEntries: 1
+
+In a more general form the ldapsearch command would be
+
+ldapsearch -h {HOST} -p {PORT} -D {DN of binding user} -w {bind password} -b {DN of binding user} "objectclass=*}
+
+
 ### Hostname Resolution Issues ###
 
 The deployments/sandbox.xml topology file has the host mapping feature enabled.
