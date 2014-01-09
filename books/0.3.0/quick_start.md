@@ -59,7 +59,7 @@ Download one of the distributions below from the [Apache mirrors][mirror].
 
 [src-zip]: http://www.apache.org/dyn/closer.cgi/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0-src.zip
 [src-sha]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0-src.zip.sha
-[src-pgp]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-0.3.0-incubating-src.zip.asc
+[src-pgp]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0-src.zip.asc
 [src-md5]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0-src.zip.md5
 [bin-zip]: http://www.apache.org/dyn/closer.cgi/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.zip
 [bin-pgp]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.zip.asc
@@ -67,7 +67,7 @@ Download one of the distributions below from the [Apache mirrors][mirror].
 [bin-md5]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.zip.md5
 [rpm]: http://www.apache.org/dyn/closer.cgi/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.rpm
 [rpm-sha]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.rpm.sha
-[rpm-pgp]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-0.3.0-incubating.rpm.asc
+[rpm-pgp]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.rpm.asc
 [rpm-md5]: http://www.apache.org/dist/incubator/knox/0.3.0-incubating/knox-incubating-0.3.0.rpm.md5
 
 Apache Knox Gateway releases are available under the [Apache License, Version 2.0][asl].
