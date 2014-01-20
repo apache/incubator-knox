@@ -56,4 +56,5 @@ Their values can also be provided via the cluster topology descriptor if your Ha
 <<config_id_assertion.md>>
 <<config_authz.md>>
 <<config_kerberos.md>>
+<<config_ha.md>>
 
