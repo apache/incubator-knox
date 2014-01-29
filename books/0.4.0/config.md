@@ -251,8 +251,9 @@ After persisting the secret, ensure that the file at config/security/master has 
 This is probably the most important layer of defense for master secret.
 Do not assume that the encryption if sufficient protection.
 
-A specific user should be created to run the gateway this will protect a persisted master file.
+A specific user should be created to run the gateway this user will be the only user with permissions for the persisted master file.
 
+See the Knox CLI section for descriptions of the command line utilties related to the master secret.
 
 #### Management of Security Artifacts ####
 
@@ -287,6 +288,9 @@ By leveraging the algorithm described above we can provide a window of opportuni
 
 1. Using a single gateway instance as a master instance the artifacts can be generated or placed into the expected location and then replicated across all of the slave instances before startup.
 2. Using an NFS mount as a central location for the artifacts would provide a single source of truth without the need to replicate them over the network. Of course, NFS mounts have their own challenges.
+3. Using the KnoxCLI to create and manage the security artifacts.
+
+See the Knox CLI section for descriptions of the command line utilties related to the security artifact management.
 
 #### Keystores ####
 In order to provide your own certificate for use by the gateway, you will need to either import an existing key pair into a Java keystore or generate a self-signed cert using the Java keytool.
@@ -318,21 +322,22 @@ NOTE: The password for the keystore as well as that of the imported key must be 
     keytool -genkey -keyalg RSA -alias gateway-identity -keystore gateway.jks \
         -storepass {master-secret} -validity 360 -keysize 2048
 
-Keytool will prompt you for a number of elements used that will comprise this distiniguished name (DN) within your certificate. 
+Keytool will prompt you for a number of elements used will comprise the distiniguished name (DN) within your certificate. 
 
 *NOTE:* When it prompts you for your First and Last name be sure to type in the hostname of the machine that your gateway instance will be running on. This is used by clients during hostname verification to ensure that the presented certificate matches the hostname that was used in the URL for the connection - so they need to match.
 
 *NOTE:* When it prompts for the key password just press enter to ensure that it is the same as the keystore password. Which as was described earlier must match the master secret for the gateway instance.
+
+See the Knox CLI section for descriptions of the command line utilties related to the management of the keystores.
 
 ##### Credential Store #####
 Whenever you provide your own keystore with either a self-signed cert or a real certificate signed by a trusted authority, you will need to create an empty credential store. This is necessary for the current release in order for the system to utilize the same password for the keystore and the key.
 
 The credential stores in Knox use the JCEKS keystore type as it allows for the storage of general secrets in addition to certificates.
 
-    keytool -genkey -alias {anything} -keystore __gateway-credentials.jceks \
-        -storepass {master-secret} -validity 360 -keysize 1024 -storetype JCEKS
+Keytool may be used to create credential stores but the Knox CLI section details how to create aliases. These aliases are managed within credential stores which are created by the CLI as appropriate. 
 
-Follow the prompts again for the DN for the cert of the credential store. This certificate isn't really used for anything at the moment but is required to create the credential store.
+See the Knox CLI section for descriptions of the command line utilties related to the management of the credential stores.
 
 ##### Provisioning of Keystores #####
 Once you have created these keystores you must move them into place for the gateway to discover them and use them to represent its identity for SSL connections. This is done by copying the keystores to the `{GATEWAY_HOME}/conf/security/keystores` directory for your gateway install.
