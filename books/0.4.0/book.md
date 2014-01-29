@@ -36,6 +36,7 @@
     * #[Sandbox Configuration]
 * #[Gateway Details]
     * #[Configuration]
+    * #[Knox CLI]
     * #[Authentication]
     * #[LDAPGroupLookup]
     * #[Identity Assertion]

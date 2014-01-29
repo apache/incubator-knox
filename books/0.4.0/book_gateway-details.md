@@ -51,6 +51,7 @@ Note: The ports 50070, 50111, 11000 and 60080 are the defaults for WebHDFS, WebH
 Their values can also be provided via the cluster topology descriptor if your Hadoop cluster uses different ports.
 
 <<config.md>>
+<<knox_cli.md>>
 <<config_authn.md>>
 <<config_ldap_group_lookup.md>>
 <<config_id_assertion.md>>
