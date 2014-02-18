@@ -28,7 +28,9 @@ prints help for all commands
 
 #### Master secret persistence ####
 ##### knoxcli.sh create-master [--help] #####
-Creates and persists an encrypted master secret in a file within {GATEWAY_HOME}/data/security/master
+Creates and persists an encrypted master secret in a file within {GATEWAY_HOME}/data/security/master. 
+
+NOTE: This command fails when there is an existing master file in the expected location.
 
 #### Alias creation ####
 ##### knoxcli.sh create-alias n [--cluster c] [--value v] [--generate] [--help] #####
@@ -37,7 +39,7 @@ Creates a password alias and stores it in a credential store within the {GATEWAY
 argument | description
 ---------|-----------
 --name|name of the alias to create  
---cluster|name of Hadoop cluster for the cluster specific credential store otherwise assumes __gateway
+--cluster|name of Hadoop cluster for the cluster specific credential store otherwise assumes that it is for the gateway itself
 --value|parameter for specifying the actual password otherwise prompted<br/>
 --generate|boolean flag to indicate whether the tool should just generate the value. This assumes that --value is not set - will result in error otherwise. User will not be prompted for the value when --generate is set.		
 
