@@ -42,7 +42,7 @@ Because of this one-to-many provider/filter relationship, there is an extra conf
 	  <name>WebAppSec</name>
 	  <enabled>true</enabled>
 	  <param><name>csrf.enabled</name><value>true</value></param>
-	  <param><name>csrf.customHeader</name><value>X_XSRF_Header</value></param>
+	  <param><name>csrf.customHeader</name><value>X-XSRF-Header</value></param>
 	  <param><name>csrf.methodsToIgnore</name><value>GET,OPTIONS,HEAD</value></param>
 	</provider>
 
@@ -52,15 +52,15 @@ The following table describes the configuration options for the web app security
 Name | Description | Default
 ---------|-----------
 csrf.enabled|This param enables the CSRF protection capabilities|false  
-csrf.customHeader|This is an optional param that indicates the name of the header to be used in order to determine that the request is from a trusted source. It defaults to the header name described by the NSA in its guidelines for dealing with CSRF in REST.|X_XSRF_Header
+csrf.customHeader|This is an optional param that indicates the name of the header to be used in order to determine that the request is from a trusted source. It defaults to the header name described by the NSA in its guidelines for dealing with CSRF in REST.|X-XSRF-Header
 csrf.methodsToIgnore|This is also an optional param that enumerates the HTTP methods to allow through without the custom HTTP header. This is useful for allowing things like GET requests from the URL bar of a browser but it assumes that the GET request adheres to REST principals in terms of being idempotent. If this cannot be assumed then it would be wise to not include GET in the list of methods to ignore.|GET,OPTIONS,HEAD
 
 #### REST Invocation
 The following curl command can be used to request a directory listing from HDFS while passing in the expected header X-XSRF-Header.
 
-	curl -k -i --header "X-XSRF-Header: oihdfgilhsdog" -v -u guest:guest-password https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp?op=LISTSTATUS
+	curl -k -i --header "X-XSRF-Header: valid" -v -u guest:guest-password https://localhost:8443/gateway/sandbox/webhdfs/v1/tmp?op=LISTSTATUS
 
-Omitting the --header "X-XSRF-Header: oihdfgilhsdog" above should result in an HTTP 400 bad_request or a 403 forbidden.
+Omitting the --header "X-XSRF-Header: valid" above should result in an HTTP 400 bad_request.
 
 Disabling the provider will then allow a request that is missing the header through. 
 
