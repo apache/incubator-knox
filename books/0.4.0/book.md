@@ -43,6 +43,8 @@
     * #[Authorization]
     * #[Secure Clusters]
     * #[High Availability]
+    * #[Web App Security Provider]
+    * #[Preauthenticated SSO Provider]
 * #[Client Details]
 * #[Service Details]
     * #[WebHDFS]

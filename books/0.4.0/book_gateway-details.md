@@ -58,4 +58,6 @@ Their values can also be provided via the cluster topology descriptor if your Ha
 <<config_authz.md>>
 <<config_kerberos.md>>
 <<config_ha.md>>
+<<config_webappsec_provider.md>>
+<<config_preauth_sso_provider.md>>
 
