@@ -137,7 +137,7 @@ The above configuration enables the authorization provider but does not indicate
         <value>username[,*|username...];group[,*|group...];ipaddr[,*|ipaddr...]</value>
     </param>
     
-where `{serverName}` would need to be the name of a configured Hadoop service within the topology.
+where `{serviceName}` would need to be the name of a configured Hadoop service within the topology.
 
 NOTE: ipaddr is unique among the parts of the ACL in that you are able to specify a wildcard within an ipaddr to indicate that the remote address must being with the String prior to the asterisk within the ipaddr acl. For instance:
 
